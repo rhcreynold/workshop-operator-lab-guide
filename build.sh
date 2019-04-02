@@ -12,11 +12,15 @@ case $2 in
   ;;
   quay)
     # designed to be used by travis-ci, where the DOCKER_* variables are defined
+    # We will loop through all existing workshops to build out images and push them to quay.io
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
-    docker build --build-arg workshop_name=$WORKSHOP_NAME \
-    -t quay.io/$DOCKER_USERNAME/operator-workshop-lab-guide-$WORKSHOP_NAME .
-    docker push quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME
+    for i in $(ls workshops);do
+      docker build --build-arg workshop_name=$WORKSHOP_NAME \
+      -t quay.io/$DOCKER_USERNAME/operator-workshop-lab-guide-$WORKSHOP_NAME .
+      docker push quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME
+    done 
   ;;
   *)
     echo "usage: build.sh <WORKSHOP_NAME> <LOCATION>"
   ;;
+esac
