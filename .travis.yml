@@ -1,10 +1,15 @@
 language: python
 python:
 - '2.7'
+env:
+  - WORKSHOP_NAME=example_workshop
+  - WORKSHOP_NAME=dcmetromap
 services:
 - docker
 install:
 - pip install -r requirements.txt
+script:
+- bash run.sh ${WORKSHOP_NAME} local
 deploy:
   provider: script
   script: bash build.sh quay
