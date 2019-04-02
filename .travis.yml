@@ -1,0 +1,5 @@
+deploy:
+  provider: script
+  script: bash build.sh quay
+  on:
+    branch: master
