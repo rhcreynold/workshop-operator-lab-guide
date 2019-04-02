@@ -12,6 +12,6 @@ script:
 - bash run.sh ${WORKSHOP_NAME} local
 deploy:
   provider: script
-  script: bash build.sh quay
+  script: bash build.sh ${WORKSHOP_NAME} quay
   on:
     branch: master
