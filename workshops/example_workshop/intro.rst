@@ -13,7 +13,7 @@ Important links
 Default Variables
 ------------------
 
-You can define more variables to fit your specific workshop in `conf.py` in the `rst_prolog <http://www.sphinx-doc.org/en/master/usage/configuration.html#confval-rst_prolog>`__ section. 
+You can define more variables to fit your specific workshop in ``conf.py`` in the `rst_prolog <http://www.sphinx-doc.org/en/master/usage/configuration.html#confval-rst_prolog>`__ section. 
 
 ======================  ==============
 Environment Variable    Default Value

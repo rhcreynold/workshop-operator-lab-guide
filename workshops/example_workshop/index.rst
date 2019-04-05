@@ -5,9 +5,9 @@
 
 .. sectionauthor:: Jamie Duncan <jduncan@redhat.com>
 
-===========
+==============================================================
 |workshop_name_clean| Lab Guide
-===========
+==============================================================
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Odio ut sem nulla pharetra diam sit amet nisl suscipit. Turpis nunc eget lorem dolor sed viverra ipsum. Quam elementum pulvinar etiam non quam lacus suspendisse. Mauris nunc congue nisi vitae suscipit tellus mauris a.
 
@@ -20,4 +20,6 @@ Dolor sit amet consectetur adipiscing elit ut. Ultrices eros in cursus turpis ma
   :name: mastertoc
 
   intro
+  quickstart
+  contributing
   license
