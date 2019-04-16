@@ -1,5 +1,5 @@
 FROM centos
-ARG workshop_name=dcmetromap
+ARG workshop_name=example-workshop
 ENV WORKSHOP_NAME=$workshop_name
 ENV STUDENT_NAME='example student'
 ENV BASTION_HOST='bastion.example.com'
@@ -14,3 +14,7 @@ RUN pip install -r requirements.txt
 EXPOSE 8080
 CMD ["/opt/docs/entrypoint.sh"]
 LABEL maintainer="jduncan@redhat.com"
+RUN chmod -R u+x /opt/docs && \
+    chgrp -R 0 /opt/docs && \
+    chmod -R g=u /opt/docs
+USER 10001
