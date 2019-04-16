@@ -7,7 +7,7 @@ ENV MASTER_URL='ocp.example.com'
 ENV APP_DOMAIN='apps.example.com'
 RUN yum -y update
 RUN yum -y install epel-release; yum -y install python-devel python-setuptools python-pip make; yum -y clean all
-COPY requirements.txt deploy.sh workshops/$workshop_name /opt/docs/
+COPY requirements.txt hack/deploy.sh workshops/$workshop_name /opt/docs/
 WORKDIR /opt/docs
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
