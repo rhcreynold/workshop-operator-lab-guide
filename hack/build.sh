@@ -18,6 +18,6 @@ case $2 in
     docker push quay.io/$QUAY_PROJECT/operator-workshop-lab-guide-$WORKSHOP_NAME
   ;;
   *)
-    echo "usage: build.sh <WORKSHOP_NAME> <LOCATION>"
+    echo "usage: ./hack/build.sh <WORKSHOP_NAME> <LOCATION>"
   ;;
 esac
