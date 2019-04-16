@@ -2,7 +2,7 @@ language: python
 python:
 - '2.7'
 env:
-  - WORKSHOP_NAME=example_workshop
+  - WORKSHOP_NAME=example-workshop
   - WORKSHOP_NAME=dcmetromap
 services:
 - docker
