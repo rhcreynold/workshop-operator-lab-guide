@@ -37,3 +37,12 @@ Let us create a site.yml to invoke the role.
 
     roles:
       - apache-simple
+
+
+Now let us add some default variables to your role in ``roles/apache-simple/defaults/main.yml.``
+
+.. code-block:: yaml
+  ---
+  # defaults file for apache-simple
+  apache_test_message: This is a test message
+  apache_max_keep_alive_requests: 115
