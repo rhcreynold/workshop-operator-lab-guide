@@ -147,6 +147,6 @@ Configuring GOGS
 
 The GOGS UI is listening at |private_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going. First, we'll tell GOGS how to connect to MariaDB listening at |private_ip|:3306.
 
-.. figure:: ../images/gogs_config_1.png
+.. figure:: _static/images/gogs_config_1.png
 
    Database connection options for GOGS
