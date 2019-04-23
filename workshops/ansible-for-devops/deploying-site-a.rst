@@ -47,3 +47,60 @@ Now let us add some default variables to your role in ``roles/apache-simple/defa
   # defaults file for apache-simple
   apache_test_message: This is a test message
   apache_max_keep_alive_requests: 115
+
+Now lets create some role-specific variables to your role in ``roles/apache-simple/vars/main.yml.``
+
+.. code-block:: yaml
+
+  # vars file for apache-simple
+  httpd_packages:
+    - httpd
+    - mod_wsgi
+
+
+Create your role handler in ``roles/apache-simple/handlers/main.yml.``
+
+.. code-block:: yaml
+
+  ---
+  # handlers file for apache-simple
+  - name: restart-apache-service
+  service:
+    name: httpd
+    state: restarted
+    enabled: yes
+
+Add tasks to your role in roles/apache-simple/tasks/main.yml.
+
+.. code-block:: yaml
+
+  ---
+  # tasks file for apache-simple
+  - name: Ensure httpd packages are installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ httpd_packages }}"
+  notify: restart-apache-service
+
+  - name: Ensure site-enabled directory is created
+  file:
+    name: /etc/httpd/conf/sites-enabled
+    state: directory
+
+  - name: Copy httpd.conf
+  template:
+    src: templates/httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify: restart-apache-service
+
+  - name: Copy index.html
+  template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+
+  - name: Ensure httpd is started
+  service:
+    name: httpd
+    state: started
+    enabled: yes
