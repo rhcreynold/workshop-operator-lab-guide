@@ -116,6 +116,6 @@ Download a couple of templates into ``roles/apache-simple/templates/``
 
 Now let us run the playbook.
 
- .. code-block:: bash
+.. code-block:: bash
 
- ansible-playbook site.yml
+  ansible-playbook site.yml
