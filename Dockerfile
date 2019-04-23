@@ -9,8 +9,8 @@ RUN yum -y update
 RUN yum -y install epel-release; yum -y install python-devel python-setuptools python-pip make; yum -y clean all
 COPY requirements.txt entrypoint.sh workshops/$workshop_name /opt/docs/
 WORKDIR /opt/docs
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade pip
+RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
 EXPOSE 8080
 CMD ["/opt/docs/entrypoint.sh"]
 LABEL maintainer="jduncan@redhat.com"
