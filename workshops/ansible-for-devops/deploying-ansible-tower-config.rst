@@ -226,3 +226,9 @@ groups contain hosts.
    :alt: Inventory with Groups
 
    Inventory with Groups
+
+.. |Browse button| image:: ./_static/images/at_browse.png
+.. |Submit button| image:: ./_static/images/at_submit.png
+.. |Gear button| image:: ./_static/images/at_gear.png
+.. |Add button| image:: ./_static/images/at_add.png
+.. |Save button| image:: ./_static/images/at_save.png
