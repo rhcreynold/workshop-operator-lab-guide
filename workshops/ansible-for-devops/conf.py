@@ -44,13 +44,14 @@ rst_prolog = """
 .. |bastion_host| replace:: %s
 .. |master_url| replace:: %s
 .. |app_domain| replace:: %s
-.. |github_url| replace:: https://github.com/jduncan-rva/workshop-operator-lab-guide
+.. |private_ip| replace:: %s
 """ % (project_clean,
        os.environ['WORKSHOP_NAME'],
        os.environ['STUDENT_NAME'],
        os.environ['BASTION_HOST'],
        os.environ['MASTER_URL'],
        os.environ['APP_DOMAIN'],
+       os.environ['PRIVATE_IP']
        )
 
 

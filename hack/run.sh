@@ -22,7 +22,9 @@ stop_local() {
 
 start_local() {
   echo "Preparing new lab guide for $WORKSHOP_NAME"
-  docker run -d -p 8080:8080 quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME &> $TMP_FILE
+  PRIVATE_IP=$(ip addr show eth0 | grep 'inet ' | awk '{ print $2 }' | awk -F/ '{ print $1 }')
+  STUDENT_NAME=student1
+  docker run -d -e PRIVATE_IP=$PRIVATE_IP -e STUDENT_NAME=$STUDENT_NAME -p 8080:8080 quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME &> $TMP_FILE
   if [ $? -eq 0 ]; then
     LAB_CONTAINER=$(cat $TMP_FILE | cut -c1-12)
     echo "$WORKSHOP_NAME is running as container ID $LAB_CONTAINER and is avaiable at http://localhost:8080"

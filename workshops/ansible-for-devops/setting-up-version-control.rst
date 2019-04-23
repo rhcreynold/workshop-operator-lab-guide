@@ -22,6 +22,18 @@ Let's get started.
 Creating an initial inventory
 ``````````````````````````````
 
+Ansible best practices include using inventory groups consistently. This makes your playbooks more portable. When your environment changes, only the inventory needs to be updated. Your roles and playbooks don't need to be edited.
+
+.. admonition:: Why is this important?
+
+  This allows content you create in this workshop to be used by simply using a different inventory.
+
+Let's create your initial inventory with a ``gogs`` group. In your home directory ``/home/|student_name|``, create a file named ``hosts``. In that file, add the following content:
+
+.. code-block:: ini
+  [gogs]
+  |private_ip|
+
 Creating a GOGS role
 `````````````````````
 
