@@ -130,14 +130,22 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
 Writing your GOGS playbook
 ```````````````````````````
 
+With your role in place, you're ready to deploy GOGS and MariaDB on your control node. To do this, your playbook will need to reference the role you just created. In your ``playbook`` directory, create a file named ``site.yml`` with the following contents.
+
 .. code-block:: yaml
 
-  ...
-  - name: deploy GOGS to control host
-    hosts: control
-    - tasks:
+  - name: deploy GOGS
+    gather_facts: false
+    hosts: gogs
+    roles:
+      - gogs
 
-      name: pull GOGS image
+As the workshop goes on, we'll continue building on this playbook to build out our complete environment. Next, we need to configure GOGS to connect to MariaDB so we can use it to house our source code.
 
 Configuring GOGS
 `````````````````
+
+The GOGS UI is listening at https://|private_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going. First, we'll tell GOGS how to connect to MariaDB listening at |private_ip|:3306.
+
+.. image::images/gogs_config_1.png
+   align: center
