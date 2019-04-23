@@ -109,13 +109,13 @@ Download a couple of templates into ``roles/apache-simple/templates/``
 
 .. code-block:: yaml
 
-  mkdir -p ~/apache-role/roles/apache-simple/templates/
-  cd ~/apache-role/roles/apache-simple/templates/
-  curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
-  curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
+  $ mkdir -p ~/apache-role/roles/apache-simple/templates/
+  $ cd ~/apache-role/roles/apache-simple/templates/
+  $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
+  $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
 
 Now let us run the playbook.
 
 .. code-block:: bash
 
-  ansible-playbook site.yml
+  $ ansible-playbook site.yml
