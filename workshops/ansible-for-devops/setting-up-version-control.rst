@@ -88,7 +88,7 @@ The tasks to deploy GOGS need to accomplish these tasks:
 In your GOGS role, add the following content to your ``tasks/main.yml`` file:
 
 .. code-block:: yaml
-  ---
+
   # tasks file for gogs
   - name: install docker-py requirements
     pip:
