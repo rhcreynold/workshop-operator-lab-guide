@@ -16,6 +16,15 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+extensions = [
+    'sphinx.ext.extlinks',
+]
+
+# -- Project information -----------------------------------------------------
+
+import os
+
+project_clean = unicode(os.environ['WORKSHOP_NAME'].title().replace('_', ' ').replace('-',' '))
 
 # -- Project information -----------------------------------------------------
 
@@ -24,10 +33,30 @@ copyright = u'2019, Red Hat Public Sector'
 author = u'Red Hat Public Sector'
 
 # The short X.Y version
-version = u''
+version = u'0.1'
 # The full version, including alpha/beta/rc tags
-release = u'0.1'
+release = u'0.1alpha1'
 
+rst_prolog = """
+.. |workshop_name_clean| replace:: %s
+.. |workshop_name| replace:: %s
+.. |student_name| replace:: %s
+.. |bastion_host| replace:: %s
+.. |master_url| replace:: %s
+.. |app_domain| replace:: %s
+.. |github_url| replace:: https://github.com/jduncan-rva/workshop-operator-lab-guide
+""" % (project_clean,
+       os.environ['WORKSHOP_NAME'],
+       os.environ['STUDENT_NAME'],
+       os.environ['BASTION_HOST'],
+       os.environ['MASTER_URL'],
+       os.environ['APP_DOMAIN'],
+       )
+
+
+extlinks = {
+        'github_url': ('https://github.com/jduncan-rva/%s', 'GitHub '),
+        }
 
 # -- General configuration ---------------------------------------------------
 
@@ -80,7 +109,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
