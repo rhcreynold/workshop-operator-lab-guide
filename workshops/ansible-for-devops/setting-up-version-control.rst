@@ -28,9 +28,9 @@ Ansible best practices include using inventory groups consistently. This makes y
 
   This allows content you create in this workshop to be used by simply using a different inventory.
 
-Let's create your initial inventory with a ``gogs`` group. In your home directory ``/home/|student_name|``, create a file named ``hosts``. In that file, add the following content:
+Let's create your initial inventory with a ``gogs`` group. In your home directory /home/|student_name|, create a file named ``hosts``. In that file, add the following content:
 
-.. code-block:: ini
+.. parsed-literal:: ini
   [gogs]
   |private_ip|
 
