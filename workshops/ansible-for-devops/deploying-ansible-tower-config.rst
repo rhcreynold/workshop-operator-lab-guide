@@ -27,16 +27,16 @@ Step 1:
 ~~~~~~~
 
 To log in, use the username ``admin`` and and the password
-``ansibleWS``.
+``ansibleWS``. Recall that this username/password was created when you built the inventory to setup Tower.
 
-.. figure:: ansible-lab-figure01-logon-screen.png
+.. figure:: _static/images/tower_install_splash.png
    :alt: Ansible Tower Login Screen
 
    Ansible Tower Login Screen
 As soon as you login, you will prompted to request a license or browse
 for an existing license file
 
-.. figure:: at_lic_prompt.png
+.. figure:: ./_static/images/at_lic_prompt.png
    :alt: Uploading a License
 
    Uploading a License
@@ -110,7 +110,7 @@ Complete the credential form using the following entries:
 | PRIVILEGE ESCALATION   | Sudo (This is the default)            |
 +------------------------+---------------------------------------+
 
-.. figure:: at_cred_detail.png
+.. figure:: ./_static/images/at_cred_detail.png
    :alt: Adding a Credential
 
    Adding a Credential
@@ -148,7 +148,7 @@ DESCRIPTION\|workshop playbooks ORGANIZATION\|Default SCM TYPE\|Git SCM
 URL\| https://github.com/ansible/lightbulb SCM BRANCH\| SCM UPDATE
 OPTIONS\| [x] Clean [x] Delete on Update [x] Update on Launch
 
-.. figure:: at_project_detail.png
+.. figure:: ./_static/images/at_project_detail.png
    :alt: Defining a Project
 
    Defining a Project
@@ -192,7 +192,7 @@ Complete the form using the following entries
 | ORGANIZATION   | Default                      |
 +----------------+------------------------------+
 
-.. figure:: at_inv_create.png
+.. figure:: ./_static/images/at_inv_create.png
    :alt: Create an Inventory
 
    Create an Inventory
@@ -214,7 +214,7 @@ import an existing inventory.
 
 You should see output similar to the following:
 
-.. figure:: at_tm_stdout.png
+.. figure:: ./_static/images/at_tm_stdout.png
    :alt: Importing an inventory with tower-manage
 
    Importing an inventory with tower-manage
@@ -222,7 +222,7 @@ Feel free to browse your inventory in Tower. You should now notice that
 the inventory has been populated with Groups and that each of those
 groups contain hosts.
 
-.. figure:: at_inv_group.png
+.. figure:: ./_static/images/at_inv_group.png
    :alt: Inventory with Groups
 
    Inventory with Groups
