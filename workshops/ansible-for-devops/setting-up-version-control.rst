@@ -105,6 +105,7 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
     file:
       name: /var/gogs
       state: directory
+      mode: 0777
 
   - name: start the GOGS container
     docker_container:
