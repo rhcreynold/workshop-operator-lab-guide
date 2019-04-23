@@ -5,6 +5,7 @@
 WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
+ETH_INT=ens33
 
 stop_local() {
   if [ -f $TMP_FILE ]; then
@@ -22,7 +23,7 @@ stop_local() {
 
 start_local() {
   echo "Preparing new lab guide for $WORKSHOP_NAME"
-  PRIVATE_IP=$(ip addr show eth0 | grep 'inet ' | awk '{ print $2 }' | awk -F/ '{ print $1 }')
+  PRIVATE_IP=$(ip addr show $ETH_INT | grep 'inet ' | awk '{ print $2 }' | awk -F/ '{ print $1 }')
   STUDENT_NAME=student1
   docker run -d -r WORKSHOP_NAME=$WORKSHOP_NAME -e PRIVATE_IP=$PRIVATE_IP -e STUDENT_NAME=$STUDENT_NAME -p 8080:8080 quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME &> $TMP_FILE
   if [ $? -eq 0 ]; then
