@@ -101,7 +101,7 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
       name: gogs/gogs
       state: present
 
-  - name: make a data container for GOGS
+  - name: make a data directory for GOGS
     file:
       name: /var/gogs
       state: directory
@@ -110,8 +110,11 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
     docker_container:
       name: gogs
       image: gogs/gogs
+      volumes:
+        - /var/gogs:/data
       ports:
-        "8081:3000"
+        - "8081:3000"
+        - "10022:22"
       restart_policy: always
 
 Writing your GOGS playbook
