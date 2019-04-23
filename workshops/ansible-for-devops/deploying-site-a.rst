@@ -19,10 +19,21 @@ Now let us create the Ansible role structure, but first we need to get into the 
   $ cd ~/devops-workshop
   $ cd roles
 
-  Now let's create the Ansible Role structure
 
-  .. code-block:: bash
+Now let's create the Ansible Role structure
 
-    $ ansible-galaxy init apache-simple
+.. code-block:: bash
 
- 
+  $ ansible-galaxy init apache-simple
+
+Let us create a site.yml to invoke the role.
+
+..code-block:: yaml
+
+  ---
+  - name: Ensure apache is installed and started via role
+    hosts: web
+    become: yes
+
+    roles:
+      - apache-simple
