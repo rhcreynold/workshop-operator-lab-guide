@@ -143,10 +143,16 @@ Step 3:
 
 Complete the form using the following entries
 
-NAME \|Ansible Workshop Project -----\|------------------------
-DESCRIPTION\|workshop playbooks ORGANIZATION\|Default SCM TYPE\|Git SCM
-URL\| https://github.com/ansible/lightbulb SCM BRANCH\| SCM UPDATE
-OPTIONS\| [x] Clean [x] Delete on Update [x] Update on Launch
+================== ===================================================
+NAME               Ansible Workshop Project
+================== ===================================================
+DESCRIPTION        workshop playbooks
+ORGANIZATION       Default
+SCM TYPE           Git
+SCM URL            https://github.com/ansible/lightbulb
+SCM BRANCH        
+SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
+================== ===================================================
 
 .. figure:: ./_static/images/at_project_detail.png
    :alt: Defining a Project
