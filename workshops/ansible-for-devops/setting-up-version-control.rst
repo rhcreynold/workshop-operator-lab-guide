@@ -124,6 +124,8 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
         - MYSQL_DATABASE:gogs
         - MYSQL_USER:gogs
         - MYSQL_PASSWORD:redhat
+      ports:
+        - "3306:3306"
 
 
 Writing your GOGS playbook
