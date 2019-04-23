@@ -96,27 +96,35 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
       state: present
       extra_args: --trusted-host pypi.org --trusted-host files.pythonhosted.org
 
-  - name: pull the GOGS image
+  - name: pull the GOGS and MariaDB images
     docker_image:
-      name: gogs/gogs
+      name: "{{ item }}"
       state: present
-
-  - name: make a data directory for GOGS
-    file:
-      name: /var/gogs
-      state: directory
-      mode: 0777
+      with_items:
+        - gogs/gogs
+        - mariadb
 
   - name: start the GOGS container
     docker_container:
       name: gogs
       image: gogs/gogs
-      volumes:
-        - /var/gogs:/data
+      # volumes:
+      #   - /var/gogs:/data
       ports:
         - "8081:3000"
         - "10022:22"
       restart_policy: always
+
+  - name: start the MariaDB container
+    docker_container:
+      name: mariadb
+      image: mariadb
+      env:
+        - MYSQL_ROOT_PASSWORD:redhat
+        - MYSQL_DATABASE:gogs
+        - MYSQL_USER:gogs
+        - MYSQL_PASSWORD:redhat
+
 
 Writing your GOGS playbook
 ```````````````````````````
@@ -129,3 +137,6 @@ Writing your GOGS playbook
     - tasks:
 
       name: pull GOGS image
+
+Configuring GOGS
+`````````````````
