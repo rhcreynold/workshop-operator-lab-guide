@@ -4,6 +4,7 @@ python:
 env:
   - WORKSHOP_NAME=example-workshop
   - WORKSHOP_NAME=dcmetromap
+  - WORKSHOP_NAME=ansible-for-devops
 services:
 - docker
 install:
