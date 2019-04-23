@@ -1,4 +1,4 @@
-.. sectionauthor:: Ajay Chenampara <achenamp@redhat.com>
+.. sectionauthor: Ajay Chenampara <achenamp@redhat.com>
 .. _docs admin: jduncan@redhat.com
 
 =========================
