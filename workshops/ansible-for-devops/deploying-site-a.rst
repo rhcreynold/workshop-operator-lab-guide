@@ -28,7 +28,7 @@ Now let's create the Ansible Role structure
 
 Let us create a site.yml to invoke the role.
 
-..code-block:: yaml
+.. code-block:: yaml
 
   ---
   - name: Ensure apache is installed and started via role
