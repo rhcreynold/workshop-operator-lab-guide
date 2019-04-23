@@ -140,12 +140,13 @@ With your role in place, you're ready to deploy GOGS and MariaDB on your control
     roles:
       - gogs
 
-As the workshop goes on, we'll continue building on this playbook to build out our complete environment. Next, we need to configure GOGS to connect to MariaDB so we can use it to house our source code.
+As the workshop progresses, we'll continue building on this playbook to build out our complete environment. Next, we need to configure GOGS to connect to MariaDB so we can use it to house our source code.
 
 Configuring GOGS
 `````````````````
 
-The GOGS UI is listening at https://|private_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going. First, we'll tell GOGS how to connect to MariaDB listening at |private_ip|:3306.
+The GOGS UI is listening at |private_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going. First, we'll tell GOGS how to connect to MariaDB listening at |private_ip|:3306.
 
-.. image::images/gogs_config_1.png
-   align: center
+.. figure:: ../images/gogs_config_1.png
+
+   Database connection options for GOGS
