@@ -89,6 +89,7 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
 
 .. code-block:: yaml
 
+  ---
   # tasks file for gogs
   - name: install docker-py requirements
     pip:
@@ -108,8 +109,6 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
     docker_container:
       name: gogs
       image: gogs/gogs
-      # volumes:
-      #   - /var/gogs:/data
       ports:
         - "8081:3000"
         - "10022:22"
@@ -120,10 +119,10 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
       name: mariadb
       image: mariadb
       env:
-        - MYSQL_ROOT_PASSWORD:redhat
-        - MYSQL_DATABASE:gogs
-        - MYSQL_USER:gogs
-        - MYSQL_PASSWORD:redhat
+        MYSQL_ROOT_PASSWORD: redhat
+        MYSQL_DATABASE: gogs
+        MYSQL_USER: gogs
+        MYSQL_PASSWORD: redhat
       ports:
         - "3306:3306"
 
