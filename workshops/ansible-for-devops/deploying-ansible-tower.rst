@@ -191,7 +191,7 @@ NAME               Ansible Workshop Project
 DESCRIPTION        workshop playbooks
 ORGANIZATION       Default
 SCM TYPE           Git
-SCM URL            \https://|control_public_ip|
+SCM URL            \http://|control_public_ip|/|student_name|/playbook.git
 SCM BRANCH
 SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 ================== ===================================================
@@ -231,13 +231,26 @@ An Inventory can also be imported into Tower using the ``tower-manage`` command 
 
 ### TODO - You're here right now, jduncan
 
-Look in your ``.ansible.cfg`` file to find the path to your inventory
-file (``cat ~/.ansible.cfg``) .Use the ``tower-manage`` command to
-import an existing inventory.
+Look in your ``.ansible.cfg`` file to find the path to your default inventory. This is the inventory we'll import into Tower. Your default inventory is the ``inventory`` parameter.
 
-.. code-block:: bash
+.. parsed-literal::
 
-    sudo tower-manage inventory_import --source=<location of you inventory> --inventory-name="Ansible Workshop Inventory"
+  $ cat ~/.ansible.cfg
+  [defaults]
+  stdout_callback = yaml
+  connection = smart
+  timeout = 60
+  deprecation_warnings = False
+  host_key_checking = False
+  retry_files_enabled = False
+
+  inventory = /home/|student_name|/devops-workshop/lab_inventory/hosts
+
+To import the inventory, we'll use the ``tower-manage`` utility on your control node/Tower server.
+
+.. parsed-literal::
+
+    sudo tower-manage inventory_import --source=/home/|student_name|/devops-workshop/lab_inventory/hosts --inventory-name="Ansible Workshop Inventory"
 
 You should see output similar to the following:
 
@@ -254,6 +267,8 @@ groups contain hosts.
    :alt: Inventory with Groups
 
    Inventory with Groups
+
+Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
 
 .. |Browse button| image:: ./_static/images/at_browse.png
 .. |Submit button| image:: ./_static/images/at_submit.png
