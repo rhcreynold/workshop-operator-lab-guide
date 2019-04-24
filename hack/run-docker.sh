@@ -6,8 +6,8 @@ WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ETH_INT=ens33
-PRIVATE_IP=$(ip addr show $ETH_INT | grep 'inet ' | awk '{ print $2 }' | awk -F/ '{ print $1 }')
 STUDENT_NAME=student1
+PRIVATE_IP=$(cat /home/student1/lightbulb/inventory.ini | grep 'ansible ansible_host' | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 NODE_1_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 NODE_2_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-2 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 NODE_3_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-3 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
