@@ -162,17 +162,17 @@ Inside that file should have the following:
 
   ---
   - name: launch apache containers on site2 nodes
-  hosts: site2
-  become: yes
+    hosts: site2
+    become: yes
 
-  tasks:
-    - name: launch apache-simple container on siteb nodes
-      docker_container:
-        name: apache-simple
-        image: |control_public_ip|:5000/student1/apache-simple
-        ports:
-          - "8080:80"
-        restart_policy: always
+    tasks:
+      - name: launch apache-simple container on siteb nodes
+        docker_container:
+          name: apache-simple
+          image: |control_public_ip|:5000/student1/apache-simple
+          ports:
+            - "8080:80"
+          restart_policy: always
 
 so let's go ahead and run this:
 
