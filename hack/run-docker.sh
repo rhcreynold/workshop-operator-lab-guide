@@ -6,7 +6,7 @@ WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ETH_INT=ens33
-STUDENT_NAME=student1
+STUDENT_NAME=$(cat /etc/passwd | grep student | awk '{ print $1 }' | awk -F':' '{ print $1 }')
 CONTROL_PRIVATE_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep 'ansible ansible_host' | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
 NODE_1_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
