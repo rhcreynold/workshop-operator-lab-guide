@@ -32,13 +32,14 @@ Let modify the main playbook inside the role from site A.  This is going to give
 Ansible code to deploy the same content.  Notice that we have added tags, read more about Ansible tags `here <https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html/>`__
 
 
-.. code-block:: bash
+.. parsed-literal::
 
   $ cd /home/|student_name|/devops-workshop/
   $ vim roles/apache-simple/tasks/main.yml
 
 
-.. code-block:: yaml
+.. parsed-literal::
+
     ---
   # tasks file for apache
   - name: Ensure httpd packages are present
@@ -91,10 +92,9 @@ Now that we have added tags, lets take a look at the DockerFile to build the con
 container that has apache installed.  From there we are going to add the config files `index.html` and `httpd.conf` to the
 container.  This will server the exact same site as the rpm version that we deployed earlier.
 
-.. code-block:: bash
+.. parsed-literal::
 
   # Pull the rhel image from the local registry
-  #FROM rhel7:latest
   FROM rhscl/httpd-24-rhel7
   USER root
 
@@ -116,7 +116,7 @@ Now we can create a Ansible playbook to build the container and push it into the
 This will have the following content.  Note how we are using the container tag, this playbook can be used for the rpm deployment
 or the container based deployment based about using tags.
 
-.. code-block:: yaml
+.. parsed-literal::
 
   ---
   - name: Ensure apache is installed and started via role
@@ -148,7 +148,7 @@ Now its time to build the container:
 
     $ ansible-playbook -i hosts build-apache-simple-container.yml
 
-Now there should be a `index.html` and a `httpd.conf` in `/home/|student_name|/devops-workshop/`.
+Now there should be a `index.html` and a `httpd.conf` in /home/|student_name|/devops-workshop/.
 
 Next step is to deploy the containers to site B.  We are going to create a simple playbook to do just that.
 
@@ -158,7 +158,7 @@ Next step is to deploy the containers to site B.  We are going to create a simpl
 
 Inside that file should have the following:
 
-.. code-block:: yaml
+.. parsed-literal::
 
   ---
   - name: launch apache containers on site2 nodes
@@ -182,7 +182,7 @@ so let's go ahead and run this:
 
 Assuming everything ran you can test each node with the curl command.
 
-.. code-block:: bash
+.. parsed-literal::
 
   $ curl http://|node_3_ip|:8080
   $ curl http://|node_4_ip|:8080
