@@ -50,7 +50,7 @@ stop_local() {
 start_local() {
   echo "Preparing new lab guide for $WORKSHOP_NAME"
   docker pull $CONTAINER_IMAGE
-  docker run -d --env-file /tmp/env.list -p 8080:8080 $CONTAINER_IMAGE &> $TMP_FILE
+  docker run -d --env-file /tmp/env.list --name lab_guide -p 8080:8080 $CONTAINER_IMAGE &> $TMP_FILE
   if [ $? -eq 0 ]; then
     LAB_CONTAINER=$(cat $TMP_FILE | cut -c1-12)
     echo "$WORKSHOP_NAME is running as container ID $LAB_CONTAINER and is avaiable at http://localhost:8080"
