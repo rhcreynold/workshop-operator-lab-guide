@@ -1,4 +1,4 @@
-.. sectionauthor:: Jamie Duncan <jduncan@redhat.com>
+.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
 .. _docs admin: jduncan@redhat.com
 
 ==================
@@ -9,7 +9,7 @@ Overview
 
 We have gone ahead and stood up two additional Red Hat Enterprise Linux hosts for you.  In this lab we are going to
 deploy a containerized simple web application (from an Ansible Role) on two different hosts. This will host a simple
-website display the hostname.
+website.  This is an interation of the last role that we made in Deploying site a.
 
 Let first modify the ``hosts`` file and add the correct ip addresses for our web servers.
 
@@ -25,4 +25,164 @@ Let first modify the ``hosts`` file and add the correct ip addresses for our web
   |node_3_ip|
   |node_4_ip|
 
-random text
+Ok so now we have our inventory let use the same role to build the same website as last time but
+in a container. We are going to build a playbook that leverages the role that we previous created.
+
+Let modify the main playbook inside the role from site A.  This is going to give us the flexibility of using the same
+Ansible code to deploy the same content.  Notice that we have added tags, read more about Ansible tags `here <https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html/>`__
+
+
+.. code-block:: bash
+
+  $ cd /home/|student_name|/devops-workshop/
+  $ vim roles/apache-simple/tasks/main.yml
+
+
+.. code-block:: yaml
+    ---
+  # tasks file for apache
+  - name: Ensure httpd packages are present
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ httpd_packages }}"
+    notify: restart-apache-service
+    tags:
+       - rpm
+
+  - name: Ensure latest httpd.conf file is present for RPM
+    template:
+      src: httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify: restart-apache-service
+    tags:
+       - rpm
+
+  - name: Ensure latest httpd.conf file is present for Container
+    template:
+      src: httpd.conf.j2
+      dest: /home/|student_name|/devops-workshop/httpd.conf
+    tags:
+       - container
+
+  - name: Ensure latest index.html file is present for RPM
+    template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
+    tags:
+       - rpm
+
+  - name: Ensure latest index.html file is present for Container
+    template:
+      src: index.html.j2
+      dest: /home/|student_name|/devops-workshop/index.html
+    tags:
+       - container
+
+  - name: Ensure httpd service is started and enabled
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    tags:
+       - rpm
+
+Now that we have added tags, lets take a look at the DockerFile to build the container.  This is going to pull a rhel
+container that has apache installed.  From there we are going to add the config files `index.html` and `httpd.conf` to the
+container.  This will server the exact same site as the rpm version that we deployed earlier.
+
+.. code-block:: bash
+
+  # Pull the rhel image from the local registry
+  #FROM rhel7:latest
+  FROM rhscl/httpd-24-rhel7
+  USER root
+
+  MAINTAINER |student_name|
+
+  # Add configuration file
+  ADD httpd.conf /etc/httpd/conf
+  ADD index.html /var/www/html/
+  RUN chown -R apache:apache /var/www/html
+  EXPOSE 80
+
+
+Now we can create a Ansible playbook to build the container and push it into the registry that we created earlier.
+
+.. code-block:: bash
+
+  $ vim build-apache-simple-container.yml
+
+This will have the following content.  Note how we are using the container tag, this playbook can be used for the rpm deployment
+or the container based deployment based about using tags.
+
+.. code-block:: yaml
+
+  ---
+  - name: Ensure apache is installed and started via role
+    hosts: localhost
+    become: yes
+    roles:
+      - apache-simple
+
+    tasks:
+
+     - name: build a new docker image
+       command: "docker build -t apache-simple ."
+       tags:
+          - container
+
+     - name: Tag and push to local registry
+       docker_image:
+          name: apache-simple
+          repository: control_public_ip:5000/|student_name|
+          tag: latest
+          push: yes
+       tags:
+          - container
+
+
+Now its time to build the container:
+
+.. code-block:  bash
+
+    $ ansible-playbook -i hosts build-apache-simple-container.yml
+
+Now there should be a `index.html` and a `httpd.conf` in `/home/|student_name|/devops-workshop/`.
+
+Next step is to deploy the containers to site B.  We are going to create a simple playbook to do just that.
+
+.. code-block:: bash
+
+  $ vim deploy-apache-simple-container.yml
+
+Inside that file should have the following:
+
+.. code-block:: yaml
+
+  ---
+  - name: launch apache containers on site2 nodes
+  hosts: site2
+  become: yes
+
+  tasks:
+    - name: launch apache-simple container on siteb nodes
+      docker_container:
+        name: apache-simple
+        image: |control_public_ip|:5000/student1/apache-simple
+        ports:
+          - "8080:80"
+        restart_policy: always
+
+so let's go ahead and run this:
+
+.. code-block:: bash
+
+  $ ansible-playbook -i hosts deploy-apache-simple-container.yml
+
+Assuming everything ran you can test each node with the curl command.
+
+.. code-block:: bash
+
+  $ curl http://|node_3_ip|:8080
+  $ curl http://|node_4_ip|:8080
