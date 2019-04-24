@@ -190,7 +190,7 @@ Writing your artifact control playbook
 
 With your roles in place, you're ready to deploy GOGS, MariaDB, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
 
-.. code-block:: yaml
+.. code-block:: yaml 
 
   - name: deploy GOGS MariaDB and container registry
     gather_facts: false
