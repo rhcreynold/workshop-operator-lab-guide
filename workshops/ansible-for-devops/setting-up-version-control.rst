@@ -289,8 +289,114 @@ You'll be returned to the login page. Log in with your |student_name| user with 
 
 .. figure:: _static/images/gogs_dash.png
 
-GOGS is now configured to house all of your repositories for the rest of the lab. Let's move on to the next lab where we'll configure our first load-balanced site.
+GOGS is now configured to house all of your repositories for the rest of the lab. Let's move on to the next lab where we'll configure our first load-balanced site. Our final task in deploying our CI/CD infrastructure is to create a repository in GOGS to hold the playbooks we just created.
 
 .. admonition:: What if I need to reset?
 
   For this workshop, GOGS, MariaDB, and the container registry are not using persistent storage. That means if you stop these containers and restart them, you'll essentially be starting from scratch with configuring GOGS. This can be helpful, but be careful!
+
+Creating a GOGS repository
+---------------------------
+
+To create our initial GOGS repository, we'll first create one in the GOGS UI, then add our content so far to it and upload to our remote host.
+
+The first step is to create a new repository in the GOGS UI at \https://|control_public_ip|:8081. After logging in with |student_name| and |student_pass|, click |plus sign| on the right side of the screen.
+
+Adding a new repository to GOGS
+````````````````````````````````
+
+.. figure:: _static/images/gogs_new_repo.png
+  :alt: Adding a new repository
+
+  Adding a new repository in the GOGS UI
+
+This takes you to the new repository wizard. We only need to fill out a name (``playbook``) and description for our repository.
+
+.. figure:: _static/images/gogs_repo_info.png
+  :alt: New repository wizard
+
+  Filling in new repository information
+
+After this is filled out, click |save button|. This will create your new repository and take you to its dashboard page.
+
+.. figure:: _static/images/gogs_repo_dashboard.png
+  :alt: repository dashboard
+
+  playbook repository dashboard
+
+.. figure:: _static/images/gogs_repo_dash.png
+  :alt: playbook repository dashboard
+
+  Playbook repository dashboard
+
+With this complete, we'll take the ``playbook`` directory we've created and make it a git repository with our new repository set as the origin for it.
+
+Creating a git repository from existing files
+``````````````````````````````````````````````
+
+On your control node, ``cd`` to your ``playbook`` directory
+
+.. parsed-literal::
+
+  cd /home/|student_name|/playbook
+
+From this directory, follow the directions from the GOGS repository dashboard. We will make a few small change we'll make in those instructions is to add all of the existing files instead of just the example ``README.md`` as well as to configure a username and email for your commit.
+
+.. admonition:: What about README.md
+
+  The ``README.md`` file is optional for this workshop, but is definitely a best practice in general.
+
+.. parsed-literal::
+  $ git init
+  Initialized empty Git repository in /home/|student_name|/playbook/.git/
+  $ git add .
+  $ git config --global user.email "|student_name|@example.com"
+  $ git config --global user.name |student_name|
+  $ git commit -m "first commit"
+  [master (root-commit) 97eeae3] first commit
+   18 files changed, 280 insertions(+)
+   create mode 100644 deploy_artifacts.yml
+   create mode 100644 hosts
+   create mode 100644 roles/gogs/README.md
+   create mode 100644 roles/gogs/defaults/main.yml
+   create mode 100644 roles/gogs/handlers/main.yml
+   create mode 100644 roles/gogs/meta/main.yml
+   create mode 100644 roles/gogs/tasks/main.yml
+   create mode 100644 roles/gogs/tests/inventory
+   create mode 100644 roles/gogs/tests/test.yml
+   create mode 100644 roles/gogs/vars/main.yml
+   create mode 100644 roles/registry/README.md
+   create mode 100644 roles/registry/defaults/main.yml
+   create mode 100644 roles/registry/handlers/main.yml
+   create mode 100644 roles/registry/meta/main.yml
+   create mode 100644 roles/registry/tasks/main.yml
+   create mode 100644 roles/registry/tests/inventory
+   create mode 100644 roles/registry/tests/test.yml
+   create mode 100644 roles/registry/vars/main.yml
+  $ git remote add origin \http://|control_public_ip|:8081/|student_name|/playbook.git
+  $ git push -u origin master
+  Counting objects: 31, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (14/14), done.
+  Writing objects: 100% (31/31), 3.82 KiB | 0 bytes/s, done.
+  Total 31 (delta 1), reused 0 (delta 0)
+  Username for 'http://3.91.13.13:8081': |student_name|
+  Password for 'http://student2@3.91.13.13:8081':
+  To http://3.91.13.13:8081/student2/playbook.git
+   * [new branch]      master -> master
+  Branch master set up to track remote branch master from origin.
+
+You'll be prompted for your GOGS username and password you set up when you registered. And that's it. Your initial playbooks have been pushed into a git repository running in a container on your control node. To confirm your work was successful, reload your repository dashboard in GOGS and you should see the files that were just committed.
+
+.. figure:: _static/images/gogs_repo_full.png
+  :alt: GOGS repo with first commit content
+
+  GOGS repository dashboard after your first commit
+
+With your initial Ansible content uploaded, you now have everything you need to create a full CI/CD pipeline for the rest of your workshop!
+
+
+
+
+.. |plus sign| image:: _static/images/gogs_plus.png
+.. |save button| image:: _static/images/gogs_save.png
