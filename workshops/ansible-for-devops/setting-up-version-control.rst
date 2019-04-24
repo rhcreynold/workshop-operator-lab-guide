@@ -147,7 +147,7 @@ Configuring GOGS
 The GOGS UI is listening at |private_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going.
 
 Connecting to MariaDB
-^^^^^^^^^^^^^^^^^^^^^^
+``````````````````````
 
 First, we'll tell GOGS how to connect to the MariaDB container. For this configuration, we'll use the IP address assigned to the MariaDB container by the container runtime. To find this IP address, we'll query the address directly. First we'll need the container ID for the MariaDB container
 
@@ -174,7 +174,7 @@ Our container's IP address is ``172.17.0.4``.
 With this section complete, we'll wrap up the other configuration options.
 
 Configuring GOGS URLs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```````````````````````
 
 GOGS needs to know the URLs to use for cloning repositories and to host its application. Replace the instances of ``localhost`` in the *Domain* and *Application URL* fields with |private_ip|. Additionally, the port number for *Application URL* needs to be ``8081``.
 
