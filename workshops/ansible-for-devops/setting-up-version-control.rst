@@ -190,7 +190,7 @@ Writing your artifact control playbook
 
 With your roles in place, you're ready to deploy GOGS, MariaDB, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
 
-.. code-block:: yaml
+.. code-block:: yaml 
 
   - name: deploy GOGS MariaDB and container registry
     gather_facts: false
@@ -202,7 +202,7 @@ With your roles in place, you're ready to deploy GOGS, MariaDB, and the containe
 
 Once complete, run ``ansible-playbook`` referencing your inventory and the playbook you just created.
 
-.. code-block:: 
+.. code-block::
 
   $ ansible-playbook -i hosts deploy_artifacts.yml -k
   SSH password:
@@ -293,4 +293,4 @@ GOGS is now configured to house all of your repositories for the rest of the lab
 
 .. admonition:: What if I need to reset?
 
-  For this workshop, GOGS and MariaDB are not using persistent storage. That means if you stop these containers and restart them, you'll essentially be starting from scratch with configuring GOGS. This can be helpful, but be careful!
+  For this workshop, GOGS, MariaDB, and the container registry are not using persistent storage. That means if you stop these containers and restart them, you'll essentially be starting from scratch with configuring GOGS. This can be helpful, but be careful!
