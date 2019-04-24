@@ -6,7 +6,6 @@ WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ENV_FILE=/tmp/env.list
-ETH_INT=ens33
 STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
 INVENTORY_FILE=/home/$STUDENT_NAME/devops-workshop/lab_inventory/hosts
 CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
@@ -23,7 +22,6 @@ echo "creating the env.list file at $ENV_FILE"
 echo "WORKSHOP_NAME="$WORKSHOP_NAME > $ENV_FILE
 echo "QUAY_USER="$QUAY_USER >> $ENV_FILE
 echo "TMP_FILE="$TMP_FILE >> $ENV_FILE
-echo "ETH_INT="$ETH_INT >> $ENV_FILE
 echo "CONTROL_PRIVATE_IP="$CONTROL_PRIVATE_IP >> $ENV_FILE
 echo "CONTROL_PUBLIC_IP="$CONTROL_PUBLIC_IP >> $ENV_FILE
 echo "STUDENT_NAME="$STUDENT_NAME >> $ENV_FILE
