@@ -5,29 +5,31 @@
 WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
-ETH_INT=ens33
-STUDENT_NAME=$(cat /etc/passwd | grep student | awk '{ print $1 }' | awk -F':' '{ print $1 }')
-CONTROL_PRIVATE_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep 'ansible ansible_host' | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+ENV_FILE=/tmp/env.list
+STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
+INVENTORY_FILE=/home/$STUDENT_NAME/devops-workshop/lab_inventory/hosts
+CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+STUDENT_PASS=grep ansible_ssh_pass $INVENTORY_FILE | awk -F= '{ print $2 }'
 CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-NODE_1_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_2_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node2 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_3_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node3 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_4_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node4 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_1_IP=$(grep node1 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+NODE_2_IP=$(grep node2 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+NODE_3_IP=$(grep node3 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+NODE_4_IP=$(grep node4 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
 
 # Create the docker run env.list file
-echo "creating the env.list file"
+echo "creating the env.list file at $ENV_FILE"
 
-echo "WORKSHOP_NAME="$WORKSHOP_NAME > /tmp/env.list
-echo "QUAY_USER="$QUAY_USER >> /tmp/env.list
-echo "TMP_FILE="$TMP_FILE >> /tmp/env.list
-echo "ETH_INT="$ETH_INT >> /tmp/env.list
-echo "CONTROL_PRIVATE_IP="$CONTROL_PRIVATE_IP >> /tmp/env.list
-echo "CONTROL_PUBLIC_IP="$CONTROL_PUBLIC_IP >> /tmp/env.list
-echo "STUDENT_NAME="$STUDENT_NAME >> /tmp/env.list
-echo "NODE_1_IP="$NODE_1_IP >> /tmp/env.list
-echo "NODE_2_IP="$NODE_2_IP >> /tmp/env.list
-echo "NODE_3_IP="$NODE_3_IP >> /tmp/env.list
-echo "NODE_4_IP="$NODE_4_IP >> /tmp/env.list
+echo "WORKSHOP_NAME="$WORKSHOP_NAME > $ENV_FILE
+echo "QUAY_USER="$QUAY_USER >> $ENV_FILE
+echo "TMP_FILE="$TMP_FILE >> $ENV_FILE
+echo "CONTROL_PRIVATE_IP="$CONTROL_PRIVATE_IP >> $ENV_FILE
+echo "CONTROL_PUBLIC_IP="$CONTROL_PUBLIC_IP >> $ENV_FILE
+echo "STUDENT_NAME="$STUDENT_NAME >> $ENV_FILE
+echo "STUDENT_PASS="$STUDENT_PASS >> $ENV_FILE
+echo "NODE_1_IP="$NODE_1_IP >> $ENV_FILE
+echo "NODE_2_IP="$NODE_2_IP >> $ENV_FILE
+echo "NODE_3_IP="$NODE_3_IP >> $ENV_FILE
+echo "NODE_4_IP="$NODE_4_IP >> $ENV_FILE
 
 stop_local() {
   if [ -f $TMP_FILE ]; then
