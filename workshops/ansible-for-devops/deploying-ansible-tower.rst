@@ -243,7 +243,7 @@ Look in your ``.ansible.cfg`` file to find the path to your inventory
 file (``cat ~/.ansible.cfg``) .Use the ``tower-manage`` command to
 import an existing inventory.
 
-::
+.. code-block::
 
     sudo tower-manage inventory_import --source=<location of you inventory> --inventory-name="Ansible Workshop Inventory"
 
@@ -253,6 +253,7 @@ You should see output similar to the following:
    :alt: Importing an inventory with tower-manage
 
    Importing an inventory with tower-manage
+
 Feel free to browse your inventory in Tower. You should now notice that
 the inventory has been populated with Groups and that each of those
 groups contain hosts.
