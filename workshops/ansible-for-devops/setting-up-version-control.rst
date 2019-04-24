@@ -63,17 +63,24 @@ This creates the prescriptive directory structure for your ansible role.
 
 .. code-block:: bash
 
-  $ ll gogs
-  total 4
-  drwxr-xr-x. 2 root root   22 Mar 16 06:52 defaults
-  drwxr-xr-x. 2 root root    6 Mar 16 06:52 files
-  drwxr-xr-x. 2 root root   22 Mar 16 06:52 handlers
-  drwxr-xr-x. 2 root root   22 Mar 16 06:52 meta
-  -rw-r--r--. 1 root root 1328 Mar 16 06:52 README.md
-  drwxr-xr-x. 2 root root   22 Mar 16 06:52 tasks
-  drwxr-xr-x. 2 root root    6 Mar 16 06:52 templates
-  drwxr-xr-x. 2 root root   39 Mar 16 06:52 tests
-  drwxr-xr-x. 2 root root   22 Mar 16 06:52 vars
+  $ tree gogs
+  gogs
+  ├── defaults
+  │   └── main.yml
+  ├── files
+  ├── handlers
+  │   └── main.yml
+  ├── meta
+  │   └── main.yml
+  ├── README.md
+  ├── tasks
+  │   └── main.yml
+  ├── templates
+  ├── tests
+  │   ├── inventory
+  │   └── test.yml
+  └── vars
+      └── main.yml
 
 This completes the basic infrastructure we'll need. Now, it's time to write some Ansible by creating our first role.
 
@@ -144,7 +151,7 @@ As the workshop progresses, we'll continue building on this playbook to build ou
 Configuring GOGS
 `````````````````
 
-The GOGS UI is listening at |private_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going.
+The GOGS UI is listening at |control_public_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going.
 
 Connecting to MariaDB
 ``````````````````````
@@ -154,7 +161,7 @@ First, we'll tell GOGS how to connect to the MariaDB container. For this configu
 .. code-block::
 
   # docker ps | grep mariadb
-4951ffc5110b        mariadb                                                          "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                                        mariadb
+  4951ffc5110b        mariadb                                                          "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                                        mariadb
 
 In our example, the container ID is ``4951ffc5110b``.
 
@@ -176,7 +183,7 @@ With this section complete, we'll wrap up the other configuration options.
 Configuring GOGS URLs
 ```````````````````````
 
-GOGS needs to know the URLs to use for cloning repositories and to host its application. Replace the instances of ``localhost`` in the *Domain* and *Application URL* fields with |private_ip|. Additionally, the port number for *Application URL* needs to be ``8081``.
+GOGS needs to know the URLs to use for cloning repositories and to host its application. Replace the instances of ``localhost`` in the *Domain* and *Application URL* fields with |control_public_ip|. Additionally, the port number for *Application URL* needs to be ``8081``.
 
 .. figure:: _static/images/gogs_config_2.png
 
