@@ -41,11 +41,11 @@ rst_prolog = """
 .. |workshop_name_clean| replace:: %s
 .. |workshop_name| replace:: %s
 .. |student_name| replace:: %s
-.. |private_ip| replace:: %s
+.. |control_public_ip| replace:: %s
 """ % (project_clean,
        os.environ['WORKSHOP_NAME'],
        os.environ['STUDENT_NAME'],
-       os.environ['PRIVATE_IP'],
+       os.environ['CONTROL_PUBLIC_IP'],
        )
 
 
