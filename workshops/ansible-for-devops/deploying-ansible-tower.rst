@@ -236,9 +236,6 @@ An Inventory can also be imported into Tower using the ``tower-manage`` command 
 
 ### TODO - You're here right now, jduncan
 
-Step 5:
-~~~~~~~
-
 Look in your ``.ansible.cfg`` file to find the path to your inventory
 file (``cat ~/.ansible.cfg``) .Use the ``tower-manage`` command to
 import an existing inventory.
