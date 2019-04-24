@@ -17,8 +17,10 @@ Let first modify the ``hosts`` file and add the correct ip addresses for our web
   [gogs]
   |control_public_ip|
 
-  [web]
+  [site1]
   |node_1_ip|
   |node_2_ip|
+  
+  [site2]
   |node_3_ip|
   |node_4_ip|
