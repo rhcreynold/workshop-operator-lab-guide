@@ -7,11 +7,12 @@ QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ETH_INT=ens33
 STUDENT_NAME=student1
-CONTROL_PRIVATE_IP=$(cat /home/student1/lightbulb/inventory.ini | grep 'ansible ansible_host' | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+CONTROL_PRIVATE_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep 'ansible ansible_host' | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-NODE_1_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_2_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-2 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_3_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-3 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_1_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_2_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node2 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_3_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node3 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_4_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node4 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 
 # Create the docker run env.list file
 echo "creating the env.list file"
@@ -26,6 +27,7 @@ echo "STUDENT_NAME="$STUDENT_NAME >> /tmp/env.list
 echo "NODE_1_IP="$NODE_1_IP >> /tmp/env.list
 echo "NODE_2_IP="$NODE_2_IP >> /tmp/env.list
 echo "NODE_3_IP="$NODE_3_IP >> /tmp/env.list
+echo "NODE_4_IP="$NODE_4_IP >> /tmp/env.list
 
 stop_local() {
   if [ -f $TMP_FILE ]; then
