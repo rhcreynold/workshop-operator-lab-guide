@@ -7,15 +7,15 @@ QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ENV_FILE=/tmp/env.list
 ETH_INT=ens33
-STUDENT_NAME=$(cat /etc/passwd | grep student | awk '{ print $1 }' | awk -F':' '{ print $1 }')
+STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
 INVENTORY_FILE=/home/$STUDENT_NAME/devops-workshop/lab_inventory/hosts
-CONTROL_PRIVATE_IP=$(cat $INVENTORY_FILE | grep 'ansible ansible_host' | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
 STUDENT_PASS=grep ansible_ssh_pass $INVENTORY_FILE | awk -F= '{ print $2 }'
 CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-NODE_1_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_2_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node2 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_3_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node3 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
-NODE_4_IP=$(cat /home/student1/devops-workshop/lab_inventory/hosts | grep node4 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_1_IP=$(grep node1 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+NODE_2_IP=$(grep node2 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+NODE_3_IP=$(grep node3 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+NODE_4_IP=$(grep node4 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
 
 # Create the docker run env.list file
 echo "creating the env.list file at $ENV_FILE"
