@@ -17,6 +17,8 @@ Let first modify the ``hosts`` file with the correct ip addresses for our web se
 .. parsed-literal::
   [web]
   |node_1_ip|
+  |node_2_ip|
+  |node_3_ip|
 
 Now let us create the Ansible role structure, but first we need to get into the right folder.
 
