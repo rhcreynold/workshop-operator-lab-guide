@@ -6,7 +6,7 @@ WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ETH_INT=ens33
-NODE_1_IP='cat /home/student1/lightbulb/inventory.ini | grep node-1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }''
+NODE_1_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 
 echo $NODE_1_IP
 
