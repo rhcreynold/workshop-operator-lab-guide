@@ -7,8 +7,12 @@ QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ETH_INT=ens33
 NODE_1_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-1 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_2_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-2 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
+NODE_3_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-3 | awk '{ print $2 }' | awk -F'=' '{ print $2 }')
 
 echo $NODE_1_IP
+echo $NODE_2_IP
+echo $NODE_3_IP
 
 stop_local() {
   if [ -f $TMP_FILE ]; then
