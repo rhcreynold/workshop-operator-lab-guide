@@ -198,3 +198,7 @@ You'll be returned to the login page. Log in with your |student_name| user with 
 .. figure:: _static/images/gogs_dash.png
 
 GOGS is now configured to house all of your repositories for the rest of the lab. Let's move on to the next lab where we'll configure our first load-balanced site.
+
+.. admonition:: What if I need to reset?
+
+  For this workshop, GOGS and MariaDB are not using persistent storage. That means if you stop these containers and restart them, you'll essentially be starting from scratch with configuring GOGS. This can be helpful, but be careful!
