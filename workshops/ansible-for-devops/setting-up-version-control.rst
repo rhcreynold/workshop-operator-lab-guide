@@ -39,7 +39,7 @@ Next, in that directory, create a file named ``hosts`` with the following conten
 
 .. parsed-literal::
   [gogs]
-  |private_ip|
+  |control_public_ip|
 
 Next, we'll create an `ansible role <https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html>`__ to apply to our GOGS group.
 
