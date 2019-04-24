@@ -266,55 +266,6 @@ groups contain hosts.
    Inventory with Groups
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
-=======
-
-An Inventory can also be imported into Tower using the ``tower-manage`` command and this is how we are going to add an inventory for this workshop.
-
-- Click on INVENTORIES
-- Select ADD |Add button|
-- Complete the form using the following entries
-
-+----------------+------------------------------+
-| NAME           | Ansible Workshop Inventory   |
-+================+==============================+
-| DESCRIPTION    | Ansible Inventory            |
-+----------------+------------------------------+
-| ORGANIZATION   | Default                      |
-+----------------+------------------------------+
-
-.. figure:: ./_static/images/at_inv_create.png
-   :alt: Create an Inventory
-
-   Creating an Inventory
-
-- Select SAVE |Save button|
-
-### TODO - You're here right now, jduncan
-
-Look in your ``.ansible.cfg`` file to find the path to your inventory
-file (``cat ~/.ansible.cfg``) .Use the ``tower-manage`` command to
-import an existing inventory.
-
-.. code-block:: bash
-
-    sudo tower-manage inventory_import --source=<location of you inventory> --inventory-name="Ansible Workshop Inventory"
-
-You should see output similar to the following:
-
-.. figure:: ./_static/images/at_tm_stdout.png
-   :alt: Importing an inventory with tower-manage
-
-   Importing an inventory with tower-manage
-
-Feel free to browse your inventory in Tower. You should now notice that
-the inventory has been populated with Groups and that each of those
-groups contain hosts.
-
-.. figure:: ./_static/images/at_inv_group.png
-   :alt: Inventory with Groups
-
-   Inventory with Groups
-
 
 .. |Browse button| image:: ./_static/images/at_browse.png
 .. |Submit button| image:: ./_static/images/at_submit.png
