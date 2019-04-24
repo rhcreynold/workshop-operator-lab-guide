@@ -16,14 +16,14 @@ NODE_3_IP=$(cat /home/student1/lightbulb/inventory.ini | grep node-3 | awk '{ pr
 echo "creating the env.list file"
 
 echo "WORKSHOP_NAME="$WORKSHOP_NAME > /tmp/env.list
-echo "WORKSHOP_NAME="$QUAY_USER >> /tmp/env.list
-echo "WORKSHOP_NAME="$TMP_FILE >> /tmp/env.list
-echo "WORKSHOP_NAME="$ETH_INT >> /tmp/env.list
-echo "WORKSHOP_NAME="$PRIVATE_IP >> /tmp/env.list
-echo "WORKSHOP_NAME="$STUDENT_NAME >> /tmp/env.list
-echo "WORKSHOP_NAME="$NODE_1_IP >> /tmp/env.list
-echo "WORKSHOP_NAME="$NODE_2_IP >> /tmp/env.list
-echo "WORKSHOP_NAME="$NODE_3_IP >> /tmp/env.list
+echo "QUAY_USER="$QUAY_USER >> /tmp/env.list
+echo "TMP_FILE="$TMP_FILE >> /tmp/env.list
+echo "ETH_INT="$ETH_INT >> /tmp/env.list
+echo "PRIVATE_IP="$PRIVATE_IP >> /tmp/env.list
+echo "STUDENT_NAME="$STUDENT_NAME >> /tmp/env.list
+echo "NODE_1_IP="$NODE_1_IP >> /tmp/env.list
+echo "NODE_2_IP="$NODE_2_IP >> /tmp/env.list
+echo "NODE_3_IP="$NODE_3_IP >> /tmp/env.list
 
 stop_local() {
   if [ -f $TMP_FILE ]; then
