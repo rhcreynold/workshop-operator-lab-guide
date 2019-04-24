@@ -24,3 +24,5 @@ Let first modify the ``hosts`` file and add the correct ip addresses for our web
   [site2]
   |node_3_ip|
   |node_4_ip|
+
+random text
