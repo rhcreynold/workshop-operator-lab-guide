@@ -12,7 +12,7 @@ Workshop design
 
 Our workshop is designed as a series of guided labs in an environment that's been deployed in Amazon ahead of time for your convenience. We'll start off today with some introductory information before we move into lab #1.
 
-.. admonition::
+.. admonition:: But I already know about Ansible!
 
   We'll try to keep the intro as short as possible. We want you to get into the fun stuff in the labs! But we have to ensure that we're all using the same vocabulary to talk about the goals we have for today.
 
