@@ -305,26 +305,26 @@ The first step is to create a new repository in the GOGS UI at \https://|control
 Adding a new repository to GOGS
 ````````````````````````````````
 
-.. figure:: ./_static/images/gogs_new_repo.png
+.. figure:: _static/images/gogs_new_repo.png
   :alt: Adding a new repository
 
   Adding a new repository in the GOGS UI
 
 This takes you to the new repository wizard. We only need to fill out a name (``playbook``) and description for our repository.
 
-.. figure:: ./_static/images/gogs_repo_info.png
+.. figure:: _static/images/gogs_repo_info.png
   :alt: New repository wizard
 
   Filling in new repository information
 
 After this is filled out, click |save button|. This will create your new repository and take you to its dashboard page.
 
-.. figure:: ./_static/images/gogs_repo_dashboard.png
+.. figure:: _static/images/gogs_repo_dashboard.png
   :alt: repository dashboard
 
   playbook repository dashboard
 
-.. figure:: ./_static/images/gogs_repo_dash.png
+.. figure:: _static/images/gogs_repo_dash.png
   :alt: playbook repository dashboard
 
   Playbook repository dashboard
@@ -388,7 +388,7 @@ From this directory, follow the directions from the GOGS repository dashboard. W
 
 You'll be prompted for your GOGS username and password you set up when you registered. And that's it. Your initial playbooks have been pushed into a git repository running in a container on your control node. To confirm your work was successful, reload your repository dashboard in GOGS and you should see the files that were just committed.
 
-.. figure:: ./_static/images/gogs_repo_full.png
+.. figure:: _static/images/gogs_repo_full.png
   :alt: GOGS repo with first commit content
 
   GOGS repository dashboard after your first commit
@@ -398,5 +398,5 @@ With your initial Ansible content uploaded, you now have everything you need to 
 
 
 
-.. |plus sign| image:: ./_static/images/gogs_plus.png
-.. |save button| image:: ./_static/images/gogs_save.png
+.. |plus sign| image:: _static/images/gogs_plus.png
+.. |save button| image:: _static/images/gogs_save.png
