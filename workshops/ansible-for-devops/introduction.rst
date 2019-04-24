@@ -28,5 +28,6 @@ node1       Site A server 1            |node_1_ip|
 node2       Site A server 2            |node_2_ip|
 node3       Site B server 1            |node_3_ip|
 node4       Site B server 2            |node_4_ip|
+=========== ========================== =============================
 
 This should be all of the information you need to manage your environment for the rest of the workshop. If a dependency is needed on a host that's not already there, we'll write some Ansible to take care of it. In the next section, we'll take care of level-setting everyone around the CI/CD concepts that we'll be using throughout the labs. Thanks again for joining us!
