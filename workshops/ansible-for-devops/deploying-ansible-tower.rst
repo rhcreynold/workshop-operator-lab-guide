@@ -92,7 +92,7 @@ can access your Tower through a browser pointed at |control_public_ip|.
 This should land you at the installation splash screen.
 
 .. figure:: _static/images/tower_install_splash.png
-:alt: Ansible Tower Login Screen
+  :alt: Ansible Tower Login Screen
 
 Next, we'll configure Tower with our credentials, projects, and inventories.
 
@@ -243,7 +243,7 @@ Look in your ``.ansible.cfg`` file to find the path to your inventory
 file (``cat ~/.ansible.cfg``) .Use the ``tower-manage`` command to
 import an existing inventory.
 
-.. code-block::
+.. code-block:: bash
 
     sudo tower-manage inventory_import --source=<location of you inventory> --inventory-name="Ansible Workshop Inventory"
 
