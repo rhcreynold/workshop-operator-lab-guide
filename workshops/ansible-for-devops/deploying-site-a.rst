@@ -12,9 +12,12 @@ We have gone ahead and stood up two Red Hat Enterprise Linux hosts for you.  In 
 deploy a simple web application (from an Ansible Role) on two different hosts. This will host a simple
 website display the hostname.
 
-Let first modify the ``hosts`` file with the correct ip addresses for our web servers.
+Let first modify the ``hosts`` file and add the correct ip addresses for our web servers.
 
 .. parsed-literal::
+  [gogs]
+  |control_public_ip|
+
   [web]
   |node_1_ip|
   |node_2_ip|
