@@ -191,7 +191,7 @@ NAME               Ansible Workshop Project
 DESCRIPTION        workshop playbooks
 ORGANIZATION       Default
 SCM TYPE           Git
-SCM URL            \https://|control_public_ip|
+SCM URL            \http://|control_public_ip|/|student_name|/playbook.git
 SCM BRANCH
 SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 ================== ===================================================
@@ -207,6 +207,68 @@ Creating an Inventory
 ^^^^^^^^^^^^^^^^^^^^^^
 
 An inventory is a collection of hosts against which jobs may be launched. Inventories are divided into groups and these groups contain the actual hosts. Groups may be sourced manually, by entering host names into Tower, or from one of Ansible Tower’s supported cloud providers.
+An Inventory can also be imported into Tower using the ``tower-manage`` command and this is how we are going to add an inventory for this workshop.
+
+- Click on INVENTORIES
+- Select ADD |Add button|
+- Complete the form using the following entries
+
++----------------+------------------------------+
+| NAME           | Ansible Workshop Inventory   |
++================+==============================+
+| DESCRIPTION    | Ansible Inventory            |
++----------------+------------------------------+
+| ORGANIZATION   | Default                      |
++----------------+------------------------------+
+
+.. figure:: ./_static/images/at_inv_create.png
+   :alt: Create an Inventory
+
+   Creating an Inventory
+
+- Select SAVE |Save button|
+
+### TODO - You're here right now, jduncan
+
+Look in your ``.ansible.cfg`` file to find the path to your default inventory. This is the inventory we'll import into Tower. Your default inventory is the ``inventory`` parameter.
+
+.. parsed-literal::
+
+  $ cat ~/.ansible.cfg
+  [defaults]
+  stdout_callback = yaml
+  connection = smart
+  timeout = 60
+  deprecation_warnings = False
+  host_key_checking = False
+  retry_files_enabled = False
+
+  inventory = /home/|student_name|/devops-workshop/lab_inventory/hosts
+
+To import the inventory, we'll use the ``tower-manage`` utility on your control node/Tower server.
+
+.. parsed-literal::
+
+    sudo tower-manage inventory_import --source=/home/|student_name|/devops-workshop/lab_inventory/hosts --inventory-name="Ansible Workshop Inventory"
+
+You should see output similar to the following:
+
+.. figure:: ./_static/images/at_tm_stdout.png
+   :alt: Importing an inventory with tower-manage
+
+   Importing an inventory with tower-manage
+
+Feel free to browse your inventory in Tower. You should now notice that
+the inventory has been populated with Groups and that each of those
+groups contain hosts.
+
+.. figure:: ./_static/images/at_inv_group.png
+   :alt: Inventory with Groups
+
+   Inventory with Groups
+
+Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
+=======
 
 An Inventory can also be imported into Tower using the ``tower-manage`` command and this is how we are going to add an inventory for this workshop.
 
@@ -254,6 +316,7 @@ groups contain hosts.
    :alt: Inventory with Groups
 
    Inventory with Groups
+
 
 .. |Browse button| image:: ./_static/images/at_browse.png
 .. |Submit button| image:: ./_static/images/at_submit.png
