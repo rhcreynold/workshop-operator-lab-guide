@@ -6,6 +6,8 @@ WORKSHOP_NAME=$1
 QUAY_USER=jduncan
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ENV_FILE=/tmp/env.list
+CONTAINER_IMAGE=quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME
+
 STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
 INVENTORY_FILE=/home/$STUDENT_NAME/devops-workshop/lab_inventory/hosts
 CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
@@ -47,7 +49,8 @@ stop_local() {
 
 start_local() {
   echo "Preparing new lab guide for $WORKSHOP_NAME"
-  docker run -d --env-file /tmp/env.list -p 8080:8080 quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME &> $TMP_FILE
+  docker pull $CONTAINER_IMAGE
+  docker run -d --env-file /tmp/env.list -p 8080:8080 $CONTAINER_IMAGE &> $TMP_FILE
   if [ $? -eq 0 ]; then
     LAB_CONTAINER=$(cat $TMP_FILE | cut -c1-12)
     echo "$WORKSHOP_NAME is running as container ID $LAB_CONTAINER and is avaiable at http://localhost:8080"
