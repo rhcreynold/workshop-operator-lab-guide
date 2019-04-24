@@ -228,8 +228,6 @@ An Inventory can also be imported into Tower using the ``tower-manage`` command 
 
 - Select SAVE |Save button|
 
-### TODO - You're here right now, jduncan
-
 Look in your ``.ansible.cfg`` file to find the path to your default inventory. This is the inventory we'll import into Tower. Your default inventory is the ``inventory`` parameter.
 
 .. parsed-literal::

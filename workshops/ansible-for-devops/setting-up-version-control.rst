@@ -319,11 +319,6 @@ This takes you to the new repository wizard. We only need to fill out a name (``
 
 After this is filled out, click |save button|. This will create your new repository and take you to its dashboard page.
 
-.. figure:: _static/images/gogs_repo_dashboard.png
-  :alt: repository dashboard
-
-  playbook repository dashboard
-
 .. figure:: _static/images/gogs_repo_dash.png
   :alt: playbook repository dashboard
 
