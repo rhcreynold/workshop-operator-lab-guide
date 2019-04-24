@@ -2,7 +2,7 @@
 .. _docs admin: jduncan@redhat.com
 
 ===========================
-Setting up Version Control
+Setting up Artifact Control
 ===========================
 
 Overview
@@ -12,6 +12,7 @@ In this lab you'll configure your control host to serve your playbooks and other
 
 1. Write a playbook to deploy GOGS on your control host
 2. Deploy GOGS and confirm it's functioning properly
+3. Deploy a container registry to manage container images
 
 .. admonition:: Do I need to configure docker?!
 
@@ -38,7 +39,7 @@ Let's create your initial inventory with a ``gogs`` group. In your home director
 Next, in that directory, create a file named ``hosts`` with the following content:
 
 .. parsed-literal::
-  [gogs]
+  [control]
   |control_public_ip|
 
 Next, we'll create an `ansible role <https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html>`__ to apply to our GOGS group.
@@ -132,21 +133,105 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
         - "3306"
       restart_policy: always
 
+Next, well create a role to manage our container registry deployment
 
-Writing your GOGS playbook
-```````````````````````````
+Creating a registry role
+`````````````````````````
 
-With your role in place, you're ready to deploy GOGS and MariaDB on your control node. To do this, your playbook will need to reference the role you just created. In your ``playbook`` directory, create a file named ``site.yml`` with the following contents.
+You'll be deploying the `Docker v2 registry <https://hub.docker.com/_/registry>`__ on your control node and serving content on port 5000. To start, we'll create a new role inside ``playbook/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
+
+.. code-block::
+
+  $ cd ~/playbook/roles
+  $ ansible-galaxy init registry
+  - registry was created successfully
+  $ tree registry
+  registry
+  ├── defaults
+  │   └── main.yml
+  ├── files
+  ├── handlers
+  │   └── main.yml
+  ├── meta
+  │   └── main.yml
+  ├── README.md
+  ├── tasks
+  │   └── main.yml
+  ├── templates
+  ├── tests
+  │   ├── inventory
+  │   └── test.yml
+  └── vars
+      └── main.yml
+
+  8 directories, 8 files
+
+In your new registry role, add the following content to ``tasks/main.yml``.
 
 .. code-block:: yaml
 
-  - name: deploy GOGS
+  ---
+  # tasks file for registry
+  - name: pull the registry image
+    docker_image:
+      name: registry
+      state: present
+
+  - name: deploy the registry container
+    docker_container:
+      name: registry
+      image: registry
+      ports:
+        - "5000:5000"
+      restart_policy: always
+
+Writing your artifact control playbook
+````````````````````````````````````````
+
+With your roles in place, you're ready to deploy GOGS, MariaDB, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
+
+.. code-block:: yaml
+
+  - name: deploy GOGS MariaDB and container registry
     gather_facts: false
-    hosts: gogs
+    become: yes
+    hosts: control
     roles:
       - gogs
+      - registry
 
-As the workshop progresses, we'll continue building on this playbook to build out our complete environment. Next, we need to configure GOGS to connect to MariaDB so we can use it to house our source code.
+Once complete, run ``ansible-playbook`` referencing your inventory and the playbook you just created.
+
+.. code-block:: 
+
+  $ ansible-playbook -i hosts deploy_artifacts.yml -k
+  SSH password:
+
+  PLAY [deploy GOGS MariaDB and container registry] *****************************************************************
+
+  TASK [gogs : install docker-py requirements] *****************************************************************
+  ok: [3.91.13.13]
+
+  TASK [gogs : pull the GOGS and MariaDB images] *****************************************************************
+  changed: [3.91.13.13] => (item=gogs/gogs)
+  changed: [3.91.13.13] => (item=mariadb)
+
+  TASK [gogs : start the GOGS container] *****************************************************************
+  changed: [3.91.13.13]
+
+  TASK [gogs : start the MariaDB container] *****************************************************************
+  changed: [3.91.13.13]
+
+  TASK [registry : pull the registry image] *****************************************************************
+  changed: [3.91.13.13]
+
+  TASK [registry : deploy the registry container] *****************************************************************
+  changed: [3.91.13.13]
+
+  PLAY RECAP *****************************************************************
+  3.91.13.13                 : ok=6    changed=5    unreachable=0    failed=0
+
+Before we can use GOGS to house our source code, we need to configure it to connect to the MariaDB container.
 
 Configuring GOGS
 `````````````````
