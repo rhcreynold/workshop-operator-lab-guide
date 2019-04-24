@@ -45,6 +45,7 @@ rst_prolog = """
 .. |node_1_ip| replace:: %s
 .. |node_2_ip| replace:: %s
 .. |node_3_ip| replace:: %s
+.. |node_4_ip| replace:: %s
 """ % (project_clean,
        os.environ['WORKSHOP_NAME'],
        os.environ['STUDENT_NAME'],
@@ -52,6 +53,7 @@ rst_prolog = """
        os.environ['NODE_1_IP'],
        os.environ['NODE_2_IP'],
        os.environ['NODE_3_IP'],
+       os.environ['NODE_4_IP'],
        )
 
 

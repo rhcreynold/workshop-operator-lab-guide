@@ -21,7 +21,6 @@ Let first modify the ``hosts`` file and add the correct ip addresses for our web
   [web]
   |node_1_ip|
   |node_2_ip|
-  |node_3_ip|
 
 Now let us create the Ansible role structure, but first we need to get into the right folder.
 
