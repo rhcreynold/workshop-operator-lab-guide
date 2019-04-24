@@ -89,7 +89,7 @@ Confirming success
 At this point, your Ansible Tower installation should be complete. You
 can access your Tower through a browser pointed at |control_public_ip|.
 
-This should land you at the installation splash screen.
+This should land you at the Tower login screen.
 
 .. figure:: _static/images/tower_install_splash.png
   :alt: Ansible Tower Login Screen
@@ -97,12 +97,7 @@ This should land you at the installation splash screen.
 Next, we'll configure Tower with our credentials, projects, and inventories.
 
 Configuring Ansible Tower
-=========================
-
-In this exercise, we are going to configure Tower to manage our infrastructure more effectively.
-
-Overview
-----------
+--------------------------
 
 There are a number of constructs in the Ansible Tower UI that enable multi-tenancy, notifications, scheduling, etc. Today we're going to focus on a few of the key constructs that are essential to any workflow.
 
@@ -114,7 +109,7 @@ There are a number of constructs in the Ansible Tower UI that enable multi-tenan
 Before we configure these, though, we need to configure Tower with a License Key to enable the software.
 
 Installing a License Key
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To log in, use the username ``admin`` and and the password
 |student_pass|. Recall that this username/password was created when you built the inventory to setup Tower.
@@ -143,7 +138,7 @@ Select "*I agree to the End User License Agreement*\ "
 Click on SUBMIT |Submit button|
 
 Creating a Credential
----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 Credentials are utilized by Tower for authentication when launching jobs against machines, synchronizing with inventory sources, and importing project content from a version control system.
 
@@ -181,7 +176,7 @@ Use this information to complete the credential form.
 With your credential created, next you'll create a project to point back to your GOGS instance.
 
 Creating a Project
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 A Project is a logical collection of Ansible playbooks, represented in Tower. You can manage playbooks and playbook directories by either placing them manually under the Project Base Path on your Tower server, or by placing your playbooks into a source code management (SCM) system supported by Tower, including Git, Subversion, and Mercurial.
 
@@ -209,7 +204,7 @@ SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 - Select SAVE |Save button|
 
 Creating an Inventory
------------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 An inventory is a collection of hosts against which jobs may be launched. Inventories are divided into groups and these groups contain the actual hosts. Groups may be sourced manually, by entering host names into Tower, or from one of Ansible Tower’s supported cloud providers.
 
