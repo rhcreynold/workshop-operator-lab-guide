@@ -12,6 +12,12 @@ We have gone ahead and stood up two Red Hat Enterprise Linux hosts for you.  In 
 deploy a simple web application (from an Ansible Role) on two different hosts. This will host a simple
 website display the hostname.
 
+Let first modify the ``hosts`` file with the correct ip addresses for our web servers.
+
+.. parsed-literal::
+  [web]
+  |node_1_ip|
+
 Now let us create the Ansible role structure, but first we need to get into the right folder.
 
 .. code-block:: bash
