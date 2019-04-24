@@ -9,7 +9,7 @@ ENV_FILE=/tmp/env.list
 STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
 INVENTORY_FILE=/home/$STUDENT_NAME/devops-workshop/lab_inventory/hosts
 CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
-STUDENT_PASS=grep ansible_ssh_pass $INVENTORY_FILE | awk -F= '{ print $2 }'
+STUDENT_PASS=$(grep ansible_ssh_pass $INVENTORY_FILE | awk -F= '{ print $2 }')
 CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
 NODE_1_IP=$(grep node1 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
 NODE_2_IP=$(grep node2 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
