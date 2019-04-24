@@ -140,7 +140,7 @@ Creating a registry role
 
 You'll be deploying the `Docker v2 registry <https://hub.docker.com/_/registry>`__ on your control node and serving content on port 5000. To start, we'll create a new role inside ``playbook/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
 
-.. code-block::
+.. code-block:: shell
 
   $ cd ~/playbook/roles
   $ ansible-galaxy init registry
@@ -190,7 +190,7 @@ Writing your artifact control playbook
 
 With your roles in place, you're ready to deploy GOGS, MariaDB, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
 
-.. code-block:: yaml 
+.. code-block:: yaml
 
   - name: deploy GOGS MariaDB and container registry
     gather_facts: false
@@ -202,7 +202,7 @@ With your roles in place, you're ready to deploy GOGS, MariaDB, and the containe
 
 Once complete, run ``ansible-playbook`` referencing your inventory and the playbook you just created.
 
-.. code-block::
+.. code-block:: bash
 
   $ ansible-playbook -i hosts deploy_artifacts.yml -k
   SSH password:
@@ -243,7 +243,7 @@ Connecting to MariaDB
 
 First, we'll tell GOGS how to connect to the MariaDB container. For this configuration, we'll use the IP address assigned to the MariaDB container by the container runtime. To find this IP address, we'll query the address directly. First we'll need the container ID for the MariaDB container
 
-.. code-block::
+.. code-block:: bash
 
   # docker ps | grep mariadb
   4951ffc5110b        mariadb                                                          "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                                        mariadb
@@ -252,7 +252,7 @@ In our example, the container ID is ``4951ffc5110b``.
 
 With this information, we can query the container runtime to get it's IP address.
 
-.. code-block::
+.. code-block:: bash
 
   # docker inspect --format '{{ .NetworkSettings.IPAddress }}' 4951ffc5110b
   172.17.0.4
