@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. Process isolation with Linux namespaces &mdash; Better Together: OpenShift and Ansible Workshop Ops Lab Guide 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Quotas and Limits with kernel control groups" href="container-cgroups.html" />
+    <link rel="prev" title="3. OpenShift Architecture" href="ocp-intro.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Better Together: OpenShift and Ansible Workshop Ops Lab Guide
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction and getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ansible-intro.html">2. Getting to know Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-intro.html">3. OpenShift Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Process isolation with Linux namespaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-exacty-is-a-container">4.1. What exacty <em>is</em> a container?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#more-effective-process-isolation">4.1.1. More effective process isolation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#isolation-with-kernel-namespaces">4.2. Isolation with kernel namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-mount-namespace">4.2.1. The mount namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-uts-namespace">4.2.2. The uts namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-ipc-namespace">4.2.3. The ipc namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-pid-namespace">4.2.4. The pid namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-network-namespace">4.2.5. The network namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">4.3. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container-cgroups.html">5. Quotas and Limits with kernel control groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-selinux.html">6. Protection with SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-deploying-apps.html">7. Applications in OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-sdn.html">8. OpenShift SDN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-routing.html">9. Routing layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">10. OpenShift and Ansible integration points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-cd.html">11. A real world CI/CD scenario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">12. Q&amp;A and Wrap-Up</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Better Together: OpenShift and Ansible Workshop Ops Lab Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>4. Process isolation with Linux namespaces</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/container-namespaces.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="process-isolation-with-linux-namespaces">
+<h1>4. Process isolation with Linux namespaces<a class="headerlink" href="#process-isolation-with-linux-namespaces" title="Permalink to this headline">¶</a></h1>
+<p>You can find five different container experts and ask them to define
+what a container is, and you’re likely to get five different answers.
+The following are some of our personal favorites, all of which are
+correct from a certain perspective:</p>
+<ul class="simple">
+<li>A transportable unit to move applications around. This is a typical
+developer’s answer.</li>
+<li>A fancy Linux process (one of our personal favorites)</li>
+<li>A more effective way to isolate processes on a Linux system. This is
+a more operations-centered answer.</li>
+</ul>
+<div class="section" id="what-exacty-is-a-container">
+<h2>4.1. What exacty <em>is</em> a container?<a class="headerlink" href="#what-exacty-is-a-container" title="Permalink to this headline">¶</a></h2>
+<p>There are t-shirts out there say “Containers are Linux”. Well. They’re
+not wrong. The components that isolate and protect applications running
+in containers are unique to the Linux kernel. Some of them have been
+around for years, or even decades. In this section we’ll investigate
+them in more depth.</p>
+<div class="section" id="more-effective-process-isolation">
+<h3>4.1.1. More effective process isolation<a class="headerlink" href="#more-effective-process-isolation" title="Permalink to this headline">¶</a></h3>
+<p>We mentioned in the last section that containers utilize server
+resources more effectively than VMs (the previous most effective
+resource isolation method). The primary reason is because containers use
+different systems in the Linux kernel to isolate the processes inside
+them. These systems don’t need to utilize a full virtualized kernel like
+a VM does.</p>
+<div class="figure">
+<img alt="" src="_images/vm_vs_container.png" />
+</div>
+<p>Let’s investigate what makes a container a container.</p>
+</div>
+</div>
+<div class="section" id="isolation-with-kernel-namespaces">
+<h2>4.2. Isolation with kernel namespaces<a class="headerlink" href="#isolation-with-kernel-namespaces" title="Permalink to this headline">¶</a></h2>
+<p>The kernel component that makes the applications feel isolated are
+called <em>namespaces</em>. Namespaces are a lot like a two-way mirror or a
+paper wall inside Linux. Like a two-way mirror, from the host we can see
+inside the container. But from inside the container it can only see
+what’s inside its namespace. And like a paper wall, namepsaces provide
+sufficient isolation but they’re lightweight to stand up and tear down.</p>
+<p>On your infrastructure node, log in as your student user and run the
+<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">lsns</span></code> command. The output will be long, so let’s look at the
+content towards the bottom.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo lsns
+NS TYPE  NPROCS   PID USER       COMMAND
+...
+4026533100 mnt        2 33456 ec2-user   /bin/sh /opt/eap/bin/standalone.sh -Djavax.net.s
+4026533101 uts        2 33456 ec2-user   /bin/sh /opt/eap/bin/standalone.sh -Djavax.net.s
+4026533102 pid        2 33456 ec2-user   /bin/sh /opt/eap/bin/standalone.sh -Djavax.net.s
+4026533103 mnt        1 33536 ec2-user   heapster --source=kubernetes.summary_api:${MASTE
+4026533104 uts        1 33536 ec2-user   heapster --source=kubernetes.summary_api:${MASTE
+4026533105 pid        1 33536 ec2-user   heapster --source=kubernetes.summary_api:${MASTE
+4026533106 mnt        5 35429 1000080000 /bin/bash /opt/app-root/src/run.sh
+4026533107 mnt        1 34734 student1   /usr/bin/pod
+4026533108 uts        1 34734 student1   /usr/bin/pod
+4026533109 ipc        7 34734 student1   /usr/bin/pod
+...
+</pre></div>
+</div>
+<p>To limit this content to a single process, specify one of the PIDs on
+your system by using the <code class="docutils literal notranslate"><span class="pre">-p</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">lsns</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">lsns</span> <span class="pre">-p34734</span> <span class="pre">NS</span> <span class="pre">TYPE</span>&#160; <span class="pre">NPROCS</span>&#160;&#160; <span class="pre">PID</span> <span class="pre">USER</span>&#160;&#160;&#160;&#160; <span class="pre">COMMAND</span> <span class="pre">4026531837</span> <span class="pre">user</span>&#160;&#160;&#160;&#160; <span class="pre">210</span>&#160;&#160;&#160;&#160; <span class="pre">1</span> <span class="pre">root</span>&#160;&#160;&#160;&#160; <span class="pre">/usr/lib/systemd/systemd</span> <span class="pre">--switched-root</span> <span class="pre">--system</span> <span class="pre">4026533107</span> <span class="pre">mnt</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">1</span> <span class="pre">34734</span> <span class="pre">student1</span> <span class="pre">/usr/bin/pod</span> <span class="pre">4026533108</span> <span class="pre">uts</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">1</span> <span class="pre">34734</span> <span class="pre">student1</span> <span class="pre">/usr/bin/pod</span> <span class="pre">4026533109</span> <span class="pre">ipc</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">7</span> <span class="pre">34734</span> <span class="pre">student1</span> <span class="pre">/usr/bin/pod</span> <span class="pre">4026533110</span> <span class="pre">pid</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">1</span> <span class="pre">34734</span> <span class="pre">student1</span> <span class="pre">/usr/bin/pod</span> <span class="pre">4026533112</span> <span class="pre">net</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">7</span> <span class="pre">34734</span> <span class="pre">student1</span> <span class="pre">/usr/bin/pod</span></code></p>
+<p>Let’s discuss 5 of these namespaces.</p>
+<div class="section" id="the-mount-namespace">
+<h3>4.2.1. The mount namespace<a class="headerlink" href="#the-mount-namespace" title="Permalink to this headline">¶</a></h3>
+<p>The mount namespace is used to isolate filesystem resources inside
+containers. The files inside the base image used to deploy a container.
+From the point of view of the container, that’s all that is available or
+visible.</p>
+<p>If your container has host resources or persistent storage assigned to
+it, these are made available using a <a class="reference external" href="https://unix.stackexchange.com/questions/198590/what-is-a-bind-mount">Linux bind
+mount</a>.
+This means, not matter what you use for your persistent storage backed,
+your developer’s applications only ever need to know how to access the
+correct directory.</p>
+<p>We can see this using the <code class="docutils literal notranslate"><span class="pre">nsenter</span></code> command line utility on your
+infrastructure node. <code class="docutils literal notranslate"><span class="pre">nsenter</span></code> is used to enter a single namespace
+that is associated with another PID. When debugging container
+environments, its value is massive. Here is the root filesystem listing
+from an infrastructure node.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo ls -al /
+total 24
+dr-xr-xr-x.  18 root root  236 Nov  9 08:09 .
+dr-xr-xr-x.  18 root root  236 Nov  9 08:09 ..
+lrwxrwxrwx.   1 root root    7 Nov  9 08:09 bin -&gt; usr/bin
+dr-xr-xr-x.   5 root root 4096 Nov  9 08:13 boot
+drwxr-xr-x.   2 root root    6 Nov 18  2017 data
+drwxr-xr-x.  18 root root 2760 Nov  9 08:13 dev
+drwxr-xr-x. 107 root root 8192 Nov  9 09:02 etc
+drwxr-xr-x.   4 root root   38 Dec 14  2017 home
+lrwxrwxrwx.   1 root root    7 Nov  9 08:09 lib -&gt; usr/lib
+lrwxrwxrwx.   1 root root    9 Nov  9 08:09 lib64 -&gt; usr/lib64
+drwxr-xr-x.   2 root root    6 Dec 14  2017 media
+drwxr-xr-x.   2 root root    6 Dec 14  2017 mnt
+...
+</pre></div>
+</div>
+<p>After using <code class="docutils literal notranslate"><span class="pre">nsenter</span></code> to enter the mount namespace for the hawkular
+container (hawkular is part of the metrics gather system in OpenShift),
+you see that the root filesystem is different.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo nsenter -m -t 33154[root@ip-172-16-87-199 /]# ll
+total 0
+lrwxrwxrwx.   1 root root         7 Aug  1 13:02 bin -&gt; usr/bin
+dr-xr-xr-x.   2 root root         6 Dec 14  2017 boot
+drwxrwsrwx.   4 root 1000040000  61 Nov  9 14:07 cassandra_data
+drwxr-xr-x.   5 root root       360 Nov  9 14:07 dev
+drwxr-xr-x.   1 root root        66 Nov  9 14:07 etc
+drwxrwsrwt.   3 root 1000040000 160 Nov  9 14:04 hawkular-cassandra-certs
+drwxr-xr-x.   1 root root        23 Sep 17 18:44 home
+lrwxrwxrwx.   1 root root         7 Aug  1 13:02 lib -&gt; usr/lib
+lrwxrwxrwx.   1 root root         9 Aug  1 13:02 lib64 -&gt; usr/lib64
+drwxr-xr-x.   2 root root         6 Dec 14  2017 media
+...
+</pre></div>
+</div>
+<p>The container image for hawkular includes some of the fileystem like a
+normal server, but it also includes directories that are specific to the
+application.</p>
+</div>
+<div class="section" id="the-uts-namespace">
+<h3>4.2.2. The uts namespace<a class="headerlink" href="#the-uts-namespace" title="Permalink to this headline">¶</a></h3>
+<p>UTS stands for “Unix Time Sharing”. This is a concept that has been
+around since the 1970’s when it was a novel idea to allow multiple users
+to log in to a system simultaneously. If you run the command
+<code class="docutils literal notranslate"><span class="pre">uname</span> <span class="pre">-a</span></code>, the information returned is the UTS data structure from
+the kernel.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uname -a
+Linux ip-172-16-87-199.ec2.internal 3.10.0-957.el7.x86_64 #1 SMP Thu Oct 4 20:48:51 UTC 2018 x86_64 ...
+</pre></div>
+</div>
+<p>Each container in OpenShift gets its own UTS namespace, which is
+equivalent to its own <code class="docutils literal notranslate"><span class="pre">uname</span> <span class="pre">-a</span></code> output. That means each container
+gets its own hostname and domain name. This is extremely useful in a
+large distributed application platform like OpenShift.</p>
+<p>We can see this in action using <code class="docutils literal notranslate"><span class="pre">nsenter</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ hostname
+ip-172-16-87-199.ec2.internal
+$ sudo nsenter -u -t 33154
+[root@hawkular-cassandra-1-w2vqb student1]# hostname
+hawkular-cassandra-1-w2vqb
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-ipc-namespace">
+<h3>4.2.3. The ipc namespace<a class="headerlink" href="#the-ipc-namespace" title="Permalink to this headline">¶</a></h3>
+<p>The IPC (inter-process communication) namespace is dedicated to kernel
+objects that are used for processes to communicate with each other.
+Objects like named semaphores and shared memory segments are included.
+here. Each container can have its own set of named memory resources and
+it won’t conflict with any other container or the host itself.</p>
+</div>
+<div class="section" id="the-pid-namespace">
+<h3>4.2.4. The pid namespace<a class="headerlink" href="#the-pid-namespace" title="Permalink to this headline">¶</a></h3>
+<p>In the Linux world, PID 1 is an important concept. PID 1 is the process
+that starts all the other processes on your server. Inside a container,
+that is true, but it’s not the PID 1 from your server. Each container
+has its own PID 1 thanks to the PID namespace. From our host, we see all
+of the processes we would expect on a Linux server using <code class="docutils literal notranslate"><span class="pre">pstree</span></code>.</p>
+<div class="admonition-privileged-containers admonition">
+<p class="first admonition-title">Privileged containers</p>
+<p class="last">Most of the containers are your infrastructure node run in privileged
+mode. That means these containers have access to all or some of the
+host’s namespaces. This is a useful, but powerful tool reserved for
+applications that need to access a host’s filesystem or network stack
+(or other namespaced components) directly. The example below is from an
+unprivileged container running an Apache web server.</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># ps --ppid 4470
+   PID TTY          TIME CMD
+  4506 ?        00:00:00 cat
+  4510 ?        00:00:01 cat
+  4542 ?        00:02:55 httpd
+  4544 ?        00:03:01 httpd
+  4548 ?        00:03:01 httpd
+  4565 ?        00:03:01 httpd
+  4568 ?        00:03:01 httpd
+  4571 ?        00:03:01 httpd
+  4574 ?        00:03:00 httpd
+  4577 ?        00:03:01 httpd
+  6486 ?        00:03:01 httpd
+</pre></div>
+</div>
+<p>When you execute the same command from inside the PID namespace, you see
+a different result. For this example, instead of using <code class="docutils literal notranslate"><span class="pre">nsenter</span></code>,
+we’ll use the <code class="docutils literal notranslate"><span class="pre">oc</span> <span class="pre">exec</span></code> command from our control node. It does the
+same thing, with the primary difference being that we don’t need to know
+the application node the container is deployed to, or its actual PID.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ oc exec app-cli-4-18k2s ps
+   PID TTY          TIME CMD
+     1 ?        00:00:27 httpd
+    18 ?        00:00:00 cat
+    19 ?        00:00:01 cat
+    20 ?        00:02:55 httpd
+    22 ?        00:03:00 httpd
+    26 ?        00:03:00 httpd
+    43 ?        00:03:00 httpd
+    46 ?        00:03:01 httpd
+    49 ?        00:03:01 httpd
+    52 ?        00:03:00 httpd
+    55 ?        00:03:00 httpd
+    60 ?        00:03:01 httpd
+    83 ?        00:00:00 ps
+</pre></div>
+</div>
+<p>From the point of view of the server, PID 4470 is an <code class="docutils literal notranslate"><span class="pre">httpd</span></code> process
+that has spawned several child processes. Inside the container, however,
+the same <code class="docutils literal notranslate"><span class="pre">httpd</span></code> process is PID 1, and its PID namespace has been
+inherited by its child processes.</p>
+<p>PIDs are how we communicate with processes inside Linux. Each container
+having its own set of Process IDs is important for security as well as
+isolation.</p>
+</div>
+<div class="section" id="the-network-namespace">
+<h3>4.2.5. The network namespace<a class="headerlink" href="#the-network-namespace" title="Permalink to this headline">¶</a></h3>
+<p>OpenShift relies on software-defined networking that we’ll discuss more
+in an upcoming section. Because of this, as well as modern networking
+architectrues, the networking configuration on an OpenShift node can
+become extremely complex. One of the over-arching goals of OpenShift is
+to make the devloper’s experience consistent no matter the underlying
+host’s complexity. The network namespace helps with this. On your
+infrastructure node, there could be upwards of 20 defined interaces.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ip a
+1: lo: &lt;loopback,up,lower_up&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;broadcast,multicast,up,lower_up&gt; mtu 9001 qdisc mq state UP group default qlen 1000
+    link/ether 0e:39:78:cc:a6:58 brd ff:ff:ff:ff:ff:ff
+    inet 172.16.87.199/16 brd 172.16.255.255 scope global noprefixroute dynamic eth0
+       valid_lft 3178sec preferred_lft 3178sec
+    inet6 fe80::c39:78ff:fecc:a658/64 scope link
+       valid_lft forever preferred_lft forever
+3: docker0: &lt;no-carrier,broadcast,multicast,up&gt; mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:36:9f:24:e7 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 scope global docker0
+       valid_lft forever preferred_lft forever
+4: ovs-system: &lt;broadcast,multicast&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether f6:95:72:0e:09:4f brd ff:ff:ff:ff:ff:ff
+5: br0: &lt;broadcast,multicast&gt; mtu 8951 qdisc noop state DOWN group default qlen 1000
+    link/ether be:47:c6:da:e5:48 brd ff:ff:ff:ff:ff:ff
+6: vxlan_sys_4789: &lt;broadcast,multicast,up,lower_up&gt;mtu 65000 qdisc noqueue master ovs-system state UNKNOWN group default qlen 1000
+    link/ether 7a:0b:31:e4:a4:eb brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::780b:31ff:fee4:a4eb/64 scope link
+       valid_lft forever preferred_lft forever
+...&lt;/broadcast,multicast,up,lower_up&gt; &lt;/broadcast,multicast&gt;&lt;/broadcast,multicast&gt;&lt;/no-carrier,broadcast,multicast,up&gt;&lt;/broadcast,multicast,up,lower_up&gt;&lt;/loopback,up,lower_up&gt;
+</pre></div>
+</div>
+<p>However, from within one of the containers on that node, you only see an
+<code class="docutils literal notranslate"><span class="pre">eth0</span></code> and <code class="docutils literal notranslate"><span class="pre">lo</span></code> infterface.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo nsenter -n -t 29774 ip a
+1: lo: &lt;loopback,up,lower_up&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+3: eth0@if10: &lt;broadcast,multicast,up,lower_up&gt;mtu 8951 qdisc noqueue state UP group default
+    link/ether 0a:58:0a:81:00:04 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.129.0.4/23 brd 10.129.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d0c8:ecff:fe7a:4049/64 scope link
+       valid_lft forever preferred_lft forever&lt;/broadcast,multicast,up,lower_up&gt; &lt;/loopback,up,lower_up&gt;
+</pre></div>
+</div>
+<p>Each container’s network namespace has a single outbound interface
+(eth0) and a loopback address (lots of applications like to use the
+loopback interface). We’ll cover OpenShift SDN (the software-defined
+network configuration in OpenShift) and how traffic gets from the
+interface inside a container out to its destination in an upcoming
+section.</p>
+<div class="admonition-we-forgot-the-user-namespace admonition">
+<p class="first admonition-title">We forgot the User namespace?</p>
+<p>Currently in OpenShift, all containers share a single user namespace.
+This is due to some lingering performance issues with the user namespace
+that prevent it from being capable of handling the enterpise scale that
+OpenShift is designed for. Don’t worry, we’re working on it.</p>
+<p class="last">User namespaces are utilized in <a class="reference external" href="https://opensource.com/article/19/2/how-does-rootless-podman-work">Podman rootless mode</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>4.3. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Linux kernel namespaces are used to isolate processes running inside
+containers. They’re more lightweight than virtulization technologies and
+don’t require an entire virtualized kernel to function properly. From
+inside a container, namespaced resources are fully isolated, but can
+still be viewed and accessed when needed from the host and from
+OpenShift.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="container-cgroups.html" class="btn btn-neutral float-right" title="5. Quotas and Limits with kernel control groups" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ocp-intro.html" class="btn btn-neutral" title="3. OpenShift Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jamie Duncan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

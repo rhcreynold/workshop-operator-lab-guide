@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. OpenShift Architecture &mdash; Better Together: OpenShift and Ansible Workshop Ops Lab Guide 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Process isolation with Linux namespaces" href="container-namespaces.html" />
+    <link rel="prev" title="2. Getting to know Ansible" href="ansible-intro.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Better Together: OpenShift and Ansible Workshop Ops Lab Guide
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction and getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ansible-intro.html">2. Getting to know Ansible</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. OpenShift Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-value-of-containers">3.1. The value of containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#worst-case-scenario-provisioning">3.2. Worst Case Scenario provisioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparing-vm-and-container-resource-usage">3.3. Comparing VM and Container resource usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#storage-resource-consumption">3.3.1. Storage resource consumption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpu-and-ram-resource-consumption">3.3.2. CPU and RAM resource consumption</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">3.4. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container-namespaces.html">4. Process isolation with Linux namespaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-cgroups.html">5. Quotas and Limits with kernel control groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-selinux.html">6. Protection with SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-deploying-apps.html">7. Applications in OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-sdn.html">8. OpenShift SDN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-routing.html">9. Routing layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">10. OpenShift and Ansible integration points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-cd.html">11. A real world CI/CD scenario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">12. Q&amp;A and Wrap-Up</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Better Together: OpenShift and Ansible Workshop Ops Lab Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3. OpenShift Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ocp-intro.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openshift-architecture">
+<h1>3. OpenShift Architecture<a class="headerlink" href="#openshift-architecture" title="Permalink to this headline">¶</a></h1>
+<p>In this section we’ll discuss the fundamental components that make up
+OpenShift. Any Ops-centric discussion of an application platform like
+OpenShift needs to start with containers; both technically and from a
+perspective of value. We’ll start off talking about why containers are
+the best solution today to deliver your applications.</p>
+<p>We promise to not beat you up with slides after this, but we do have a
+few more. Let’s use the <a class="reference external" href="https://s3.amazonaws.com/openshift-ansible-workshop-materials/openshift_technical_overview.pdf">OpenShift Technical
+Overview</a>
+to become familiar with the core OpenShift concepts before we dive down
+into the fun details.</p>
+<div class="section" id="the-value-of-containers">
+<h2>3.1. The value of containers<a class="headerlink" href="#the-value-of-containers" title="Permalink to this headline">¶</a></h2>
+<p>At their heart, containers are the next evolution in how we isolate
+processes on a Linux system. This evolution started when we created the
+first computers. They evolved from ENIAC, through mainframes, into the
+server revolution all the way through virtual machines (VMs) and now
+into containers.</p>
+<div class="figure">
+<img alt="" src="_images/evolution.png" />
+</div>
+<p>More efficient application isolation (we’ll get into how that works in
+the next section) provides an Ops team a few key advantages that we’ll
+discuss next.</p>
+</div>
+<div class="section" id="worst-case-scenario-provisioning">
+<h2>3.2. Worst Case Scenario provisioning<a class="headerlink" href="#worst-case-scenario-provisioning" title="Permalink to this headline">¶</a></h2>
+<p>Think about your traditional virtualization platform, or your workflow
+to deploy instances to your public cloud of choice for a moment. How big
+is your default VMDK for your root OS disk? How much extra storage do
+you add to your EC2 instance, just to handle the ‘unknown’ situations?
+Is it 40GB? 60GB?</p>
+<p><strong>This phenomenon is known as *Worst Case Scenario Provisioning*.</strong> In
+the industry, we’ve done it for years because we consider each VM a
+unique creature that is hard to alter once created. Even with more
+optimized workflows in the public cloud, we hold on to IP addresses, and
+their associated resources, as if they’re immutable once created. It’s
+easier to overspend on compute resources for most of us than to change
+an IP address in our IPAM once we’ve deployed a system.</p>
+</div>
+<div class="section" id="comparing-vm-and-container-resource-usage">
+<h2>3.3. Comparing VM and Container resource usage<a class="headerlink" href="#comparing-vm-and-container-resource-usage" title="Permalink to this headline">¶</a></h2>
+<p>In this section we’re going to investigate how containers use your
+datacenter resources more efficiently. First, we’ll focus on storage.</p>
+<div class="section" id="storage-resource-consumption">
+<h3>3.3.1. Storage resource consumption<a class="headerlink" href="#storage-resource-consumption" title="Permalink to this headline">¶</a></h3>
+<p>Compared to a 40GB disk image, the RHEL 7 container base image is
+<a class="reference external" href="https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/rhel7">approximately
+72MB</a>.
+It’s a widely accepted rule of thumb that container images shouldn’t
+exceed 1GB in size. If your application takes more than 1GB of code and
+libraries to run, you likely need to re-think your plan of attack.</p>
+<p>Instead of each new instance of an application consuming 40GB+ on your
+storage resources, they consume a couple hundred MegaBytes. Your next
+storage purchase just got a whole lot more interesting.</p>
+</div>
+<div class="section" id="cpu-and-ram-resource-consumption">
+<h3>3.3.2. CPU and RAM resource consumption<a class="headerlink" href="#cpu-and-ram-resource-consumption" title="Permalink to this headline">¶</a></h3>
+<p>It’s not just storage where containers help save resources. We’ll
+analyze this in more depth in the next section, but we want to get the
+idea into your head for that part of our investigation now. Containers
+are smaller than a full VM because containers don’t each run their own
+Linux kernel. All containers on a host share a single kernel. That means
+a container just needs the application it needs to execute and its
+dependencies. You can think of containers as a “portable userspace” for
+your applications.</p>
+<div class="admonition-time-and-resource-savings admonition">
+<p class="first admonition-title">Time and Resource Savings</p>
+<p>Because each container doesn’t require its own kernel, we also measure
+startup time in milliseconds! This gives us a whole new way to think
+about scalability and High Availability!</p>
+<p class="last">In your cluster, log in as the admin user and navigate to the default
+project. Look at the resources your registry and other deployed
+applications consume. For example the <code class="docutils literal notranslate"><span class="pre">registry-console</span></code> application
+(a UI to see and manage the images in your OpenShift cluster) is
+consuming less than 3MB of RAM!</p>
+</div>
+<div class="figure">
+<img alt="" src="_images/metrics.jpeg" />
+</div>
+<p>If we were deploying this application in a VM we would spend multiple
+gigabytes of our RAM just so we could give the application the handful
+of MegaBytes it needs to run properly.</p>
+<p>The same is true for CPU consumption. In OpenShift, we measure and
+allocate CPUs by the <em>millicore</em>, or thousandth of a core. Instead of
+multiple CPUs, applications can be given the small fractions of a CPU
+they need to get their job done.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>3.4. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Containers aren’t just a tool to help developers create applications
+more quickly. Although they are revolutionary in how they do that.
+Containers are just marketing hype. Although there’s certainly a lot of
+that going on right now, too.</p>
+<p>**For an Ops team, containers take any application and deploy it more
+efficiently in our infrastructure. Instead of measuring each application
+in GB used and full CPUs allocated, we measure containers using MB of
+storage and RAM and we allocate thousandths of CPUs.</p>
+<p>OpenShift deployed into your existing datacenter gives you back
+resources. For customers deep into their transformation with OpenShfit,
+an exponential increase in resource density isn’t uncommon.**</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="container-namespaces.html" class="btn btn-neutral float-right" title="4. Process isolation with Linux namespaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ansible-intro.html" class="btn btn-neutral" title="2. Getting to know Ansible" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jamie Duncan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

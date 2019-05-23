@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. OpenShift SDN &mdash; Better Together: OpenShift and Ansible Workshop Ops Lab Guide 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. Routing layer" href="ocp-routing.html" />
+    <link rel="prev" title="7. Applications in OpenShift" href="ocp-deploying-apps.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Better Together: OpenShift and Ansible Workshop Ops Lab Guide
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction and getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ansible-intro.html">2. Getting to know Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-intro.html">3. OpenShift Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-namespaces.html">4. Process isolation with Linux namespaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-cgroups.html">5. Quotas and Limits with kernel control groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-selinux.html">6. Protection with SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-deploying-apps.html">7. Applications in OpenShift</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. OpenShift SDN</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">8.1. Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inspecting-the-sdn">8.2. Inspecting the SDN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">8.3. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-routing.html">9. Routing layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">10. OpenShift and Ansible integration points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-cd.html">11. A real world CI/CD scenario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">12. Q&amp;A and Wrap-Up</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Better Together: OpenShift and Ansible Workshop Ops Lab Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>8. OpenShift SDN</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ocp-sdn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openshift-sdn">
+<h1>8. OpenShift SDN<a class="headerlink" href="#openshift-sdn" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>8.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>OpenShift uses a complex software-defined network solution using <a class="reference external" href="https://www.openvswitch.org/">Open
+vSwitch (OVS)</a> that creates multiple
+interfaces for each container and routes traffic through VXLANs to other
+nodes in the cluster or through a TUN interface to route out of your
+cluster and into other networks.</p>
+</div>
+<div class="section" id="inspecting-the-sdn">
+<h2>8.2. Inspecting the SDN<a class="headerlink" href="#inspecting-the-sdn" title="Permalink to this headline">¶</a></h2>
+<p>At a fundamental level, OpenShift creates an OVS bridge and attaches a
+TUN and VXLAN interface. The VXLAN interface routes requests between
+nodes on the cluster, and the TUN interface routes traffic off of the
+cluster using the node’s default gateway. Each container also cretes a
+<code class="docutils literal notranslate"><span class="pre">veth</span></code> interface that is linked to the <code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface in a
+specific container using <a class="reference external" href="https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-class-net">kernel interrface
+linking</a>.
+You can see this on your nodes by running the <code class="docutils literal notranslate"><span class="pre">ovs-vsct</span> <span class="pre">list-br</span></code>
+command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ovs-vsctl list-br br0</span>
+</pre></div>
+</div>
+<p>This lists the OVS bridges on the host. To see the interfaces within the
+bridge, run the following command. Here you can see the <code class="docutils literal notranslate"><span class="pre">vxlan</span></code>,
+<code class="docutils literal notranslate"><span class="pre">tun</span></code>, and <code class="docutils literal notranslate"><span class="pre">veth</span></code> interfaces within the bridge.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ovs-vsctl list-ifaces br0 tun0</span>
+veth1903c0e4
+veth2daf2599
+veth6afcc070
+veth77b9379f
+veth9406531e
+veth97389395
+vxlan0
+</pre></div>
+</div>
+<p>Logically, the networking configuration on an OpenShift node looks like
+the graphic below.</p>
+<div class="figure">
+<img alt="" src="_images/ocp_networking_node.png" />
+</div>
+</div>
+<div class="section" id="summary">
+<h2>8.3. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>When networking isn’t working as you expect, and you’ve already ruled
+out DNS (for the 5th time), keep this architecture in mind as you are
+troubleshooting your cluster. There’s no magic invovled; only
+technologies that have proven themselves for years in production.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ocp-routing.html" class="btn btn-neutral float-right" title="9. Routing layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ocp-deploying-apps.html" class="btn btn-neutral" title="7. Applications in OpenShift" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jamie Duncan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

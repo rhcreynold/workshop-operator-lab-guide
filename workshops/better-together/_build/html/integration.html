@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10. OpenShift and Ansible integration points &mdash; Better Together: OpenShift and Ansible Workshop Ops Lab Guide 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11. A real world CI/CD scenario" href="ci-cd.html" />
+    <link rel="prev" title="9. Routing layer" href="ocp-routing.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Better Together: OpenShift and Ansible Workshop Ops Lab Guide
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction and getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ansible-intro.html">2. Getting to know Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-intro.html">3. OpenShift Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-namespaces.html">4. Process isolation with Linux namespaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-cgroups.html">5. Quotas and Limits with kernel control groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container-selinux.html">6. Protection with SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-deploying-apps.html">7. Applications in OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-sdn.html">8. OpenShift SDN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocp-routing.html">9. Routing layer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. OpenShift and Ansible integration points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-openshift">10.1. Deploying OpenShift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modifying-an-openshift-cluster">10.2. Modifying an OpenShift cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">10.3. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ci-cd.html">11. A real world CI/CD scenario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">12. Q&amp;A and Wrap-Up</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Better Together: OpenShift and Ansible Workshop Ops Lab Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>10. OpenShift and Ansible integration points</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/integration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openshift-and-ansible-integration-points">
+<h1>10. OpenShift and Ansible integration points<a class="headerlink" href="#openshift-and-ansible-integration-points" title="Permalink to this headline">¶</a></h1>
+<p>Deploying and managing an OpenShift cluster is controlled by Ansible.
+The
+<code class="docutils literal notranslate"><span class="pre">`openshift-ansible</span></code> &lt;<a class="reference external" href="https://github.com/openshift/openshift-ansible">https://github.com/openshift/openshift-ansible</a>&gt;`__
+project is used to deploy and scale OpenShift clusters, as well as
+enable new features like <a class="reference external" href="https://www.openshift.com/products/container-storage/">OpenShift Container
+Storage</a>.</p>
+<div class="section" id="deploying-openshift">
+<h2>10.1. Deploying OpenShift<a class="headerlink" href="#deploying-openshift" title="Permalink to this headline">¶</a></h2>
+<p>Your entire OpenShift cluster was deployed using Ansible. The inventory
+used to deploy your cluster is on your bastion host at the default
+inventory location for Ansible, <code class="docutils literal notranslate"><span class="pre">/etc/ansible/hosts</span></code>. To deploy an
+OpenShift cluster on RHEL 7, after registering it and subscribing it to
+the proper repositories two Ansible playbooks need to be run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ansible</span><span class="o">-</span><span class="n">playook</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">ansible</span><span class="o">/</span><span class="n">openshift</span><span class="o">-</span><span class="n">ansible</span><span class="o">/</span><span class="n">playbooks</span><span class="o">/</span><span class="n">prerequisites</span><span class="o">.</span><span class="n">yml</span>
+<span class="n">ansible</span><span class="o">-</span><span class="n">playook</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">ansible</span><span class="o">/</span><span class="n">openshift</span><span class="o">-</span><span class="n">ansible</span><span class="o">/</span><span class="n">playbooks</span><span class="o">/</span><span class="n">deploy_cluster</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>The deployment process takes 30-40 minutes to complete, depending on the
+size of your cluster. To save that time, we’ve got you covered and have
+already deployed your OpenShift cluster. In fact, all lab environments
+were provisioned using a single ansible playbook from <a class="reference external" href="https://github.com/jduncan-rva/linklight">another ansible
+playbook that incorporates the playbooks that deploy
+OpenShift</a>.</p>
+</div>
+<div class="section" id="modifying-an-openshift-cluster">
+<h2>10.2. Modifying an OpenShift cluster<a class="headerlink" href="#modifying-an-openshift-cluster" title="Permalink to this headline">¶</a></h2>
+<p>In additon to deploying OpenShift, Ansible is used to modify your
+existing cluster. These playbooks are also located in
+<code class="docutils literal notranslate"><span class="pre">/usr/share/ansible/openshift-ansible/</span></code>. They can do things such as:</p>
+<ul class="simple">
+<li>Adding a node to your cluster</li>
+<li>Deploying OpenShift Container Storage (OCS)</li>
+<li>Other operations like re-deploying encryption certificates</li>
+</ul>
+<p>Taking a look at the playbook options available from
+<code class="docutils literal notranslate"><span class="pre">openshift-ansible</span></code>, you see:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls /usr/share/ansible/openshift-ansible/playbooks/
+adhoc/
+common/
+openshift-autoheal/
+openshift-grafana/
+openshift-master/
+openshift-node/
+openshift-web-console/
+roles/
+aws/
+container-runtime/
+openshift-checks/
+openshift-hosted/
+openshift-metrics/
+openshift-node-problem-detector/
+openstack/
+azure/
+deploy_cluster.yml
+openshift-descheduler
+openshift-loadbalancer
+openshift-monitor-availability
+openshift-prometheus
+prerequisites.yml
+byo/
+gcp/
+openshift-etcd/
+openshift-logging/
+openshift-monitoring/
+openshift-provisioners/
+README.md
+cluster-operator/
+init/
+openshift-glusterfs/
+openshift-management/
+openshift-nfs/
+openshift-service-catalog/
+redeploy-certificates.yml
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>10.3. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In section 1, we talked about Ansible fundamentals. In section 2, we
+worked through the OpenShift architecture and how your cluster can be
+managed using Ansible.</p>
+<p>This section has been about the deeper relationship between OpenShift
+and Ansible. All major lifecycle events are handled using Ansible.</p>
+<p>Next, we’ll take a look at an OpenShift deployment that provides
+everything you need to create and test a full CI/CD workflow in
+OpenShift.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ci-cd.html" class="btn btn-neutral float-right" title="11. A real world CI/CD scenario" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ocp-routing.html" class="btn btn-neutral" title="9. Routing layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jamie Duncan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

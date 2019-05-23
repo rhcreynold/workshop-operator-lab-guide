@@ -390,8 +390,5 @@ You'll be prompted for your GOGS username and password you set up when you regis
 
 With your initial Ansible content uploaded, you now have everything you need to create a full CI/CD pipeline for the rest of your workshop!
 
-
-
-
 .. |plus sign| image:: _static/images/gogs_plus.png
 .. |save button| image:: _static/images/gogs_save.png

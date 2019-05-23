@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. Routing layer &mdash; Better Together: OpenShift and Ansible Workshop Ops Lab Guide 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="9. OpenShift and Ansible integration points" href="../integration/" />
+    <link rel="prev" title="7. OpenShift SDN" href="../ocp-sdn/" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../" class="icon icon-home"> Better Together: OpenShift and Ansible Workshop Ops Lab Guide
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ansible-intro/">1. Getting to know Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-intro/">2. OpenShift Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../container-namespaces/">3. How containers work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../container-cgroups/">4. Quotas and Limits with kernel control groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../container-selinux/">5. Protection with SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-deploying-apps/">6. Applications in OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-sdn/">7. OpenShift SDN</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Routing layer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#summary">8.1. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../integration/">9. OpenShift and Ansible integration points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci-cd/">10. A real world CI/CD scenario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">11. Q&amp;A and Wrap-Up</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Better Together: OpenShift and Ansible Workshop Ops Lab Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../">Docs</a> &raquo;</li>
+        
+      <li>8. Routing layer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/ocp-routing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="routing-layer">
+<h1>8. Routing layer<a class="headerlink" href="#routing-layer" title="Permalink to this headline">¶</a></h1>
+<p>The routing layer inside OpenShift uses HAProxy by default. It’s
+function is to map the publicly available route you assign to an
+application and map it back to the corresponding pods in your cluster.
+Each time an application or route is updated (created, retired, scaled
+up or down), the configuration in HAProxy is updated by OpenShift.
+HAProxy runs in a pod in the default project on your infrastructure
+node.</p>
+<p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">oc</span> <span class="pre">project</span> <span class="pre">default</span> <span class="pre">#</span> <span class="pre">oc</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">NAME</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">READY</span>&#160;&#160;&#160;&#160; <span class="pre">STATUS</span>&#160;&#160;&#160; <span class="pre">RESTARTS</span>&#160;&#160; <span class="pre">AGE</span> <span class="pre">docker-registry-1-77rmv</span>&#160;&#160;&#160; <span class="pre">1/1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Running</span>&#160;&#160; <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">2d</span> <span class="pre">registry-console-1-n7kbk</span>&#160;&#160; <span class="pre">1/1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Running</span>&#160;&#160; <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">2d</span> <span class="pre">router-1-mwb89</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">1/1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Running</span>&#160;&#160; <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">2d</span> <span class="pre">&lt;---</span> <span class="pre">router</span> <span class="pre">pod</span> <span class="pre">running</span> <span class="pre">HAProxy</span></code></p>
+<p>If you know the name of a pod, you can us <code class="docutils literal notranslate"><span class="pre">oc</span> <span class="pre">rsh</span></code> to connect to it
+remotely. This is doing some fun magic using <code class="docutils literal notranslate"><span class="pre">ssh</span></code> and <code class="docutils literal notranslate"><span class="pre">nsenter</span></code>
+under the covers to provide a connection to the proper node inside the
+proper namespaces for the pod. Looking in the <code class="docutils literal notranslate"><span class="pre">haproxy.config</span></code> file
+for references to <code class="docutils literal notranslate"><span class="pre">app-cli</span></code> gives displays your router configuration
+for that application. <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> will exit out of your <code class="docutils literal notranslate"><span class="pre">rsh</span></code> session.</p>
+<p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">oc</span> <span class="pre">rsh</span> <span class="pre">router-1-mwb89</span> <span class="pre">sh-4.2$</span> <span class="pre">grep</span> <span class="pre">app-cli</span> <span class="pre">haproxy.config</span> <span class="pre">backend</span> <span class="pre">be_http:image-uploader:app-cli</span>&#160;&#160; <span class="pre">server</span> <span class="pre">pod:app-cli-1-tthhf:app-cli:10.130.0.36:8080</span> <span class="pre">10.130.0.36:8080</span> <span class="pre">cookie</span> <span class="pre">91b8f12aa1ca5b82e34e730715b58254</span> <span class="pre">weight</span> <span class="pre">256</span> <span class="pre">check</span> <span class="pre">inter</span> <span class="pre">5000ms</span>&#160;&#160; <span class="pre">server</span> <span class="pre">pod:app-cli-1-bgt75:app-cli:10.130.0.41:8080</span> <span class="pre">10.130.0.41:8080</span> <span class="pre">cookie</span> <span class="pre">0f411f181edfdfb13c0c0d1b562f5efd</span> <span class="pre">weight</span> <span class="pre">256</span> <span class="pre">check</span> <span class="pre">inter</span> <span class="pre">5000ms</span>&#160;&#160; <span class="pre">server</span> <span class="pre">pod:app-cli-1-26fgz:app-cli:10.131.0.6:8080</span> <span class="pre">10.131.0.6:8080</span> <span class="pre">cookie</span> <span class="pre">67b4bd5bb54b037c5b37c8acadcfe833</span> <span class="pre">weight</span> <span class="pre">256</span> <span class="pre">check</span> <span class="pre">inter</span> <span class="pre">5000ms</span></code></p>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">oc</span> <span class="pre">get</span> <span class="pre">pods</span></code> command for the Image Uploader project
+and limit its output for the app-cli application, you can see the IP
+addresses in HAProxy match the pods for the application.</p>
+<p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">oc</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-l</span> <span class="pre">app=app-cli</span> <span class="pre">-n</span> <span class="pre">image-uploader</span> <span class="pre">-o</span> <span class="pre">wide</span> <span class="pre">NAME</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">READY</span>&#160;&#160;&#160;&#160; <span class="pre">STATUS</span>&#160;&#160;&#160; <span class="pre">RESTARTS</span>&#160;&#160; <span class="pre">AGE</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">IP</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">NODE</span> <span class="pre">app-cli-1-26fgz</span>&#160;&#160; <span class="pre">1/1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Running</span>&#160;&#160; <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">3h</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">10.131.0.6</span>&#160;&#160;&#160; <span class="pre">ip-172-16-50-98.ec2.internal</span> <span class="pre">app-cli-1-bgt75</span>&#160;&#160; <span class="pre">1/1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Running</span>&#160;&#160; <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">3h</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">10.130.0.41</span>&#160;&#160; <span class="pre">ip-172-16-245-111.ec2.internal</span> <span class="pre">app-cli-1-tthhf</span>&#160;&#160; <span class="pre">1/1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Running</span>&#160;&#160; <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">3h</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">10.130.0.36</span>&#160;&#160; <span class="pre">ip-172-16-245-111.ec2.internal</span></code></p>
+<p>To confirm HAProxy is automatically updated, let’s scale <code class="docutils literal notranslate"><span class="pre">app-cli</span></code>
+back down to 1 pod and re-check the router configuration.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd><p class="first"># oc scale dc/app-cli -n image-uploader –replicas=1
+deploymentconfig.apps.openshift.io “app-cli” scaled</p>
+<p>oc get pods -l app=app-cli -n image-uploader -o wide</p>
+<p>NAME READY STATUS RESTARTS AGE IP NODE app-cli-1-tthhf 1/1 Running 0 3h
+10.130.0.36 ip-172-16-245-111.ec2.internal</p>
+<p>oc exec router-1-mwb89 grep app-cli haproxy.config</p>
+<p>backend be_http:image-uploader:app-cli server
+pod:app-cli-1-tthhf:app-cli:10.130.0.36:8080 10.130.0.36:8080 cookie
+91b8f12aa1ca5b82e34e730715b58254 weight 256 check inter 5000ms ```</p>
+<p class="last">We were able to confirm that our HAProxy configuration updates
+automatically when applications are updated.</p>
+</dd>
+</dl>
+<div class="section" id="summary">
+<h2>8.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>We know this is a mountain of content. Our goal is to present you with
+information that will be helpful as you sink your teeth into your own
+OpenShift clusters in your own infrastructure. These are some of the
+fundamental tools and tricks that are going to be helpful as you begin
+this journey.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../integration/" class="btn btn-neutral float-right" title="9. OpenShift and Ansible integration points" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../ocp-sdn/" class="btn btn-neutral" title="7. OpenShift SDN" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jamie Duncan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

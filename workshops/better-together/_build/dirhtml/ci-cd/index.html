@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10. A real world CI/CD scenario &mdash; Better Together: OpenShift and Ansible Workshop Ops Lab Guide 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="11. Q&amp;A and Wrap-Up" href="../summary/" />
+    <link rel="prev" title="9. OpenShift and Ansible integration points" href="../integration/" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../" class="icon icon-home"> Better Together: OpenShift and Ansible Workshop Ops Lab Guide
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ansible-intro/">1. Getting to know Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-intro/">2. OpenShift Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../container-namespaces/">3. How containers work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../container-cgroups/">4. Quotas and Limits with kernel control groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../container-selinux/">5. Protection with SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-deploying-apps/">6. Applications in OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-sdn/">7. OpenShift SDN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ocp-routing/">8. Routing layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integration/">9. OpenShift and Ansible integration points</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. A real world CI/CD scenario</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-ci-cd-workflow-manually">10.1. Creating a CI/CD workflow manually</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-needed-projects">10.2. Creating the needed projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#giving-your-ci-cd-project-the-proper-permissions">10.3. Giving your CI/CD project the proper permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automating-application-deployment-with-ansible">10.4. Automating application deployment with Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">10.5. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">11. Q&amp;A and Wrap-Up</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Better Together: OpenShift and Ansible Workshop Ops Lab Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../">Docs</a> &raquo;</li>
+        
+      <li>10. A real world CI/CD scenario</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/ci-cd.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="a-real-world-ci-cd-scenario">
+<h1>10. A real world CI/CD scenario<a class="headerlink" href="#a-real-world-ci-cd-scenario" title="Permalink to this headline">¶</a></h1>
+<p>In the final section of our workshop, we’ll take everything we’ve been
+discussing and put it into practice with a large, complex, real-work
+workflow. In your cluster, you’ll create multiple projects and use a
+Jenkins pipeline workflow that:</p>
+<ul class="simple">
+<li>Checks out source code from a git server within Openshift</li>
+<li>Builds a java application and archives it in Nexus</li>
+<li>Runs unit tests for the application</li>
+<li>Runs code analysis using Sonarqube</li>
+<li>Builds a Wildfly container image</li>
+<li>Deplous the app into a dev project and runs integration tests</li>
+<li>Builds a human break into the OpenShift UI to confirm before it
+promotes the application to the stage project</li>
+</ul>
+<p>This is a complete analog to a modern CI/CD workflow, implemented 100%
+within OpenShift. First, we’ll need to create some projects for your
+CI/CD workflow to use. The content can be found on Github at
+<a class="reference external" href="https://github.com/siamaksade/openshift-cd-demo">https://github.com/siamaksade/openshift-cd-demo</a>. This content has been
+downloaded already to your OpenShift control node at
+<code class="docutils literal notranslate"><span class="pre">/root/cicd-demo</span></code>.</p>
+<div class="section" id="creating-a-ci-cd-workflow-manually">
+<h2>10.1. Creating a CI/CD workflow manually<a class="headerlink" href="#creating-a-ci-cd-workflow-manually" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="creating-the-needed-projects">
+<h2>10.2. Creating the needed projects<a class="headerlink" href="#creating-the-needed-projects" title="Permalink to this headline">¶</a></h2>
+<p>On your control node, execute the following code:</p>
+<p><code class="docutils literal notranslate"><span class="pre">oc</span> <span class="pre">new-project</span> <span class="pre">dev</span> <span class="pre">--display-name=&quot;Tasks</span> <span class="pre">-</span> <span class="pre">Dev&quot;</span> <span class="pre">oc</span> <span class="pre">new-project</span> <span class="pre">stage</span> <span class="pre">--display-name=&quot;Tasks</span> <span class="pre">-</span> <span class="pre">Stage&quot;</span> <span class="pre">oc</span> <span class="pre">new-project</span> <span class="pre">cicd</span> <span class="pre">--display-name=&quot;CI/CD&quot;</span></code></p>
+<p>This will create three projects in your OpenShift cluster.</p>
+<ul class="simple">
+<li><strong>Tasks - Dev:</strong> This will house your dev team’s development
+deployment</li>
+<li><strong>Tasks - Stage:</strong> This will be your dev team’s Stage deployment</li>
+<li><strong>CI/CD:</strong> This projects houses all of your CI/CD tools</li>
+</ul>
+</div>
+<div class="section" id="giving-your-ci-cd-project-the-proper-permissions">
+<h2>10.3. Giving your CI/CD project the proper permissions<a class="headerlink" href="#giving-your-ci-cd-project-the-proper-permissions" title="Permalink to this headline">¶</a></h2>
+<p>Next, you need to give the CI/CD project permission to exexute tasks in
+the Dev and Stage projects.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oc</span> <span class="n">policy</span> <span class="n">add</span><span class="o">-</span><span class="n">role</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">group</span> <span class="n">edit</span> <span class="n">system</span><span class="p">:</span><span class="n">serviceaccounts</span><span class="p">:</span><span class="n">cicd</span> <span class="o">-</span><span class="n">n</span> <span class="n">dev</span>
+<span class="n">oc</span> <span class="n">policy</span> <span class="n">add</span><span class="o">-</span><span class="n">role</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">group</span> <span class="n">edit</span> <span class="n">system</span><span class="p">:</span><span class="n">serviceaccounts</span><span class="p">:</span><span class="n">cicd</span> <span class="o">-</span><span class="n">n</span> <span class="n">stage</span>
+</pre></div>
+</div>
+<p>4.1.3 - Deploying your workflow</p>
+<p>With your projects created, you’re ready to deploy the demo and trigger
+the workflow</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oc</span> <span class="n">new</span><span class="o">-</span><span class="n">app</span> <span class="o">-</span><span class="n">n</span> <span class="n">cicd</span> <span class="o">-</span><span class="n">f</span> <span class="n">cicd</span><span class="o">-</span><span class="n">template</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">param</span><span class="o">=</span><span class="n">DEPLOY_CHE</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>This process doesn’t take much time for a single application, but it
+doesn’t scale well, it’s not repeatable, and it relies on the person
+executing it knowing the commands, and the specific information about
+the situation. In the next section, we’ll accomplish the same thing with
+a simple Ansible playbook, executed from your bastion host.</p>
+</div>
+<div class="section" id="automating-application-deployment-with-ansible">
+<h2>10.4. Automating application deployment with Ansible<a class="headerlink" href="#automating-application-deployment-with-ansible" title="Permalink to this headline">¶</a></h2>
+<p>There modules for <code class="docutils literal notranslate"><span class="pre">oc</span></code>. However, lots of interactions with OpenShift
+that you’ll find in OpenShift playbooks still use the <code class="docutils literal notranslate"><span class="pre">command</span></code>
+module. There is minimal risk here because the <code class="docutils literal notranslate"><span class="pre">oc</span></code> command itself is
+idempotent.</p>
+<p>A playbook that would create the entire CI/CD workflow could look as
+follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">Deploy</span> <span class="n">OpenShift</span> <span class="n">CI</span><span class="o">/</span><span class="n">CD</span> <span class="n">Project</span> <span class="ow">and</span> <span class="n">begin</span> <span class="n">workflow</span>
+<span class="n">hosts</span><span class="p">:</span> <span class="n">masters</span>
+<span class="n">become</span><span class="p">:</span> <span class="n">yes</span>
+
+<span class="n">tasks</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Create</span> <span class="n">Tasks</span> <span class="n">project</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">oc</span> <span class="n">new</span><span class="o">-</span><span class="n">project</span> <span class="n">dev</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Tasks - Dev&quot;</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Create</span> <span class="n">Stage</span> <span class="n">project</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">oc</span> <span class="n">new</span><span class="o">-</span><span class="n">project</span> <span class="n">stage</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Tasks - Stage&quot;</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Create</span> <span class="n">CI</span><span class="o">/</span><span class="n">CD</span> <span class="n">project</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">oc</span> <span class="n">new</span><span class="o">-</span><span class="n">project</span> <span class="n">cicd</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CI/CD&quot;</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Set</span> <span class="n">serviceaccount</span> <span class="n">status</span> <span class="k">for</span> <span class="n">CI</span><span class="o">/</span><span class="n">CD</span> <span class="n">project</span> <span class="k">for</span> <span class="n">dev</span> <span class="ow">and</span> <span class="n">stage</span> <span class="n">projects</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">oc</span> <span class="n">policy</span> <span class="n">add</span><span class="o">-</span><span class="n">role</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">group</span> <span class="n">edit</span> <span class="n">system</span><span class="p">:</span><span class="n">serviceaccounts</span><span class="p">:</span><span class="n">cicd</span> <span class="o">-</span><span class="n">n</span> <span class="p">{{</span> <span class="n">item</span> <span class="p">}}</span>
+  <span class="n">with_items</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">dev</span>
+  <span class="o">-</span> <span class="n">stage</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Start</span> <span class="n">application</span> <span class="n">deployment</span> <span class="n">to</span> <span class="n">trigger</span> <span class="n">CI</span><span class="o">/</span><span class="n">CD</span> <span class="n">workflow</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">oc</span> <span class="n">new</span><span class="o">-</span><span class="n">app</span> <span class="o">-</span><span class="n">n</span> <span class="n">cicd</span> <span class="o">-</span><span class="n">f</span> <span class="n">cicd</span><span class="o">-</span><span class="n">template</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">param</span><span class="o">=</span><span class="n">DEPLOY_CHE</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>This playbook is relatively simple, with a single <code class="docutils literal notranslate"><span class="pre">with_items</span></code> loop.
+What sort of additional enhancements can you think of to make this
+playbook more powerful to deploy workflows inside OpenShift?</p>
+</div>
+<div class="section" id="summary">
+<h2>10.5. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This project takes multiple complex developer tools and integrates into
+a single automated workflow. Applications are built, tested, deployed,
+and then humans can verify eveything passes to their satisfaction before
+the final button is pushed to promote the application to the next level.
+Every one of those tools is running in a container inside your OpenShift
+cluster.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../summary/" class="btn btn-neutral float-right" title="11. Q&amp;A and Wrap-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../integration/" class="btn btn-neutral" title="9. OpenShift and Ansible integration points" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jamie Duncan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
