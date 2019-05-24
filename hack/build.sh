@@ -2,7 +2,12 @@
 # Helper script to build container images for each workshop
 
 WORKSHOP_NAME=$1
-QUAY_PROJECT=jduncan
+if [[ ${#3} -eq 0 ]];then
+  QUAY_PROJECT=jduncan
+else
+  QUAY_PROJECT=$3
+fi
+
 
 case $2 in
   local)
