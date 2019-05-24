@@ -3,7 +3,6 @@ python:
 - '2.7'
 env:
   - WORKSHOP_NAME=example-workshop
-  - WORKSHOP_NAME=dcmetromap
   - WORKSHOP_NAME=ansible-for-devops
   - WORKSHOP_NAME=better-together
 services:
