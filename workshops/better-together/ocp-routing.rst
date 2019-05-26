@@ -8,6 +8,12 @@ up or down), the configuration in HAProxy is updated by OpenShift.
 HAProxy runs in a pod in the default project on your infrastructure
 node.
 
+.. admonition:: Other routing options
+
+  OpenShift uses a plugin framework for its routing layer. The default router for OpenShift 3.11 is HAProxy, but OpenShift also ships with an F5 router plugin. Additionally, there are cloud-provider specific and third-party router plugins.
+
+  OpenShift 4 transitioned to `nginx <https://www.nginx.com/>`__ as the default router.
+
 Inspecting HAProxy in OpenShift
 '''''''''''''''''''''''''''''''''
 
@@ -60,6 +66,10 @@ back down to 1 pod and re-check the router configuration.
 
   NAME READY STATUS RESTARTS AGE IP NODE app-cli-1-tthhf 1/1 Running 0 3h
   10.130.0.36 ip-172-16-245-111.ec2.internal
+
+Instead of having to connect to a shell session inside the router pod, you can use ``oc exec`` to run a single command in a pod and get the output.
+
+::
 
   oc exec router-1-mwb89 grep app-cli haproxy.config
 

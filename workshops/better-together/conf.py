@@ -21,12 +21,12 @@
 
 project = u'Better Together: OpenShift and Ansible Workshop Ops Lab Guide'
 copyright = u'2019, Jamie Duncan'
-author = u'Jamie Duncan'
+author = u'Red Hat'
 
 # The short X.Y version
 version = u''
 # The full version, including alpha/beta/rc tags
-release = u'1.0'
+release = u'1.1'
 
 
 # -- General configuration ---------------------------------------------------

@@ -70,25 +70,35 @@ content towards the bottom.
 To limit this content to a single process, specify one of the PIDs on
 your system by using the ``-p`` parameter for ``lsns``.
 
-``$ sudo lsns -p34734 NS TYPE  NPROCS   PID USER     COMMAND 4026531837 user     210     1 root     /usr/lib/systemd/systemd --switched-root --system 4026533107 mnt        1 34734 student1 /usr/bin/pod 4026533108 uts        1 34734 student1 /usr/bin/pod 4026533109 ipc        7 34734 student1 /usr/bin/pod 4026533110 pid        1 34734 student1 /usr/bin/pod 4026533112 net        7 34734 student1 /usr/bin/pod``
+::
+
+  $ sudo lsns -p34734
+  NS TYPE  NPROCS   PID USER     COMMAND
+  4026531837 user     210     1 root     /usr/lib/systemd/systemd --switched-root --system
+  4026533107 mnt        1 34734 student1 /usr/bin/pod
+  4026533108 uts        1 34734 student1 /usr/bin/pod
+  4026533109 ipc        7 34734 student1 /usr/bin/pod
+  4026533110 pid        1 34734 student1 /usr/bin/pod
+  4026533112 net        7 34734 student1 /usr/bin/pod
 
 Let's discuss 5 of these namespaces.
 
 The mount namespace
 ````````````````````
 
-
 The mount namespace is used to isolate filesystem resources inside
 containers. The files inside the base image used to deploy a container.
 From the point of view of the container, that's all that is available or
 visible.
 
-If your container has host resources or persistent storage assigned to
-it, these are made available using a `Linux bind
-mount <https://unix.stackexchange.com/questions/198590/what-is-a-bind-mount>`__.
-This means, not matter what you use for your persistent storage backed,
-your developer's applications only ever need to know how to access the
-correct directory.
+.. admonition:: Persistent storage and host resources
+
+  If your container has host resources or persistent storage assigned to
+  it, these are made available using a `Linux bind
+  mount <https://unix.stackexchange.com/questions/198590/what-is-a-bind-mount>`__.
+  This means, not matter what you use for your persistent storage backed,
+  your developer's applications only ever need to know how to access the
+  correct directory.
 
 We can see this using the ``nsenter`` command line utility on your
 infrastructure node. ``nsenter`` is used to enter a single namespace
@@ -141,7 +151,6 @@ application.
 The uts namespace
 ``````````````````
 
-
 UTS stands for "Unix Time Sharing". This is a concept that has been
 around since the 1970's when it was a novel idea to allow multiple users
 to log in to a system simultaneously. If you run the command
@@ -171,7 +180,6 @@ We can see this in action using ``nsenter``.
 The ipc namespace
 ``````````````````
 
-
 The IPC (inter-process communication) namespace is dedicated to kernel
 objects that are used for processes to communicate with each other.
 Objects like named semaphores and shared memory segments are included.
@@ -180,7 +188,6 @@ it won't conflict with any other container or the host itself.
 
 The pid namespace
 ```````````````````
-
 
 In the Linux world, PID 1 is an important concept. PID 1 is the process
 that starts all the other processes on your server. Inside a container,
@@ -249,7 +256,6 @@ isolation.
 The network namespace
 ``````````````````````
 
-
 OpenShift relies on software-defined networking that we'll discuss more
 in an upcoming section. Because of this, as well as modern networking
 architectrues, the networking configuration on an OpenShift node can
@@ -313,7 +319,7 @@ network configuration in OpenShift) and how traffic gets from the
 interface inside a container out to its destination in an upcoming
 section.
 
-.. admonition:: We forgot the User namespace?
+.. admonition:: What about the User namespace?
 
   Currently in OpenShift, all containers share a single user namespace.
   This is due to some lingering performance issues with the user namespace
@@ -325,7 +331,7 @@ section.
 Summary
 ''''''''''
 Linux kernel namespaces are used to isolate processes running inside
-containers. They're more lightweight than virtulization technologies and
+containers. They're more lightweight than virtualization technologies and
 don't require an entire virtualized kernel to function properly. From
 inside a container, namespaced resources are fully isolated, but can
 still be viewed and accessed when needed from the host and from
