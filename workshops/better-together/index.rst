@@ -12,7 +12,23 @@ Better Together: OpenShift and Ansible Workshop Ops Lab Guide
 Welcome
 ========
 
-Thank you for joining us today at the Better Together: OpenShift and Ansible Workshop.
+Thank you for joining us today at the Better Together: OpenShift and Ansible Workshop. As a reminder, here's the login information you'll use for the rest of today's lab.
+
+- SSH Username: |student_name|
+- OpenShift Username: admin and |student_name|
+- Password: |student_pass|
+- Control Node: |control_public_ip|
+
+Typical Agenda (subject to change depending on needs):
+
+- 0830a - breakfast starts
+- 0900a - start / group chat
+- 1000a - breakouts start
+- 1200p - lunch
+- 0230p - call to action / Q&A
+- 0300p - break for the day
+
+Let's get started, and have some fun!
 
 .. toctree::
   :maxdepth: 2

@@ -18,16 +18,32 @@
 
 
 # -- Project information -----------------------------------------------------
-
+import os
 project = u'Better Together: OpenShift and Ansible Workshop Ops Lab Guide'
-copyright = u'2019, Jamie Duncan'
-author = u'Red Hat'
+copyright = u'2019, Red Hat'
+author = u'Jamie Duncan'
 
 # The short X.Y version
 version = u''
 # The full version, including alpha/beta/rc tags
 release = u'1.1'
-
+html_logo = "images/Logo-RedHat-D-Color-RGB.png"
+html_favicon = "images/rh_favicon.png"
+rst_prolog = """
+.. |student_name| replace:: %s
+.. |student_pass| replace:: %s
+.. |control_public_ip| replace:: %s
+.. |openshift_ver| replace:: %s
+.. |lab_domain| replace:: %s
+.. |ssh_command| replace:: %s@%s
+""" % (os.environ['STUDENT_NAME'],
+       os.environ['STUDENT_PASS'],
+       os.environ['CONTROL_PUBLIC_IP'],
+       os.environ['OPENSHIFT_VER'],
+       os.environ['LAB_DOMAIN'],
+       os.environ['STUDENT_NAME'],
+       os.environ['CONTROL_PUBLIC_IP']
+       )
 
 # -- General configuration ---------------------------------------------------
 
@@ -83,7 +99,12 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'style_nav_header_background': '#dddddd',
+    'style_external_links': True,
+    'logo_only': True,
+    'prev_next_buttons_location': 'both',
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
