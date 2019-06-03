@@ -1,5 +1,6 @@
-Container Images and Registries
-================================
+Lab 2 - Container Images and Registries
+========================================
+
 The container revolution couldn't have happened without the ability to easily package up what you want in your container and move it from one platform to another. The `OCI Image Format Standard <https://github.com/opencontainers/image-spec>`__ provides us all a standard to package up and transfer containers. Let's take a quick look at how container images work.
 
 Getting started
@@ -7,19 +8,14 @@ Getting started
 
 When you read the OCI Image spec, it turns out that containers are really just `tarballs <https://whatis.techtarget.com/definition/tarball-tar-archive>`__, or compressed Linux ``tar`` archives. That means we can examine them. Let's do that in this lab.
 
-.. note::
+.. warning::
 
-  The content for this lab section is from a more in-depth `blog post <https://medium.com/@jamieeduncan/dissecting-a-docker-container-image-6da2411fcebe>`__ from 2017.
+  For this lab, SSH to your control node.
 
-Connect to your control node
-`````````````````````````````
+  .. parsed-literal::
 
-To start, let's log in to your control node.
-
-.. parsed-literal::
-
-  ssh |ssh_command|
-  sudo su -
+    ssh |ssh_command|
+    sudo su -
 
 Now, let's start examining the container images on this host.
 
@@ -65,6 +61,10 @@ Let's take a look at the ``docker history`` output for our host. Notice all of t
     Container "Layer Cake" model
 
 Next, we'll export a container image from the cache into a local file we can examine in-depth.
+
+.. note::
+
+  The content for this lab section is from a more in-depth `blog post <https://medium.com/@jamieeduncan/dissecting-a-docker-container-image-6da2411fcebe>`__ from 2017.
 
 Extracting containers from a host cache
 ''''''''''''''''''''''''''''''''''''''''

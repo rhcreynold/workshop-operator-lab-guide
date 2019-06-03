@@ -1,5 +1,5 @@
-Protection with SELinux
-========================
+Discussion - Protection with SELinux
+=======================================
 
 SELinux has a polarizing reputation in the Linux community. Inside an
 OpenShift cluster, it is 100% required. We're not going to get into the

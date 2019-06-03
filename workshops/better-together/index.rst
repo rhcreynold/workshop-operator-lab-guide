@@ -22,15 +22,11 @@ Thank you for joining us today at the Better Together: OpenShift and Ansible Wor
 Introduction and getting started
 =================================
 
-Workshop links and resources
+Links and resources
 -----------------------------
 
 - `Ansible Essentials slides </_static/ansible-essentials.html>`__
 - `OpenShift Technical overview slides </_static/openshift_technical_overview.pdf>`__
-
-Additional links and resources
--------------------------------
-
 - `CI/CD Pipeline Example <https://github.com/siamaksade/openshift-cd-demo>`__
 - `PuTTY for Windows <https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe>`__
 - `Ansible Docs <https://docs.ansible.com/>`__
@@ -47,6 +43,7 @@ Additional links and resources
 
   ansible-intro
   ocp-intro
+  integration
   container-registry
   container-namespaces
   container-cgroups
@@ -54,6 +51,5 @@ Additional links and resources
   ocp-deploying-apps
   ocp-sdn
   ocp-routing
-  integration
   ci-cd
-  summary
+  

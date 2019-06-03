@@ -1,5 +1,5 @@
-Container Fundamentals
-=======================
+Discussion - Container Fundamentals
+====================================
 
 In this section we'll discuss the fundamental components that make up
 OpenShift. Any Ops-centric discussion of an application platform like
@@ -20,13 +20,18 @@ in containers are unique to the Linux kernel. Some of them have been
 around for years, or even decades. In this section we'll investigate
 them in more depth.
 
-.. figure:: images/ops/containers_vs_vms.png
-
 Comparing VM and Container resource usage
 '''''''''''''''''''''''''''''''''''''''''''''''''
 
 In this section we're going to investigate how containers use your
-datacenter resources more efficiently. First, we'll focus on storage.
+datacenter resources more efficiently.
+
+.. figure:: images/ops/containers_vs_vms.png
+  :alt: containers compared to virtual machines
+
+  Container host resources compared to VM hypervisor resources
+
+ First, we'll focus on storage.
 
 Storage resource consumption
 `````````````````````````````
@@ -54,46 +59,39 @@ a container just needs the application it needs to execute and its
 dependencies. You can think of containers as a "portable userspace" for
 your applications.
 
-.. admonition:: Time and Resource Savings
-
-  Because each container doesn't require its own kernel, we also measure
-  startup time in milliseconds! This gives us a whole new way to think
-  about scalability and High Availability!
-
-  In your cluster, log in as the admin user and navigate to the default
-  project. Look at the resources your registry and other deployed
-  applications consume. For example the ``registry-console`` application
-  (a UI to see and manage the images in your OpenShift cluster) is
-  consuming less than 3MB of RAM!
+Because each container doesn't require its own kernel, we also measure
+startup time in milliseconds! This gives us a whole new way to think
+about scalability and High Availability!
 
 .. figure:: images/ops/metrics.jpeg
-   :alt:
+   :alt: Metrics resource consumption
+
+   The registry-console application consumes less than 3MB of RAM!
 
 If we were deploying this application in a VM we would spend multiple
 gigabytes of our RAM just so we could give the application the handful
 of MegaBytes it needs to run properly.
 
+.. note::
+
+  Think about your traditional virtualization platform, or your workflow
+  to deploy instances to your public cloud of choice for a moment. How big
+  is your default VMDK for your root OS disk? How much extra storage do
+  you add to your EC2 instance, just to handle the 'unknown' situations?
+  Is it 40GB? 60GB?
+
+  **This phenomenon is known as *Worst Case Scenario Provisioning*.** In
+  the industry, we've done it for years because we consider each VM a
+  unique creature that is hard to alter once created. Even with more
+  optimized workflows in the public cloud, we hold on to IP addresses, and
+  their associated resources, as if they're immutable once created. It's
+  easier to overspend on compute resources for most of us than to change
+  an IP address in our IPAM once we've deployed a system.
+
 The same is true for CPU consumption. In OpenShift, we measure and
 allocate CPUs by the *millicore*, or thousandth of a core. Instead of
 multiple CPUs, applications can be given the small fractions of a CPU
 they need to get their job done.
-
-Worst Case Scenario provisioning
-''''''''''''''''''''''''''''''''''''''''
-
-Think about your traditional virtualization platform, or your workflow
-to deploy instances to your public cloud of choice for a moment. How big
-is your default VMDK for your root OS disk? How much extra storage do
-you add to your EC2 instance, just to handle the 'unknown' situations?
-Is it 40GB? 60GB?
-
-**This phenomenon is known as *Worst Case Scenario Provisioning*.** In
-the industry, we've done it for years because we consider each VM a
-unique creature that is hard to alter once created. Even with more
-optimized workflows in the public cloud, we hold on to IP addresses, and
-their associated resources, as if they're immutable once created. It's
-easier to overspend on compute resources for most of us than to change
-an IP address in our IPAM once we've deployed a system.
 
 Containers are an evolution, not an end state
 ''''''''''''''''''''''''''''''''''''''''''''''

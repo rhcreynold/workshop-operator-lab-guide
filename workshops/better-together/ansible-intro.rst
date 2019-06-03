@@ -1,19 +1,18 @@
-Getting to know Ansible
-=========================
+Lab 1 - Getting to know Ansible
+================================
 
 To start our lab today, we're going to spend a few minutes getting used to our environments while making sure everyone is comfortable with how Ansible works. This is more of a recap than an in-depth exploration. But it will cover the concepts that we'll be using today.
 
-.. hint::
+.. warning::
+  To begin, ``ssh`` to your Ansible host as your student user.
 
-  For a more in-depth look at the concepts around the Ansible language, engine, and Ansible Tower, please see the  `Ansible Essentials <https://s3.amazonaws.com/openshift-ansible-workshop-materials/ansible-essentials.html>`__.
+  .. parsed-literal::
 
-To begin, ``ssh`` to your Ansible host as your student user.
+    ssh |ssh_command|
 
-.. parsed-literal::
+  We'll use our control node for most of our exercises with Ansible, and some of our OpenShift-related exercises. Let's start with the simplest way to use Ansible; ad hoc commands.
 
-  ssh |ssh_command|
-
-We'll use our control node for most of our exercises with Ansible, and some of our OpenShift-related exercises. Let's start with the simplest way to use Ansible; ad hoc commands.
+  For a more in-depth look at the concepts around the Ansible language, engine, and Ansible Tower, please see the  `Ansible Essentials presentation </_static/ansible-essentials.html>`__.
 
 Terms
 ------
@@ -53,9 +52,7 @@ Ad hoc commands
 
   ``sudo su - ec2-user``
 
-Ansible ad hoc commands use the ``ansible`` executable to run commands that use a single module against hosts in our inventory. As an initial task, lets run an ad hoc command that simply gives our server uptime. To run this command, you need to specify an inventory group to run against, a module to use (specified with the ``-m`` parameter) and any additional parameters that module may need. Let's talk quickly about inventories.
-
-They also reference your inventory hosts. Let's take a look at how inventories are configured next.
+Ansible ad hoc commands use the ``ansible`` executable to run commands that use a single module against hosts in our inventory. As an initial task, lets run an ad hoc command that simply gives our server uptime. To run this command, you need to specify an inventory group to run against, a module to use (specified with the ``-m`` parameter) and any additional parameters that module may need. They also reference your inventory hosts. Let's take a look at how inventories are configured next.
 
 Inventories
 ~~~~~~~~~~~~

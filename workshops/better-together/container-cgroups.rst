@@ -1,7 +1,11 @@
-Quotas and Limits with kernel control groups
-==============================================
+Lab 4 - Quotas and Limits 
+=====================================================
 
 In this lab we'll investigate how the Linux kernel uses Control Groups to prevent containers from consuming more than their fair share of host resources.
+
+.. warning::
+
+  For this lab, SSH to your master node and escalate to your root user so you can interact with OpenShift via the ``oc`` command line client.
 
 What are kernel control groups?
 ''''''''''''''''''''''''''''''''

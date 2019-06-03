@@ -1,5 +1,5 @@
-A real world CI/CD scenario
-============================
+Lab 8 - A real world CI/CD scenario
+====================================
 
 In the final section of our workshop, we'll take everything we've been
 discussing and put it into practice with a large, complex, real-work

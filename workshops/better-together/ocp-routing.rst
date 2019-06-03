@@ -1,5 +1,5 @@
-Routing layer
-==============
+Lab 7 - Routing layer
+=======================
 
 The routing layer integrated with OpenShift uses HAProxy by default. It maps the publicly available route you assign an
 application and maps it back to the corresponding pods in your cluster.

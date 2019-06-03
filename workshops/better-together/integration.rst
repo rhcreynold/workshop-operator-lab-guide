@@ -1,5 +1,5 @@
-OpenShift and Ansible integration points
-=========================================
+Discussion - OpenShift and Ansible Together
+=======================================================
 
 Deploying and managing an OpenShift cluster is controlled by Ansible.
 The
@@ -21,7 +21,7 @@ the proper repositories two Ansible playbooks need to be run:
 
 The deployment process takes 30-40 minutes to complete, depending on the size of your cluster. To save that time, we've got you covered and have already deployed your OpenShift cluster. In fact, all lab environments were provisioned using a single ansible playbook from `another ansible playbook that incorporates the playbooks that deploy OpenShift <https://github.com/jduncan-rva/linklight>`__.
 
-Modifying an OpenShift cluster
+Operations and Lifecycle management
 ''''''''''''''''''''''''''''''''''''
 
 In additon to deploying OpenShift, Ansible is used to modify your
@@ -84,9 +84,7 @@ Taking a look at the playbook options available from
 Summary
 '''''''''
 
-In section 1, we talked about Ansible fundamentals. In section 2, we
-worked through the OpenShift architecture and how your cluster can be
-managed using Ansible.
+We've talked about Ansible fundamentals, an we've discussed OpenShift architecture.
 
 This section has been about the deeper relationship between OpenShift
 and Ansible. All major lifecycle events are handled using Ansible.

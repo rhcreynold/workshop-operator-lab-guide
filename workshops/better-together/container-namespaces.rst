@@ -1,5 +1,5 @@
-Process isolation with Linux namespaces
-========================================
+Lab 3 - Containers are Linux 
+================================================
 
 You can find five different container experts and ask them to define
 what a container is, and you're likely to get five different answers.
@@ -12,9 +12,13 @@ correct from a certain perspective:
 -  A more effective way to isolate processes on a Linux system. This is
    a more operations-centered answer.
 
-
 More effective process isolation
 `````````````````````````````````
+
+.. warning::
+
+  For this section, SSH to your infrastructure node
+
 
 We mentioned in the last section that containers utilize server
 resources more effectively than VMs (the previous most effective
@@ -25,7 +29,7 @@ a VM does.
 
 .. figure:: images/ops/vm_vs_container.png
    :alt: VM vs Container
-   :captions: VM versus containers 
+   :captions: VM versus containers
 
 Let's investigate what makes a container a container.
 
