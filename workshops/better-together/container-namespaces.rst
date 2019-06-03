@@ -12,14 +12,6 @@ correct from a certain perspective:
 -  A more effective way to isolate processes on a Linux system. This is
    a more operations-centered answer.
 
-What exacty *is* a container?
-'''''''''''''''''''''''''''''''''''''
-
-There are t-shirts out there say "Containers are Linux". Well. They're
-not wrong. The components that isolate and protect applications running
-in containers are unique to the Linux kernel. Some of them have been
-around for years, or even decades. In this section we'll investigate
-them in more depth.
 
 More effective process isolation
 `````````````````````````````````
@@ -32,7 +24,8 @@ them. These systems don't need to utilize a full virtualized kernel like
 a VM does.
 
 .. figure:: images/ops/vm_vs_container.png
-   :alt:
+   :alt: VM vs Container
+   :captions: VM versus containers 
 
 Let's investigate what makes a container a container.
 

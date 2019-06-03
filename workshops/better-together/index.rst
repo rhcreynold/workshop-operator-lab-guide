@@ -19,16 +19,25 @@ Thank you for joining us today at the Better Together: OpenShift and Ansible Wor
 - Password: |student_pass|
 - Control Node: |control_public_ip|
 
-Typical Agenda (subject to change depending on needs):
+Introduction and getting started
+=================================
 
-- 0830a - breakfast starts
-- 0900a - start / group chat
-- 1000a - breakouts start
-- 1200p - lunch
-- 0230p - call to action / Q&A
-- 0300p - break for the day
+Workshop links and resources
+-----------------------------
 
-Let's get started, and have some fun!
+- `Ansible Essentials slides </_static/ansible-essentials.html>`__
+- `OpenShift Technical overview slides </_static/openshift_technical_overview.pdf>`__
+
+Additional links and resources
+-------------------------------
+
+- `CI/CD Pipeline Example <https://github.com/siamaksade/openshift-cd-demo>`__
+- `PuTTY for Windows <https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe>`__
+- `Ansible Docs <https://docs.ansible.com/>`__
+- `Ansible Module Index <https://docs.ansible.com/ansible/latest/modules/modules_by_category.html>`__
+- `OpenShift Docs <https://docs.openshift.com/>`__
+- `OC Command line client <https://github.com/openshift/origin/releases/latest>`__
+
 
 .. toctree::
   :maxdepth: 2
@@ -36,9 +45,9 @@ Let's get started, and have some fun!
   :Caption: Index
   :name: mastertoc
 
-  introduction
   ansible-intro
   ocp-intro
+  container-registry
   container-namespaces
   container-cgroups
   container-selinux
