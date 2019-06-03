@@ -94,7 +94,7 @@ Equipped with this information, let's run our first ad hoc commands. In this exa
 
 ::
 
-  $ ansible nodes -m command uptime
+  $ ansible nodes -m command -a uptime
 
 .. note::
 
@@ -102,7 +102,7 @@ Equipped with this information, let's run our first ad hoc commands. In this exa
 
   There are a few modules that can't be idempotent because of what they do. One of those is the ``command`` module. Because it executes any arbitrary command, there's no way it can ensure it will only make changes once. Other non-idempotent modules are `shell <https://docs.ansible.com/ansible/latest/modules/shell_module.html>`__, `raw <https://docs.ansible.com/ansible/latest/modules/raw_module.html>`__, and `script <https://docs.ansible.com/ansible/latest/modules/script_module.html>`__.
 
-The ``command`` module doesn't need any additional parameters. But if you're using an ad hoc command with a module that does need parameters to function properly, they can be passed to the module using the ``-a`` option.
+The ``command`` module only needs one parameter to function. But some modules need dozens of parameters to perform their assigned task.
 
 Ad hoc commands can be useful if you need to quickly pull data from systems for analysis. But they're not how you should be interacting with Ansible at scale. That large-scale interaction and automation should happen with Ansible playbooks.
 
@@ -116,6 +116,7 @@ Here's a playbook to do the same thing we did previously with an ad hoc command.
 .. code-block:: shell
 
   $ mkdir ~/playbooks
+  $ cd ~/playbooks
   $ vim site.yml
 
 You first playbook's contents should be like the example below.
@@ -138,7 +139,7 @@ To execute the command, run the ``ansible-playbook`` command.
 
 Your output should look similar to
 
-.. code-block:: bash
+.. code-block:: shell
 
   $ ansible-playbook ~/playbooks/site.yml
 
