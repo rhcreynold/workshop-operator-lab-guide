@@ -21,13 +21,15 @@ There are currently 3 workshops in this repository:
 $ sudo hack/run.sh <WORKSHOP-NAME> start
 ```
 
-And that's it. The workshop guide your specified is running on your server on port 8080. 
+And that's it. The workshop guide your specified is running on your server on port 8080.
 
-### Running multiple workshops at once, or runining on a nonstandard port:
+### Running multiple workshops at once, or running on a port other than 8080:
 
 ```
 $ sudo hack/run.sh <WORKSHOP-NAME> start <PORT>
 ```
+
+*note: only one copy of a single workshop works right now. You can multiple different workshops on different ports, but only one of each.*
 
 ### Stopping a workshop:
 
