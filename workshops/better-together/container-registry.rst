@@ -8,7 +8,7 @@ Getting started
 
 When you read the OCI Image spec, it turns out that containers are really just `tarballs <https://whatis.techtarget.com/definition/tarball-tar-archive>`__, or compressed Linux ``tar`` archives. That means we can examine them. Let's do that in this lab.
 
-.. warning::
+.. important::
 
   For this lab, SSH to your control node.
 

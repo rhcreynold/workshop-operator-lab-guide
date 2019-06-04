@@ -1,4 +1,4 @@
-Lab 3 - Containers are Linux 
+Lab 3 - Containers are Linux
 ================================================
 
 You can find five different container experts and ask them to define
@@ -15,9 +15,9 @@ correct from a certain perspective:
 More effective process isolation
 `````````````````````````````````
 
-.. warning::
+.. important::
 
-  For this section, SSH to your infrastructure node
+  For this section, SSH to your infrastructure node so you can inspect the containers directly.
 
 
 We mentioned in the last section that containers utilize server

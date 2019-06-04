@@ -3,7 +3,7 @@ Lab 1 - Getting to know Ansible
 
 To start our lab today, we're going to spend a few minutes getting used to our environments while making sure everyone is comfortable with how Ansible works. This is more of a recap than an in-depth exploration. But it will cover the concepts that we'll be using today.
 
-.. warning::
+.. important::
   To begin, ``ssh`` to your Ansible host as your student user.
 
   .. parsed-literal::

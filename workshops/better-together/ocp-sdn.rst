@@ -9,9 +9,9 @@ interfaces for each container and routes traffic through VXLANs to other
 nodes in the cluster or through a TUN interface to route out of your
 cluster and into other networks.
 
-.. warning::
+.. important::
 
-  For this lab, SSH to your infrastructure node and escalate to your root user so you can interact with OpenShift via the ``oc`` command line client.
+  For this lab, SSH to your master node and escalate to your root user so you can interact with OpenShift via the ``oc`` command line client.
 
 Inspecting the SDN
 '''''''''''''''''''

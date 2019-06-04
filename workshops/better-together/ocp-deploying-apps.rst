@@ -5,7 +5,7 @@ In this section, we'll use both the CLI and web interface to deploy and
 examine applications in OpenShift. While this certainly isn't an
 Ops-specific domain, it's required knowledge for all OpenShift users.
 
-.. warning::
+.. important::
 
   For this lab, SSH to your master node and escalate to your root user so you can interact with OpenShift via the ``oc`` command line client.
 

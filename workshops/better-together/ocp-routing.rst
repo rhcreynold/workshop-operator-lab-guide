@@ -1,6 +1,10 @@
 Lab 7 - Routing layer
 =======================
 
+.. important::
+
+  For this lab, SSH to your master node and escalate to your root user so you can interact with OpenShift via the ``oc`` command line client.
+
 The routing layer integrated with OpenShift uses HAProxy by default. It maps the publicly available route you assign an
 application and maps it back to the corresponding pods in your cluster.
 Each time an application or route is updated (created, retired, scaled
@@ -8,7 +12,7 @@ up or down), the configuration in HAProxy is updated by OpenShift.
 HAProxy runs in a pod in the default project on your infrastructure
 node.
 
-.. admonition:: Other routing options
+.. note:: Other routing options
 
   OpenShift uses a plugin framework for its routing layer. The default router for OpenShift 3.11 is HAProxy, but OpenShift also ships with an F5 router plugin. Additionally, there are cloud-provider specific and third-party router plugins.
 

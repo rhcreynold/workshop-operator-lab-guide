@@ -15,6 +15,10 @@ Jenkins pipeline workflow that:
 -  Builds a human break into the OpenShift UI to confirm before it
    promotes the application to the stage project
 
+.. important::
+
+ For this lab, SSH to your master node and escalate to your root user so you can interact with OpenShift via the ``oc`` command line client.
+
 This is a complete analog to a modern CI/CD workflow, implemented 100%
 within OpenShift. First, we'll need to create some projects for your
 CI/CD workflow to use. The content can be found on Github at
