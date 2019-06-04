@@ -29,7 +29,7 @@ And that's it. The workshop guide your specified is running on your server on po
 $ sudo hack/run.sh <WORKSHOP-NAME> start <PORT>
 ```
 
-*note: only one copy of a single workshop works right now. You can multiple different workshops on different ports, but only one of each.*
+*note: only one copy of a single workshop works right now. You can run multiple different workshops on different ports, but only one of each.*
 
 ### Stopping a workshop:
 
