@@ -15,7 +15,7 @@ There are currently 3 workshops in this repository:
 * better-together: The Ops lab guide for the Better Together: Ansible and OpenShift workshop series.
 * ansible-for-devops: The revamped, container-based Ansible Essentials workshop content.
 
-To start a workshop:
+## Starting a workshop:
 
 ```
 $ sudo hack/run.sh <WORKSHOP-NAME> start
@@ -23,13 +23,13 @@ $ sudo hack/run.sh <WORKSHOP-NAME> start
 
 And that's it. The project documentation is running on your server on port 8080. Happy contributing!
 
-To run multiple workshops at once, or run on a nonstandard port:
+## Running multiple workshops at once, or runining on a nonstandard port:
 
 ```
 $ sudo hack/run.sh <WORKSHOP-NAME> start <PORT>
 ```
 
-To stop a workshop:
+## Stopping a workshop:
 
 ```
 $ sudo hack/run.sh <WORKSHOP-NAME> stop
