@@ -34,7 +34,8 @@ author = u'Red Hat, Inc. North America Public Sector Emerging Technology Team'
 version = u'0.1'
 # The full version, including alpha/beta/rc tags
 release = u'0.1alpha1'
-
+html_logo = "images/Logo-RedHat-D-Color-RGB.png"
+html_favicon = "images/rh_favicon.png"
 rst_prolog = """
 .. |workshop_name_clean| replace:: %s
 .. |workshop_name| replace:: %s
@@ -50,6 +51,14 @@ rst_prolog = """
        os.environ['MASTER_URL'],
        os.environ['APP_DOMAIN'],
        )
+
+
+html_theme_options = {
+    'style_nav_header_background': '#dddddd',
+    'style_external_links': True,
+    'logo_only': True,
+    'prev_next_buttons_location': 'both',
+}
 
 
 extlinks = {
