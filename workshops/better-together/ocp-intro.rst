@@ -31,7 +31,7 @@ datacenter resources more efficiently.
 
   Container host resources compared to VM hypervisor resources
 
- First, we'll focus on storage.
+First, we'll focus on storage.
 
 Storage resource consumption
 `````````````````````````````
