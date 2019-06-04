@@ -21,7 +21,7 @@ There are currently 3 workshops in this repository:
 $ sudo hack/run.sh <WORKSHOP-NAME> start
 ```
 
-And that's it. The project documentation is running on your server on port 8080. Happy contributing!
+And that's it. The workshop guide your specified is running on your server on port 8080. 
 
 ### Running multiple workshops at once, or runining on a nonstandard port:
 
