@@ -71,7 +71,7 @@ Extracting containers from a host cache
 
 To save a container image from the host cache, use the ``docker save`` command directed into a local file.
 
-.. code-block::
+::
 
   # docker save dc8e2f6241dd > lab-guide.tar
   # ll -h lab-guide.tar
@@ -79,7 +79,7 @@ To save a container image from the host cache, use the ``docker save`` command d
 
 Next, make a directory to hold our image components and extract the image into it. Looking inside the directory, we see a bunch of directories with long names, a `JSON <https://www.json.org/>`__ with the name of the full `SHA256 <https://en.wikipedia.org/wiki/SHA-2>`__ hash of the image, and a file named ``manifest.json``.
 
-.. code-block::
+::
 
   # mkdir image
   # tar -xf lab-guide.tar -C image/

@@ -22,6 +22,8 @@ Thank you for joining us today at the Better Together: OpenShift and Ansible Wor
 Introduction and getting started
 =================================
 
+Thank you for taking the time to come and work with us today! Let's get started.
+
 Links and resources
 -----------------------------
 
@@ -33,7 +35,9 @@ Links and resources
 - `Ansible Module Index <https://docs.ansible.com/ansible/latest/modules/modules_by_category.html>`__
 - `OpenShift Docs <https://docs.openshift.com/>`__
 - `OC Command line client <https://github.com/openshift/origin/releases/latest>`__
-
+- `Lab Guide Container Image <https://quay.io/repository/jduncan/operator-workshop-lab-guide-better-together>`__
+- `Lab Guide Source Code <https://github.com/jduncan-rva/workshop-operator-lab-guide>`__
+- `Workshop Deploy Playbooks <https://github.com/jduncan-rva/linklight-ocp>`__
 
 .. toctree::
   :maxdepth: 2
@@ -52,4 +56,3 @@ Links and resources
   ocp-sdn
   ocp-routing
   ci-cd
-  

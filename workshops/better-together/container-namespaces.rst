@@ -105,21 +105,21 @@ from an infrastructure node.
 
 ::
 
-    $ sudo ls -al /
-    total 24
-    dr-xr-xr-x.  18 root root  236 Nov  9 08:09 .
-    dr-xr-xr-x.  18 root root  236 Nov  9 08:09 ..
-    lrwxrwxrwx.   1 root root    7 Nov  9 08:09 bin -> usr/bin
-    dr-xr-xr-x.   5 root root 4096 Nov  9 08:13 boot
-    drwxr-xr-x.   2 root root    6 Nov 18  2017 data
-    drwxr-xr-x.  18 root root 2760 Nov  9 08:13 dev
-    drwxr-xr-x. 107 root root 8192 Nov  9 09:02 etc
-    drwxr-xr-x.   4 root root   38 Dec 14  2017 home
-    lrwxrwxrwx.   1 root root    7 Nov  9 08:09 lib -> usr/lib
-    lrwxrwxrwx.   1 root root    9 Nov  9 08:09 lib64 -> usr/lib64
-    drwxr-xr-x.   2 root root    6 Dec 14  2017 media
-    drwxr-xr-x.   2 root root    6 Dec 14  2017 mnt
-    ...
+  $ sudo ls -al /
+  total 24
+  dr-xr-xr-x.  18 root root  236 Nov  9 08:09 .
+  dr-xr-xr-x.  18 root root  236 Nov  9 08:09 ..
+  lrwxrwxrwx.   1 root root    7 Nov  9 08:09 bin -> usr/bin
+  dr-xr-xr-x.   5 root root 4096 Nov  9 08:13 boot
+  drwxr-xr-x.   2 root root    6 Nov 18  2017 data
+  drwxr-xr-x.  18 root root 2760 Nov  9 08:13 dev
+  drwxr-xr-x. 107 root root 8192 Nov  9 09:02 etc
+  drwxr-xr-x.   4 root root   38 Dec 14  2017 home
+  lrwxrwxrwx.   1 root root    7 Nov  9 08:09 lib -> usr/lib
+  lrwxrwxrwx.   1 root root    9 Nov  9 08:09 lib64 -> usr/lib64
+  drwxr-xr-x.   2 root root    6 Dec 14  2017 media
+  drwxr-xr-x.   2 root root    6 Dec 14  2017 mnt
+  ...
 
 After using ``nsenter`` to enter the mount namespace for the hawkular
 container (hawkular is part of the metrics gather system in OpenShift),
@@ -127,19 +127,19 @@ you see that the root filesystem is different.
 
 ::
 
-    $ sudo nsenter -m -t 33154[root@ip-172-16-87-199 /]# ll
-    total 0
-    lrwxrwxrwx.   1 root root         7 Aug  1 13:02 bin -> usr/bin
-    dr-xr-xr-x.   2 root root         6 Dec 14  2017 boot
-    drwxrwsrwx.   4 root 1000040000  61 Nov  9 14:07 cassandra_data
-    drwxr-xr-x.   5 root root       360 Nov  9 14:07 dev
-    drwxr-xr-x.   1 root root        66 Nov  9 14:07 etc
-    drwxrwsrwt.   3 root 1000040000 160 Nov  9 14:04 hawkular-cassandra-certs
-    drwxr-xr-x.   1 root root        23 Sep 17 18:44 home
-    lrwxrwxrwx.   1 root root         7 Aug  1 13:02 lib -> usr/lib
-    lrwxrwxrwx.   1 root root         9 Aug  1 13:02 lib64 -> usr/lib64
-    drwxr-xr-x.   2 root root         6 Dec 14  2017 media
-    ...
+  $ sudo nsenter -m -t 33154[root@ip-172-16-87-199 /]# ll
+  total 0
+  lrwxrwxrwx.   1 root root         7 Aug  1 13:02 bin -> usr/bin
+  dr-xr-xr-x.   2 root root         6 Dec 14  2017 boot
+  drwxrwsrwx.   4 root 1000040000  61 Nov  9 14:07 cassandra_data
+  drwxr-xr-x.   5 root root       360 Nov  9 14:07 dev
+  drwxr-xr-x.   1 root root        66 Nov  9 14:07 etc
+  drwxrwsrwt.   3 root 1000040000 160 Nov  9 14:04 hawkular-cassandra-certs
+  drwxr-xr-x.   1 root root        23 Sep 17 18:44 home
+  lrwxrwxrwx.   1 root root         7 Aug  1 13:02 lib -> usr/lib
+  lrwxrwxrwx.   1 root root         9 Aug  1 13:02 lib64 -> usr/lib64
+  drwxr-xr-x.   2 root root         6 Dec 14  2017 media
+  ...
 
 The container image for hawkular includes some of the fileystem like a
 normal server, but it also includes directories that are specific to the
