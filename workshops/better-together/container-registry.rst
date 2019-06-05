@@ -32,7 +32,7 @@ Once on the control node, run the ``docker images`` command to see the images on
 
 Let's take a look at the ``docker history`` output for our host. Notice all of the layers, the command that creted them, as well as the size of each layer.
 
-.. code-block::
+.. code-block:: shell
 
   # docker history quay.io/jduncan/operator-workshop-lab-guide-better-together
   IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
@@ -71,7 +71,7 @@ Extracting containers from a host cache
 
 To save a container image from the host cache, use the ``docker save`` command directed into a local file.
 
-.. code-block::
+.. code-block:: shell
 
   # docker save dc8e2f6241dd > lab-guide.tar
   # ll -h lab-guide.tar
@@ -79,7 +79,7 @@ To save a container image from the host cache, use the ``docker save`` command d
 
 Next, make a directory to hold our image components and extract the image into it. Looking inside the directory, we see a bunch of directories with long names, a `JSON <https://www.json.org/>`__ with the name of the full `SHA256 <https://en.wikipedia.org/wiki/SHA-2>`__ hash of the image, and a file named ``manifest.json``.
 
-.. code-block::
+.. code-block:: shell
 
   # mkdir image
   # tar -xf lab-guide.tar -C image/

@@ -270,7 +270,7 @@ This means that simply by overriding the value of a variable in one location wit
 
 .. code-block:: shell
 
-  $ ansible-playbook -e service_name=~/playbooks/site.yml
+  $ ansible-playbook -e "service_name=tuned" ~/playbooks/site.yml
 
 Notice the different name in the name for your restart task. Instead of ``chronyd``, your playbook restarted ``tuned``, just like you specified. Just by using a variable, and taking advantage of Ansible's variable precedence, we're able to change what our playbook does. Next, let's look at how we conditionally execute commands using conditionals.
 
