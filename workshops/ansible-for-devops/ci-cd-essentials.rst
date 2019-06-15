@@ -14,3 +14,9 @@ Additionally, all of our workloads in this lab are going to be deployed using `L
 
 Defining Common Terms
 ''''''''''''''''''''''
+
+- Continuous Integration
+- Continuous Delivery
+- Containers
+- Ansible
+- Ansible Tower 
