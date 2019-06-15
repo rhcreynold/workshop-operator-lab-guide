@@ -8,48 +8,39 @@ Deploying Site A
 Overview
 `````````
 
-We have gone ahead and stood up two Red Hat Enterprise Linux hosts for you.  In this lab we are going to
-deploy a simple web application (from an Ansible Role) on two different hosts. This will host a simple
-website display the hostname.
+Now that we have our operational infrastructure deployed, in this lab we'll deploy a our first site's web server infrastructure. To do this, we'll create an Ansible Role. Our web application will display the hostname of each server.
 
-Let first modify the ``hosts`` file and add the correct ip addresses for our web servers.
+.. important::
+  To save time, two RHEL 7 hosts that have been pre-provisioned for your Site A web hosts.
+
+Adding hosts to your Ansible inventory
+```````````````````````````````````````
+
+First, modify your ansible inventory at ``~/hosts`` to add a new groupe named ``site1`` with the IP addresses for your hosts as members.
 
 .. parsed-literal::
   [gogs]
   |control_public_ip|
 
-  [site1]
-  |node_1_ip|
-  |node_2_ip|
+  [siteA]
+  siteA-node1 ansible_host=|node_1_ip|
+  siteA-node2 ansible_host=|node_2_ip|
 
-Now let us create the Ansible role structure, but first we need to get into the right folder.
+Creating a Site A deployment role
+```````````````````````````````````
+
+Next, change to the ``~/devops-workshop/roles`` directory and create a new Ansible role using ``ansible-galaxy``.
 
 .. code-block:: bash
 
   $ cd ~/devops-workshop
   $ cd roles
-
-
-Now let's create the Ansible Role structure
-
-.. code-block:: bash
-
   $ ansible-galaxy init apache-simple
 
-Let us create a site.yml to invoke the role.
+Role defaults
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: yaml
-
-  ---
-  - name: Ensure apache is installed and started via role
-    hosts: web
-    become: yes
-
-    roles:
-      - apache-simple
-
-
-Now let us add some default variables to your role in ``roles/apache-simple/defaults/main.yml.``
+Your role needs some default values for variables in ``roles/apache-simple/defaults/main.yml``. Edit your file to look like the example below.
 
 .. code-block:: yaml
 
@@ -58,7 +49,10 @@ Now let us add some default variables to your role in ``roles/apache-simple/defa
   apache_test_message: This is a test message
   apache_max_keep_alive_requests: 115
 
-Now lets create some role-specific variables to your role in ``roles/apache-simple/vars/main.yml.``
+Role variables
+~~~~~~~~~~~~~~~
+
+Next, add the following role-specific variables in ``roles/apache-simple/vars/main.yml.``
 
 .. code-block:: yaml
 
@@ -67,6 +61,8 @@ Now lets create some role-specific variables to your role in ``roles/apache-simp
     - httpd
     - mod_wsgi
 
+Role handlers
+~~~~~~~~~~~~~~
 
 Create your role handler in ``roles/apache-simple/handlers/main.yml.``
 
@@ -74,13 +70,28 @@ Create your role handler in ``roles/apache-simple/handlers/main.yml.``
 
   ---
   # handlers file for apache-simple
-  - name: restart-apache-service
+  - name: restart httpd service
   service:
     name: httpd
     state: restarted
     enabled: yes
 
-Add tasks to your role in roles/apache-simple/tasks/main.yml.
+Role templates
+~~~~~~~~~~~~~~~
+
+Your roles needs two Ansible templates in ``roles/apache-simple/templates/``. To save time, we've made these available for your to download directly using the following commands.
+
+.. code-block:: yaml
+
+  $ mkdir -p ~/apache-role/roles/apache-simple/templates/
+  $ cd ~/apache-role/roles/apache-simple/templates/
+  $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
+  $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
+
+Role tasks
+~~~~~~~~~~~
+
+Finally, create tasks for your role that reference your defaults, variables, handlers, and templates in ``roles/apache-simple/tasks/main.yml``.
 
 .. code-block:: yaml
 
@@ -91,7 +102,7 @@ Add tasks to your role in roles/apache-simple/tasks/main.yml.
     name: "{{ item }}"
     state: present
   with_items: "{{ httpd_packages }}"
-  notify: restart-apache-service
+  notify: restart httpd service
 
   - name: Ensure site-enabled directory is created
   file:
@@ -102,7 +113,7 @@ Add tasks to your role in roles/apache-simple/tasks/main.yml.
   template:
     src: templates/httpd.conf.j2
     dest: /etc/httpd/conf/httpd.conf
-  notify: restart-apache-service
+  notify: restart httpd service
 
   - name: Copy index.html
   template:
@@ -115,17 +126,39 @@ Add tasks to your role in roles/apache-simple/tasks/main.yml.
     state: started
     enabled: yes
 
-Download a couple of templates into ``roles/apache-simple/templates/``
+Next, we need to create a playbook to apply our new role to our Site A hosts.
+
+Creating a Site A playbook
+````````````````````````````
+
+Create an Ansible playbook at ``~/devops-workshop/site.yml`` with the following content.
 
 .. code-block:: yaml
 
-  $ mkdir -p ~/apache-role/roles/apache-simple/templates/
-  $ cd ~/apache-role/roles/apache-simple/templates/
-  $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
-  $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
+  ---
+  - name: Deploy site web infrastructure
+    hosts: siteA
+    become: yes
 
-Now let us run the playbook.
+    roles:
+      - apache-simple
+
+With your playbook created, it's time to deploy Site A.
+
+Deploying Site A
+``````````````````
+
+To deploy Site A, use the ``ansible-playbook`` command to execute your new playbook.
 
 .. code-block:: bash
 
-  $ ansible-playbook site.yml
+  $ ansible-playbook ~/devops-workshop/site.yml
+
+Your output should look like this sample output:
+
+.. code-block:: bash
+
+  $ output goes here for reference
+
+Summary
+````````
