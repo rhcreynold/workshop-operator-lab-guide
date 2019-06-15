@@ -16,7 +16,7 @@ Now that we have our operational infrastructure deployed, in this lab we'll depl
 Adding hosts to your Ansible inventory
 ```````````````````````````````````````
 
-First, modify your ansible inventory at ``~/hosts`` to add a new groupe named ``site1`` with the IP addresses for your hosts as members.
+First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new groupe named ``siteA`` with the IP addresses for your hosts as members.
 
 .. parsed-literal::
   [gogs]
