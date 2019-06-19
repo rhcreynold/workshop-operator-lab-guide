@@ -1,0 +1,7 @@
+---
+- name: Deploy site web infrastructure
+  hosts: siteB
+  become: yes
+
+  roles:
+    - apache-simple

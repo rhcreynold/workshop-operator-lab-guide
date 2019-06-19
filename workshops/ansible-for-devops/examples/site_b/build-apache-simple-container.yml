@@ -1,0 +1,22 @@
+---
+- name: Ensure apache is installed and started via role
+  hosts: localhost
+  become: yes
+  roles:
+    - apache-simple
+
+  tasks:
+
+   - name: build a new docker image
+     command: "docker build -t apache-simple ."
+     tags:
+        - container
+
+   - name: Tag and push to local registry
+     docker_image:
+        name: apache-simple
+        repository: control_public_ip:5000/student1
+        tag: latest
+        push: yes
+     tags:
+        - container
