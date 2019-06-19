@@ -1,0 +1,13 @@
+---
+- name: launch apache containers on site2 nodes
+  hosts: siteB
+  become: yes
+
+  tasks:
+    - name: launch apache-simple container on siteb nodes
+      docker_container:
+        name: apache-simple
+        image: 192.168.0.1:5000/student1/apache-simple
+        ports:
+          - "8080:80"
+        restart_policy: always
