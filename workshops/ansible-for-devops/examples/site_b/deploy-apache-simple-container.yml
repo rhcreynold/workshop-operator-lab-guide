@@ -9,5 +9,5 @@
         name: apache-simple
         image: 192.168.0.1:5000/student1/apache-simple
         ports:
-          - "8080:80"
+          - "8080:8080"
         restart_policy: always

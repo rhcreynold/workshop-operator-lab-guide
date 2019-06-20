@@ -104,7 +104,7 @@ container.  This will server the exact same site as the rpm version that we depl
   ADD httpd.conf /etc/httpd/conf
   ADD index.html /var/www/html/
   RUN chown -R apache:apache /var/www/html
-  EXPOSE 80
+  EXPOSE 8080
 
 
 Now we can create a Ansible playbook to build the container and push it into the registry that we created earlier.
@@ -171,7 +171,7 @@ Inside that file should have the following:
           name: apache-simple
           image: |control_public_ip|:5000/student1/apache-simple
           ports:
-            - "8080:80"
+            - "8080:8080"
           restart_policy: always
 
 so let's go ahead and run this:
@@ -184,5 +184,5 @@ Assuming everything ran you can test each node with the curl command.
 
 .. parsed-literal::
 
-  $ curl http://|node_3_ip|:8080
-  $ curl http://|node_4_ip|:8080
+  $ curl http://|node_3_ip|
+  $ curl http://|node_4_ip|

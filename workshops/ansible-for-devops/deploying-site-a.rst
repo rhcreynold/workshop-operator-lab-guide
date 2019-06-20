@@ -48,7 +48,7 @@ Your role needs some default values for variables in ``roles/apache-simple/defau
   # defaults file for apache-simple
   apache_test_message: This is a test message
   apache_max_keep_alive_requests: 115
-  apache_webserver_port: 80
+  apache_webserver_port: 8080
 
 Role variables
 ~~~~~~~~~~~~~~~

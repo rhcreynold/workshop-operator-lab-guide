@@ -8,4 +8,4 @@ MAINTAINER student1
 ADD httpd.conf /etc/httpd/conf
 ADD index.html /var/www/html/
 RUN chown -R apache:apache /var/www/html
-EXPOSE 80
+EXPOSE 8080
