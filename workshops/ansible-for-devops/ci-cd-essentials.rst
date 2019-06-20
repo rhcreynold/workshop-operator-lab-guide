@@ -42,10 +42,7 @@ Ansible Tower
 
 Ansible Tower is how you use Ansible at scale. Tower is a mature web application that provides a user interface, RBAC, and API in front of your Ansible workloads. For teams larger than a few people who are managing more than a few servers, Ansible Tower is the best way to use Ansible.
 
-Today's Scenario
+Getting Started
 '''''''''''''''''
 
-Today we're going to build out the following scenario:
-
-- Deploy artifacts we need to use containers and Ansible effectively. We'll be 
-- Deploy production Site A using Ansible playbooks. Site A will be two Amazon instances, each running an ``httpd`` container running a custom website.
+Ready? Let's start building out our next-generation infrastructure!
