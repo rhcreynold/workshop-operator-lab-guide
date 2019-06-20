@@ -109,9 +109,9 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
     docker_image:
       name: "{{ item }}"
       state: present
-      with_items:
-        - gogs/gogs
-        - mariadb
+    loop:
+      - gogs/gogs
+      - mariadb
 
   - name: start the GOGS container
     docker_container:

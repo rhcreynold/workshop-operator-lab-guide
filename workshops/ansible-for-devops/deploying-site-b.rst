@@ -135,7 +135,7 @@ or the container based deployment based about using tags.
      - name: Tag and push to local registry
        docker_image:
           name: apache-simple
-          repository: control_public_ip:5000/|student_name|
+          repository: |control_public_ip|:5000/|student_name|/apache-simple
           tag: latest
           push: yes
        tags:
@@ -162,7 +162,7 @@ Inside that file should have the following:
 
   ---
   - name: launch apache containers on site2 nodes
-    hosts: site2
+    hosts: siteB
     become: yes
 
     tasks:
