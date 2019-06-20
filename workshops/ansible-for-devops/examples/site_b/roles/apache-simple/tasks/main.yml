@@ -1,4 +1,4 @@
- ---
+---
 # tasks file for apache
 - name: Ensure httpd packages are present
   yum:
@@ -11,7 +11,7 @@
 
 - name: Ensure latest httpd.conf file is present for RPM
   template:
-    src: httpd.conf.j2
+    src: templates/httpd.conf.j2
     dest: /etc/httpd/conf/httpd.conf
   notify: restart-apache-service
   tags:
@@ -19,21 +19,21 @@
 
 - name: Ensure latest httpd.conf file is present for Container
   template:
-    src: httpd.conf.j2
+    src: templates/httpd.conf.j2
     dest: /home/student1/devops-workshop/httpd.conf
   tags:
      - container
 
 - name: Ensure latest index.html file is present for RPM
   template:
-    src: index.html.j2
+    src: templates/index.html.j2
     dest: /var/www/html/index.html
   tags:
      - rpm
 
 - name: Ensure latest index.html file is present for Container
   template:
-    src: index.html.j2
+    src: templates/index.html.j2
     dest: /home/student1/devops-workshop/index.html
   tags:
      - container
