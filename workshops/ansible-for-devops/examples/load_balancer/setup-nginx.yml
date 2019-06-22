@@ -16,33 +16,46 @@
         autoindex: false
         reverse_proxy:
           locations:
-            frontend:
+            backend:
               location: /
-              proxy_pass: http://frontend_servers
+              proxy_pass: http://backend_servers
+              proxy_set_header:
+                header_host:
+                  name: Host
+                  value: $host
+                header_x_real_ip:
+                  name: X-Real-IP
+                  value: $remote_addr
+                header_x_forwarded_for:
+                  name: X-Forwarded-For
+                  value: $proxy_add_x_forwarded_for
+                header_x_forwarded_proto:
+                  name: X-Forwarded-Proto
+                  value: $scheme
         upstreams:
           upstream_1:
             name: backend_servers
             lb_method: least_conn
-            zone_name: frontend
+            zone_name: backend
             zone_size: 64k
             sticky_cookie: false
             servers:
-              frontend_server_1:
+              backend_server_1:
                 address: localhost
                 port: 80
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
-              frontend_server_2:
+              backend_server_2:
                 address: localhost
                 port: 80
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
-              frontend_server_3:
+              backend_server_3:
                 address: localhost
                 port: 80
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
-              frontend_server_4:
+              backend_server_4:
                 address: localhost
                 port: 80
                 weight: 1
