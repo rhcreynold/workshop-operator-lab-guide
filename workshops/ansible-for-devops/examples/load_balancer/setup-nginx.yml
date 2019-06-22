@@ -10,7 +10,7 @@
         template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 80
+        port: 8080
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false
@@ -42,21 +42,21 @@
             servers:
               backend_server_1:
                 address: localhost
-                port: 80
+                port: 8080
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
               backend_server_2:
                 address: localhost
-                port: 80
+                port: 8080
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
               backend_server_3:
                 address: localhost
-                port: 80
+                port: 8080
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
               backend_server_4:
                 address: localhost
-                port: 80
+                port: 8080
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s

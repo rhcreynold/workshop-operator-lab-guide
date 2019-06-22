@@ -1,4 +1,6 @@
 - hosts: all
   become: true
+  vars:
+    service_firewalld_enabled: false #since using a cloud image, we need to skip this
   roles:
      - { role: RedHatOfficial.rhel7_stig }
