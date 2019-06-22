@@ -4,3 +4,11 @@
     service_firewalld_enabled: false #since using a cloud image, we need to skip this
   roles:
      - { role: RedHatOfficial.rhel7_stig }
+
+
+  tasks:
+  - name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+    seboolean:
+      name: httpd_can_network_connect
+      state: yes
+      persistent: yes

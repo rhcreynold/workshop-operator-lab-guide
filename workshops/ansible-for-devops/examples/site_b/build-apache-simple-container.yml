@@ -12,11 +12,12 @@
      tags:
         - container
 
-   - name: Tag and push to local registry
+   - name: Tag and push to registry
      docker_image:
-        name: apache-simple
-        repository: control_public_ip:5000/student1
-        tag: latest
-        push: yes
+       name: apache-simple
+       repository: 172.16.22.48:5000/student1/apache-simple
+       push: yes
+       source: local
+       tag: latest
      tags:
         - container
