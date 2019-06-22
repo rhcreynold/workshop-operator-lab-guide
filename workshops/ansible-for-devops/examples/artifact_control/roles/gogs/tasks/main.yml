@@ -10,9 +10,9 @@
   docker_image:
     name: "{{ item }}"
     state: present
-    with_items:
-      - gogs/gogs
-      - mariadb
+  with_items:
+    - gogs/gogs
+    - mariadb
 
 - name: start the GOGS container
   docker_container:
