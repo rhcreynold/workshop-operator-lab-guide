@@ -2,6 +2,7 @@
   become: true
   vars:
     service_firewalld_enabled: false #since using a cloud image, we need to skip this
+    sysctl_net_ipv4_ip_forward: true #for things to work correctly
   roles:
      - { role: RedHatOfficial.rhel7_stig }
 
