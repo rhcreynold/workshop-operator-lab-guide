@@ -1,6 +1,6 @@
 ---
 # handlers file for apache-simple
-- name: restart httpd service
+- name: restart-apache-service
   service:
     name: httpd
     state: restarted
