@@ -18,6 +18,7 @@
  introduction
  ci-cd-essentials
  setting-up-version-control
+ stig
  deploying-site-a
  deploying-ansible-tower
  deploying-site-b

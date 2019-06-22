@@ -11,6 +11,9 @@ We have gone ahead and stood up two additional Red Hat Enterprise Linux hosts fo
 deploy a containerized simple web application (from an Ansible Role) on two different hosts. This will host a simple
 website.  This is an interation of the last role that we made in Deploying site a.
 
+Modify the hosts file
+`````````````````````
+
 Let first modify the ``hosts`` file and add the correct ip addresses for our web servers.
 
 .. parsed-literal::
@@ -31,6 +34,8 @@ in a container. We are going to build a playbook that leverages the role that we
 Let modify the main playbook inside the role from site A.  This is going to give us the flexibility of using the same
 Ansible code to deploy the same content.  Notice that we have added tags, read more about Ansible tags `here <https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html/>`__
 
+Modify our Apache Role
+`````````````````````
 
 .. parsed-literal::
 
@@ -92,6 +97,12 @@ Now that we have added tags, lets take a look at the DockerFile to build the con
 container that has apache installed.  From there we are going to add the config files `index.html` and `httpd.conf` to the
 container.  This will server the exact same site as the rpm version that we deployed earlier.
 
+Containers
+```````````
+
+Creating the Dockerfile
+^^^^^^^^^^^^^^^^^^^^^^^
+
 .. parsed-literal::
 
   # Pull the rhel image from the local registry
@@ -106,6 +117,9 @@ container.  This will server the exact same site as the rpm version that we depl
   RUN chown -R apache:apache /var/www/html
   EXPOSE 8080
 
+
+Playbook to build the container and push it
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now we can create a Ansible playbook to build the container and push it into the registry that we created earlier.
 
@@ -132,12 +146,13 @@ or the container based deployment based about using tags.
        tags:
           - container
 
-     - name: Tag and push to local registry
+     - name: Tag and push to registry
        docker_image:
-          name: apache-simple
-          repository: |control_public_ip|:5000/|student_name|/apache-simple
-          tag: latest
-          push: yes
+         name: apache-simple
+         repository: |control_public_ip|:5000/student1/apache-simple
+         push: yes
+         source: local
+         tag: latest
        tags:
           - container
 
@@ -149,6 +164,9 @@ Now its time to build the container:
     $ ansible-playbook -i hosts build-apache-simple-container.yml
 
 Now there should be a `index.html` and a `httpd.conf` in /home/|student_name|/devops-workshop/.
+
+Playbook to deploy the container
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Next step is to deploy the containers to site B.  We are going to create a simple playbook to do just that.
 
@@ -171,7 +189,7 @@ Inside that file should have the following:
           name: apache-simple
           image: |control_public_ip|:5000/student1/apache-simple
           ports:
-            - "8080:8080"
+            - "8080:80"
           restart_policy: always
 
 so let's go ahead and run this:
@@ -180,9 +198,12 @@ so let's go ahead and run this:
 
   $ ansible-playbook -i hosts deploy-apache-simple-container.yml
 
+
+OUTPUT GOES HERE
+
 Assuming everything ran you can test each node with the curl command.
 
 .. parsed-literal::
 
-  $ curl http://|node_3_ip|
-  $ curl http://|node_4_ip|
+  $ curl http://|node_3_ip|:8080
+  $ curl http://|node_4_ip|:8080
