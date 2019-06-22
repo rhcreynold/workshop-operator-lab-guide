@@ -1,0 +1,14 @@
+---
+# tasks file for registry
+- name: pull the registry image
+  docker_image:
+    name: registry
+    state: present
+
+- name: deploy the registry container
+  docker_container:
+    name: registry
+    image: registry
+    ports:
+      - "5000:5000"
+    restart_policy: always

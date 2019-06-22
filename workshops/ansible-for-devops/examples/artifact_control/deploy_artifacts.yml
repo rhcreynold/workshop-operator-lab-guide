@@ -1,0 +1,7 @@
+- name: deploy GOGS MariaDB and container registry
+  gather_facts: false
+  become: yes
+  hosts: control
+  roles:
+    - gogs
+    - registry
