@@ -29,6 +29,7 @@ First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new
 Creating a development site deployment role
 ``````````````````````````````````````````````
 
+
 Next, change to the ``~/devops-workshop/roles`` directory and create a new Ansible role using ``ansible-galaxy``.
 
 .. code-block:: bash
