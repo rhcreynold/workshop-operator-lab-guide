@@ -8,7 +8,7 @@ Setting up Artifact Control
 Overview
 `````````
 
-In this lab you'll configure your control host to serve your playbooks and other content for the rest of today's lab. We'll be using `GOGS <https://gogs.io/>`__ deployed in a container for this. Our tasks for this lab are to:
+In this lab we're using `GOGS <https://gogs.io/>`__ deployed in a container to provide version control for all the playbooks we'll create. Additionally we'll deploy a container registry to house our container images. Our tasks for this lab are to:
 
 1. Write a playbook to deploy GOGS on your control host
 2. Deploy GOGS and confirm it's functioning properly
@@ -17,6 +17,8 @@ In this lab you'll configure your control host to serve your playbooks and other
 .. admonition:: Do I need to configure docker?!
 
   Your control host already has all the dependencies to run docker containers. That's because this lab guide is already running on your control host inside a container!
+
+  Run ``docker ps`` on your control node to confirm.
 
 Let's get started.
 
@@ -27,9 +29,9 @@ Ansible best practices include using inventory groups consistently. This makes y
 
 .. admonition:: Why is this important?
 
-  This allows content you create in this workshop to be used by simply using a different inventory.
+  This practice allows content you create in this workshop to be used in other environments by simply using a different inventory.
 
-Let's create your initial inventory with a ``gogs`` group. In your home directory, /home/|student_name|, create a directory named ``devops-workshop``.
+Let's create your initial inventory with ``gogs`` and ``registry`` groups. In your home directory, /home/|student_name|, create a directory named ``devops-workshop``.
 
 .. code-block:: bash
 
@@ -39,7 +41,10 @@ Let's create your initial inventory with a ``gogs`` group. In your home director
 Next, in that directory, create a file named ``hosts`` with the following content:
 
 .. parsed-literal::
-  [control]
+  [gogs]
+  |control_public_ip|
+
+  [registry]
   |control_public_ip|
 
 Next, we'll create an `ansible role <https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html>`__ to apply to our GOGS group.
@@ -138,11 +143,11 @@ Next, well create a role to manage our container registry deployment
 Creating a registry role
 `````````````````````````
 
-You'll be deploying the `Docker v2 registry <https://hub.docker.com/_/registry>`__ on your control node and serving content on port 5000. To start, we'll create a new role inside ``playbook/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
+You'll be deploying the `Docker v2 registry <https://hub.docker.com/_/registry>`__ on your control node and serving content on port 5000. To start, we'll create a new role inside ``~/devops-workshop/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
 
 .. code-block:: shell
 
-  $ cd ~/playbook/roles
+  $ cd ~/devops-workshop/roles
   $ ansible-galaxy init registry
   - registry was created successfully
   $ tree registry
@@ -192,15 +197,25 @@ With your roles in place, you're ready to deploy GOGS, MariaDB, and the containe
 
 .. code-block:: yaml
 
-  - name: deploy GOGS MariaDB and container registry
+  - name: deploy GOGS MariaDB
     gather_facts: false
     become: yes
-    hosts: control
+    hosts: gogs
     roles:
       - gogs
+
+  - name: deploy container registry
+    gather_facts: false
+    become: yes
+    hosts: registry
+    roles:
       - registry
 
 Once complete, run ``ansible-playbook`` referencing your inventory and the playbook you just created.
+
+.. admonition:: Following best practices
+
+  Like we said in the beginning, this playbook is designed to work regardless of how you have your hosts configured. Your ``gogs`` and ``registry`` groups use the same host in today's example, but the same playbooks works identically if the hosts are different. The only requirements are to be running docker and be in the proper groups in your inventory.
 
 .. code-block:: bash
 
@@ -246,7 +261,7 @@ First, we'll tell GOGS how to connect to the MariaDB container. For this configu
 .. code-block:: bash
 
   # docker ps | grep mariadb
-  4951ffc5110b        mariadb                                                          "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                                        mariadb
+  4951ffc5110b        mariadb   "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                                        mariadb
 
 In our example, the container ID is ``4951ffc5110b``.
 
@@ -388,7 +403,7 @@ You'll be prompted for your GOGS username and password you set up when you regis
 
   GOGS repository dashboard after your first commit
 
-With your initial Ansible content uploaded, you now have everything you need to create a full CI/CD pipeline for the rest of your workshop!
+With your initial Ansible content uploaded, you now have almost everything you need to create a full CI/CD pipeline for the rest of your workshop!
 
 .. |plus sign| image:: _static/images/gogs_plus.png
 .. |save button| image:: _static/images/gogs_save.png

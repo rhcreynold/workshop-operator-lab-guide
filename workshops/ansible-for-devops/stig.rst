@@ -8,40 +8,32 @@ STIG the Environment
 Overview
 `````````
 
-For this excersize we are going to STIG the Environment to make sure we are complying with our security officers demands.
-
-
+For this excercise we are going to STIG the Environment to make sure we are complying with our security officers demands.
 
 Get the RHEL 7 STIG role from Ansible Galaxy
 ```````````````````````````````````````
 
-We will be pulling the role from https://galaxy.ansible.com/RedHatOfficial/rhel7_stig
-To install this role to be used locally we will need to run the ansible galaxy command from the README
-
+We'll pull the role from https://galaxy.ansible.com/RedHatOfficial/rhel7_stig
+To install this role to be used locally we'll use the ``ansible-galaxy`` command.
 
 .. code-block:: bash
 
   $ ansible-galaxy install redhatofficial.rhel7_stig
+  - downloading role 'rhel7_stig', owned by redhatofficial
+  - downloading role from https://github.com/RedHatOfficial/ansible-role-rhel7-stig/archive/0.1.44.tar.gz
+  - extracting redhatofficial.rhel7_stig to /Users/jduncan/.ansible/roles/redhatofficial.rhel7_stig
+  - redhatofficial.rhel7_stig (0.1.44) was installed successfully
 
+With the role installed it's time to create the playbook to apply the STIG baseline to our hosts.
 
-
-
-OUTPUT GOES HERE
-
-
-Once we have the role installed, it is time to create the playbook that will install the stig all the servers.
-
-
-Create the stig Playbook
+Writing the STIG Playbook
 ````````````````````````````
-Let create the file for the playbook to live in.
-
+Create a file named ``~/devops/workshop/stig.yml``.
 
   .. code-block:: bash
 
     $ cd ~/devops-workshop
     $ vim stig.yml
-
 
 
 
@@ -53,10 +45,9 @@ Role tasks
   - hosts: all
     become: true
     vars:
-      service_firewalld_enabled: false #since using a cloud image, we need to skip this
+      service_firewalld_enabled: false
     roles:
        - { role: RedHatOfficial.rhel7_stig }
-
 
     tasks:
     - name: Set httpd_can_network_connect flag on and keep it persistent across reboots
@@ -72,9 +63,8 @@ Role tasks
         state: present
         reload: true
 
-
 As you can see we are adding two addition tasks and setting a variable.  Since we are using the cloud image for RHEL, there is no firewalld.
-The first tasks sets the sebooklean to allow http connections to our webservers and containers.  The second tasks allows us to make sure tcp connections
+The first tasks sets the seboolean to allow http connections to our webservers and containers.  The second tasks allows us to make sure tcp connections
 are forward from the host to the container that is serving our content.
 
 Now let us run the playbook to STIG the Environment.
