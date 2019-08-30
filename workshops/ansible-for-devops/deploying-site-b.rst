@@ -20,11 +20,14 @@ Let first modify the ``hosts`` file and add the correct ip addresses for our web
   [gogs]
   |control_public_ip|
 
-  [site1]
+  [registry]
+  |control_public_ip|
+
+  [dev]
   |node_1_ip|
   |node_2_ip|
 
-  [site2]
+  [prod]
   |node_3_ip|
   |node_4_ip|
 

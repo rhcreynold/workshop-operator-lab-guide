@@ -22,13 +22,15 @@ First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new
   [gogs]
   |control_public_ip|
 
+  [registry]
+  |control_public_ip|
+
   [dev]
   |node_1_ip|
   |node_2_ip|
 
 Creating a development site deployment role
 ``````````````````````````````````````````````
-
 
 Next, change to the ``~/devops-workshop/roles`` directory and create a new Ansible role using ``ansible-galaxy``.
 

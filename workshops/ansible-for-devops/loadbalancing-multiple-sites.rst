@@ -1,14 +1,14 @@
 .. sectionauthor:: Chris Reynolds <creynold@redhat.com>
 .. _docs admin: creynold@redhat.com
 
-===========================
-Deploying the nginx server
-===========================
+=================================
+Deploying an nginx load balancer
+=================================
 
 Overview
 `````````
 
-For this exercise we are going to deploy an nginx reverse proxy and loadbalancer.  This proxy will take incoming http requests over port 8080
+In exercise we're going to deploy an nginx reverse proxy and loadbalancer.  This proxy will take incoming http requests over port 8080
 and forward them to one of the 4 webservers that we have deployed. To be consistent, we'll be containerizing nginx.
 
 Creating the nginx container image
@@ -35,10 +35,10 @@ Create a directory named ``~/devops-workshop/nginx-loadbalancer`` on your contro
 
   server {
       location /dev {
-        proxy_pass http://dev;
+        proxy_pass \http://dev;
       }
       location /prod {
-        proxy_pass http://prod;
+        proxy_pass \http://prod;
       }
   }
 

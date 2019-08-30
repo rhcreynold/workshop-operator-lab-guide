@@ -31,12 +31,11 @@ Ansible best practices include using inventory groups consistently. This makes y
 
   This practice allows content you create in this workshop to be used in other environments by simply using a different inventory.
 
-Let's create your initial inventory with ``gogs`` and ``registry`` groups. In your home directory, /home/|student_name|, create a directory named ``devops-workshop``.
+Let's create your initial inventory with ``gogs`` and ``registry`` groups. In your home directory, /home/|student_name| already exists. Change to that directory so we can work in it.
 
 .. code-block:: bash
 
-  $ mkdir ~/devops-workshop
-  $ cd devops-workshop
+  $ cd ~/devops-workshop
 
 Next, in that directory, create a file named ``hosts`` with the following content:
 
@@ -55,8 +54,7 @@ Ansible roles should live in your playbook project inside a directory named ``ro
 
 .. code-block:: bash
 
-  $ cd ~/devops-workshop
-  $ mkdir roles
+  $ mkdir ~/devops-workshop/roles
   $ cd roles
 
 As we stated in the initial presentation, we're going to do our best to follow Ansible best practices in all of these labs. One of the key best practices is to use roles in (practically) every situation. Deploying GOGS will be no different. To create a role, we use the ``ansible-galaxy`` command.
@@ -197,7 +195,8 @@ With your roles in place, you're ready to deploy GOGS, MariaDB, and the containe
 
 .. code-block:: yaml
 
-  - name: deploy GOGS MariaDB
+  ---
+  - name: deploy GOGS and MariaDB
     gather_facts: false
     become: yes
     hosts: gogs
@@ -219,6 +218,7 @@ Once complete, run ``ansible-playbook`` referencing your inventory and the playb
 
 .. code-block:: bash
 
+  $ cd ~/devops-workshop
   $ ansible-playbook -i hosts deploy_artifacts.yml -k
   SSH password:
 
@@ -260,7 +260,7 @@ First, we'll tell GOGS how to connect to the MariaDB container. For this configu
 
 .. code-block:: bash
 
-  # docker ps | grep mariadb
+  $ sudo docker ps | grep mariadb
   4951ffc5110b        mariadb   "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                                        mariadb
 
 In our example, the container ID is ``4951ffc5110b``.
@@ -269,10 +269,10 @@ With this information, we can query the container runtime to get it's IP address
 
 .. code-block:: bash
 
-  # docker inspect --format '{{ .NetworkSettings.IPAddress }}' 4951ffc5110b
+  $ sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' 4951ffc5110b
   172.17.0.4
 
-Our container's IP address is ``172.17.0.4``.
+Our container's IP address is ``172.17.0.4``. Your root database user's password is ``redhat``. We set that in the task that deployed the container in the ``gogs`` Ansible role.
 
 .. figure:: _static/images/gogs_config_1.png
 

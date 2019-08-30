@@ -7,94 +7,9 @@ Installing and Configuring Ansible Tower
 
 Overview
 ---------
-In this lab will you'll be working with Ansible Tower to make it how we interface with our playbooks, roles, and infrastructure for the rest of the workshop. You'll accomplish the following goals:
+In this lab will you'll be working with Ansible Tower to make it how we interface with our playbooks, roles, and infrastructure for the rest of the workshop. We'll configure Tower with your inventory, credentials, and tell it how to interface with GOGS to manage playbooks and roles.
 
-* Deploy Ansible Tower on your control node
-* Configure Tower with your inventory, credentials, and to interface with GOGS to manage playbooks and roles.
-
-The first step is to install Tower on your control node (|control_public_ip|).
-
-
-Tower Installation
-------------------------
-
-The Ansible Tower installation process uses an ansible inventory and a script that calls Ansible playbooks to deploy Tower on your host. First, you need to download the Ansible Tower archive file, then configure your Tower inventory.
-
-Downloading Ansible Tower
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Download the latest Tower release into ``/tmp`` on your control node.
-
-.. code-block:: bash
-
-  $ cd /tmp
-  $ curl -O https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
-  %   Total  %   Received % Xferd  Average Speed   Time     Time      Time     Current
-                                   Dload  Upload   Total    Spent     Left     Speed
-  100 5021k  100 5021k    0  0     27.5M      0   --:--:--  --:--:--  --:--:-- 27.5M
-
-After this completes, extract the compressed file and ``cd`` into the uncompressed directory.
-
-.. code-block:: bash
-
-  $ tar xvfz /tmp/ansible-tower-setup-latest.tar.gz
-  $ cd /tmp/ansible-tower-setup-*/
-
-Next, you'll configure your Tower inventory.
-
-Configuring your Tower inventory and beginning installation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
- open the inventory file using ``vim`` (or another editor if you're more comfortable) and set the  ``admin_password``, ``pg_password``, and ``rabbitmq_password`` variables to |student_pass|.
-
- .. parsed-literal::
-
-  [tower]
-  localhost ansible_connection=local
-
-  [database]
-
-  [all:vars]
-  admin_password='|student_pass|'
-
-  pg_host=''
-  pg_port=''
-
-  pg_database='awx'
-  pg_username='awx'
-  pg_password='|student_pass|'
-
-  rabbitmq_port=5672
-  rabbitmq_vhost=tower
-  rabbitmq_username=tower
-  rabbitmq_password='|student_pass|'
-  rabbitmq_cookie=cookiemonster
-
-  = Needs to be true for fqdns and ip addresses
-  rabbitmq_use_long_name=false
-
-.. admonition:: What about more complex Tower deployments?
-
-  By defining multiple hosts and some prescriptive group names in this same inventory, you can create HA Tower clusters across multiple datacenters and with multiple roles. This process is out of scope for this workshop, but you can find more information in the `Tower documentation <https://docs.ansible.com/ansible-tower/3.4.3/html/administration/clustering.html#ag-clustering>`__.
-
-With your inventory configured, it's time to launch the installation process. Normally, this process will take approximately 25 minutes to run to completion. Luckily, this is where we've planned to start lunch.
-
-.. code-block:: bash
-
-  sudo ./setup.sh
-
-Confirming success
-^^^^^^^^^^^^^^^^^^^^
-
-At this point, your Ansible Tower installation should be complete. You
-can access your Tower through a browser pointed at |control_public_ip|.
-
-This should land you at the Tower login screen.
-
-.. figure:: _static/images/tower_install_splash.png
-  :alt: Ansible Tower Login Screen
-
-Next, we'll configure Tower with our credentials, projects, and inventories.
+Your control node already has Tower deployed at https://|control_public_ip|. We've pre-applied a
 
 Configuring Ansible Tower
 --------------------------
@@ -106,36 +21,7 @@ There are a number of constructs in the Ansible Tower UI that enable multi-tenan
 -  Inventory
 -  Job Template
 
-Before we configure these, though, we need to configure Tower with a License Key to enable the software.
-
-Installing a License Key
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To log in, use the username ``admin`` and and the password
-|student_pass|. Recall that this username/password was created when you built the inventory to setup Tower.
-
-.. figure:: _static/images/tower_install_splash.png
-   :alt: Ansible Tower Login Screen
-
-   Ansible Tower Login Screen
-
-As soon as you login, you will prompted to request a license or browse
-for an existing license file
-
-.. figure:: ./_static/images/at_lic_prompt.png
-   :alt: Uploading a License
-
-   Uploading a License
-
-In a separate browser tab, browse to
-https://www.ansible.com/workshop-license to request a workshop license.
-
-Back in the Tower UI, choose BROWSE |Browse button| and upload your
-recently downloaded license file into Tower.
-
-Select "*I agree to the End User License Agreement*\ "
-
-Click on SUBMIT |Submit button|
+Let's start with adding a Credential.
 
 Creating a Credential
 ^^^^^^^^^^^^^^^^^^^^^^

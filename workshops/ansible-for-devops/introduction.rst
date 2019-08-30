@@ -44,14 +44,15 @@ Success Criteria
 
 We want the lab today to be a fair analogue of what you may be doing in your own environments today with containers. By the end of today's workshop our goal is to:
 
+- Secure our infrastructure using an approved security baseline like the DISA STIG
 - Deploy the tools we need to use containers and Ansible effectively in our infrastructure, including:
 
   * GOGS for git-based version control
   * A container registry to house our custom container images
   * Ansible Tower
 
-- Deploy production Site A using Ansible playbooks. Site A will be two Amazon instances, each running an ``httpd`` container running a custom website.
-- Deploy and configure Ansible Tower in a container
-- Deploy production Site B using Ansible playbooks
-- Configure an ``nginx`` load balancer to balance traffic between both production sites on your control node
+- Deploy production Site B using Ansible playbooks and traditional RPMs. Site B is two RHEL instances on AWS and serving ``httpd``
+- Deploy development Site A using Ansible playbooks. Site A will be two Amazon instances as well, each running ``httpd`` in containers running a custom website
+- Deploy and configure Ansible Tower
+- Configure an ``nginx`` load balancer to balance traffic for your development and production clusters
 - Tie all of these resources together in Ansible Tower using a CI/CD workflow

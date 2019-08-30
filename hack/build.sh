@@ -19,7 +19,7 @@ case $2 in
     # designed to be used by travis-ci, where the DOCKER_* variables are defined
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
     docker build --build-arg workshop_name=$WORKSHOP_NAME \
-    -t quay.io/$DOCKER_USERNAME/operator-workshop-lab-guide-$WORKSHOP_NAME .
+    -t quay.io$DOCKER_USERNAME/operator-workshop-lab-guide-$WORKSHOP_NAME .
     docker push quay.io/$QUAY_PROJECT/operator-workshop-lab-guide-$WORKSHOP_NAME
   ;;
   *)
