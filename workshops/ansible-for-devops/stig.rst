@@ -1,19 +1,19 @@
 .. sectionauthor:: Chris Reynolds <creynold@redhat.com>
 .. _docs admin: creynold@redhat.com
 
-==================
-STIG the Environment
-==================
+==========================
+Securing your environment
+==========================
 
 Overview
 `````````
 
-For this excercise we are going to STIG the Environment to make sure we are complying with our security officers demands.
+Before we deploy services and software, we need to ensure our infrastructure is secure. To accomplish this, we're going to apply the `RHEL 7 DISA STIG <https://public.cyber.mil/stigs/downloads/?_search_stigs=Red%20Hat&_dl_facet_stigs=operating-systems>`__.
 
 Get the RHEL 7 STIG role from Ansible Galaxy
-```````````````````````````````````````
+`````````````````````````````````````````````
 
-We'll pull the role from https://galaxy.ansible.com/RedHatOfficial/rhel7_stig
+The RHEL 7 DISA STIG is a set of guidelines to secure government servers. To implement it we'll use an Ansible role that's maintained by Red Hat. We'll pull the role from https://galaxy.ansible.com/RedHatOfficial/rhel7_stig
 To install this role to be used locally we'll use the ``ansible-galaxy`` command.
 
 .. code-block:: bash

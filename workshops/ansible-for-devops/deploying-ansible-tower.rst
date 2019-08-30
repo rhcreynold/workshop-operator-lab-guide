@@ -2,14 +2,14 @@
 .. _docs admin: jduncan@redhat.com
 
 ==================================================
-Installing and Configuring Ansible Tower
+Configuring Ansible Tower
 ==================================================
 
 Overview
 ---------
 In this lab will you'll be working with Ansible Tower to make it how we interface with our playbooks, roles, and infrastructure for the rest of the workshop. We'll configure Tower with your inventory, credentials, and tell it how to interface with GOGS to manage playbooks and roles.
 
-Your control node already has Tower deployed at https://|control_public_ip|. We've pre-applied a
+Your control node already has Tower deployed at \https://|control_public_ip|. We've also pre-applied a license key to your tower instance, so it's ready to be configured. Your Tower username is ``admin`` and your Tower password is |student_pass|.
 
 Configuring Ansible Tower
 --------------------------

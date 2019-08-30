@@ -51,8 +51,8 @@ We want the lab today to be a fair analogue of what you may be doing in your own
   * A container registry to house our custom container images
   * Ansible Tower
 
-- Deploy production Site B using Ansible playbooks and traditional RPMs. Site B is two RHEL instances on AWS and serving ``httpd``
-- Deploy development Site A using Ansible playbooks. Site A will be two Amazon instances as well, each running ``httpd`` in containers running a custom website
+- Deploy production Site B using Ansible playbooks and traditional software RPM packages. Site B is a cluster of two RHEL instances on AWS and serving a custom website with ``httpd``.
+- Deploy development Site A using Ansible playbooks. Site A will be a cluster of two Amazon instances as well, each running ``httpd`` in containers running a custom website.
 - Deploy and configure Ansible Tower
-- Configure an ``nginx`` load balancer to balance traffic for your development and production clusters
+- Configure a containerized ``nginx`` load balancer to balance traffic for your development and production clusters
 - Tie all of these resources together in Ansible Tower using a CI/CD workflow
