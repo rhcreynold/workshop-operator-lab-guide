@@ -31,9 +31,16 @@ You need to add ``gogs`` and ``registry`` groups to your inventory located at ``
 
   $ vim ~/playbook/hosts
 
-Add the following groups
+Add your ``gogs`` and ``registry`` groups to ``~/playbook/hosts``.
 
 .. parsed-literal::
+  
+  [nodes]
+  |node_1_ip|
+  |node_2_ip|
+  |node_3_ip|
+  |node_4_ip|
+
   [gogs]
   |control_public_ip|
 

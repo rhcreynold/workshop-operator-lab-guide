@@ -19,8 +19,8 @@
  ci-cd-essentials
  stig
  setting-up-version-control
- deploying-site-a
- deploying-site-b
+ deploying-prod
+ deploying-dev
  loadbalancing-multiple-sites
  deploying-ansible-tower
  conclusions

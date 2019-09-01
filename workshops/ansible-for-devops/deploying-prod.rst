@@ -16,6 +16,13 @@ Adding prod hosts to your inventory
 First, modify your ansible inventory at ``~/playbook/hosts`` to add a new groupe named ``prod`` with the IP addresses for your production hosts as members.
 
 .. parsed-literal::
+  
+  [nodes]
+  |node_1_ip|
+  |node_2_ip|
+  |node_3_ip|
+  |node_4_ip|
+
   [gogs]
   |control_public_ip|
 
