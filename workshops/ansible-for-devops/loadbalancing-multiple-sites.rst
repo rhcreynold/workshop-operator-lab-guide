@@ -2,7 +2,7 @@
 .. _docs admin: creynold@redhat.com
 
 =================================
-Load balancing your sites
+Load-balancing your clusters
 =================================
 
 Overview

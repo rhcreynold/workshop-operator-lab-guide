@@ -13,7 +13,7 @@ Now that we have our operational infrastructure secured, in this lab you'll depl
 Adding prod hosts to your inventory
 ``````````````````````````````````````````
 
-First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new groupe named ``prod`` with the IP addresses for your production hosts as members.
+First, modify your ansible inventory at ``~/playbook/hosts`` to add a new groupe named ``prod`` with the IP addresses for your production hosts as members.
 
 .. parsed-literal::
   [gogs]
@@ -26,10 +26,12 @@ First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new
   |node_1_ip|
   |node_2_ip|
 
+Next we'll create the Ansible content to deploy our production application.
+
 Creating a development site deployment role
 ``````````````````````````````````````````````
 
-Next, change to the ``~/devops-workshop/roles`` directory and create a new Ansible role using ``ansible-galaxy``.
+Next, move over to the ``~/devops-workshop/roles`` directory and create a new Ansible role using ``ansible-galaxy`` named ``apache-simple``.
 
 .. code-block:: bash
 
@@ -39,7 +41,9 @@ Next, change to the ``~/devops-workshop/roles`` directory and create a new Ansib
 Role defaults
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Your role needs some default values for variables in ``roles/apache-simple/defaults/main.yml``. Edit your file to look like the example below.
+Your role needs some default values for variables in ``~/playbook/roles/apache-simple/defaults/main.yml``. Edit your file to look like the example below.
+
+Default values are used for variables by Ansible if they're not set in any other location. In Ansible, you can set variable values in 22 different locations, each of which have an assigned `level of precedence<https://docs.ansible.com/ansible/2.5/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>`__.
 
 .. code-block:: yaml
 
@@ -64,7 +68,13 @@ Next, add the following role-specific variables in ``~/playbook/roles/apache-sim
 Role handlers
 ~~~~~~~~~~~~~~
 
-Create your role handler in ``~/playbook/roles/apache-simple/handlers/main.yml.``
+Your ``apache-simple`` role needs a `handler task<https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#handlers-running-operations-on-change>`__ as well in ``~/playbook/roles/apache-simple/handlers/main.yml``. Handler tasks are special tasks in an Ansible role or playbook that can be triggered by another task or tasks when the original task has caused a change to the system.
+
+.. admonition:: Designing for minimal disruption
+
+  Ansible encourages you to design workflows that are as minimally disruptive as possible. 100% uptime (and even "5 9's" if we want to be real about it) is a myth.
+
+  But you don't have to reboot servers and restart services as a matter of course. Ansible makes minimal disruption to your infrastructure and services a practical reality.
 
 .. code-block:: yaml
 
@@ -79,11 +89,11 @@ Create your role handler in ``~/playbook/roles/apache-simple/handlers/main.yml.`
 Role templates
 ~~~~~~~~~~~~~~~
 
-Your roles needs two Ansible templates in ``~/playbook/roles/apache-simple/templates/``. To save time, we've made these available for your to download directly using the following commands.
+Your role needs two Ansible templates in ``~/playbook/roles/apache-simple/templates/``. To save time, we've made these available for your to download directly.
 
 .. code-block:: yaml
 
-  $ cd ~/apache-role/roles/apache-simple/templates/
+  $ cd ~/playbook/roles/apache-simple/templates/
   $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
   $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
 
