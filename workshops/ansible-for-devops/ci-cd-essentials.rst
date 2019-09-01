@@ -2,7 +2,7 @@
 .. _docs admin: jduncan@redhat.com
 
 ==================
-CI/CD Essentials
+CI/CD essentials
 ==================
 
 Overview
