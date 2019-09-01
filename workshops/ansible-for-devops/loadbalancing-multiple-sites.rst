@@ -2,7 +2,7 @@
 .. _docs admin: creynold@redhat.com
 
 =================================
-Deploying an nginx load balancer
+Load balancing your sites
 =================================
 
 Overview
@@ -23,12 +23,12 @@ Create a directory named ``~/devops-workshop/nginx-loadbalancer`` on your contro
 
 .. parsed-literal::
 
-  upstream dev {
+  upstream prod {
     server |node_1_ip|;
     server |node_2_ip|;
   }
 
-  upstream prod {
+  upstream dev {
     server |node_3_ip|;
     server |node_4_ip|;
   }
