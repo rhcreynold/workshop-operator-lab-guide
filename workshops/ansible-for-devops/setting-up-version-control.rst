@@ -1,9 +1,9 @@
 .. sectionauthor:: Jamie Duncan <jduncan@redhat.com>
 .. _docs admin: jduncan@redhat.com
 
-===========================
-Setting up Artifact Control
-===========================
+==========================================
+Managing source code and container images
+==========================================
 
 Overview
 `````````
