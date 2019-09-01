@@ -1,15 +1,15 @@
 .. sectionauthor:: Chris Reynolds <creynold@redhat.com>
 .. _docs admin: jduncan@redhat.com
 
-==================
-Deploying Site B
-==================
+===========================
+Deploying your dev cluster
+===========================
 Overview
 `````````
 
 We have gone ahead and stood up two additional Red Hat Enterprise Linux hosts for you.  In this lab we are going to
 deploy a containerized simple web application (from an Ansible Role) on two different hosts. This will host a simple
-website.  This is an interation of the last role that we made in Deploying site a.
+website.  This is an integration of the last role that we made in Deploying site a.
 
 Modify the hosts file
 `````````````````````
@@ -171,7 +171,9 @@ Now there should be a `index.html` and a `httpd.conf` in /home/|student_name|/de
 Playbook to deploy the container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next you'll deploy a container-based version of your application to your dev environment.  In this lab you'll do that using Ansible as well.
+Next you'll deploy a container-based version of your application to your dev environment.  In this lab you'll do that using Ansible as well. First, you'll need to add a ``dev`` group to ``~/playbook/hosts``.
+
+
 
 .. code-block:: bash
 
