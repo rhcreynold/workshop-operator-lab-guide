@@ -8,15 +8,12 @@ Deploying Site A
 Overview
 `````````
 
-Now that we have our operational infrastructure deployed, in this lab we'll deploy a our first site's web server infrastructure. To do this, we'll create an Ansible Role. Our web application will display the hostname of each server.
+Now that we have our operational infrastructure secured, in this lab you'll deploy your production web server infrastructure. To do this, you'll create an Ansible Role. Our web application will display the hostname of each server.
 
-.. important::
-  To save time, two RHEL 7 hosts that have been pre-provisioned for your Site A web hosts.
+Adding prod hosts to your inventory
+``````````````````````````````````````````
 
-Adding hosts to your Ansible inventory
-```````````````````````````````````````
-
-First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new groupe named ``siteA`` with the IP addresses for your hosts as members.
+First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new groupe named ``prod`` with the IP addresses for your production hosts as members.
 
 .. parsed-literal::
   [gogs]
@@ -25,7 +22,7 @@ First, modify your ansible inventory at ``~/devops-workshop/hosts`` to add a new
   [registry]
   |control_public_ip|
 
-  [dev]
+  [prod]
   |node_1_ip|
   |node_2_ip|
 
@@ -36,8 +33,7 @@ Next, change to the ``~/devops-workshop/roles`` directory and create a new Ansib
 
 .. code-block:: bash
 
-  $ cd ~/devops-workshop
-  $ cd roles
+  $ cd ~/playbook/roles
   $ ansible-galaxy init apache-simple
 
 Role defaults
@@ -56,7 +52,7 @@ Your role needs some default values for variables in ``roles/apache-simple/defau
 Role variables
 ~~~~~~~~~~~~~~~
 
-Next, add the following role-specific variables in ``roles/apache-simple/vars/main.yml.``
+Next, add the following role-specific variables in ``~/playbook/roles/apache-simple/vars/main.yml.``
 
 .. code-block:: yaml
 
@@ -68,7 +64,7 @@ Next, add the following role-specific variables in ``roles/apache-simple/vars/ma
 Role handlers
 ~~~~~~~~~~~~~~
 
-Create your role handler in ``roles/apache-simple/handlers/main.yml.``
+Create your role handler in ``~/playbook/roles/apache-simple/handlers/main.yml.``
 
 .. code-block:: yaml
 
@@ -83,11 +79,10 @@ Create your role handler in ``roles/apache-simple/handlers/main.yml.``
 Role templates
 ~~~~~~~~~~~~~~~
 
-Your roles needs two Ansible templates in ``roles/apache-simple/templates/``. To save time, we've made these available for your to download directly using the following commands.
+Your roles needs two Ansible templates in ``~/playbook/roles/apache-simple/templates/``. To save time, we've made these available for your to download directly using the following commands.
 
 .. code-block:: yaml
 
-  $ mkdir -p ~/apache-role/roles/apache-simple/templates/
   $ cd ~/apache-role/roles/apache-simple/templates/
   $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
   $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
@@ -95,7 +90,7 @@ Your roles needs two Ansible templates in ``roles/apache-simple/templates/``. To
 Role tasks
 ~~~~~~~~~~~
 
-Finally, create tasks for your role that reference your defaults, variables, handlers, and templates in ``roles/apache-simple/tasks/main.yml``.
+Finally, create tasks for your role that reference your defaults, variables, handlers, and templates in ``~/playbook/roles/apache-simple/tasks/main.yml``.
 
 .. code-block:: yaml
 
@@ -130,39 +125,33 @@ Finally, create tasks for your role that reference your defaults, variables, han
     state: started
     enabled: yes
 
-Next, we need to create a playbook to apply our new role to our Site A hosts.
+Next, create a playbook to apply the new role to your production hosts.
 
-Creating a Site A playbook
+Creating a production playbook
 ````````````````````````````
 
-Create an Ansible playbook at ``~/devops-workshop/site.yml`` with the following content.
+Create an Ansible playbook at ``~/playbook/prod.yml`` with the following content.
 
 .. code-block:: yaml
 
   ---
   - name: Deploy site web infrastructure
-    hosts: siteA
+    hosts: prod
     become: yes
 
     roles:
       - apache-simple
 
-With your playbook created, it's time to deploy Site A.
+With your playbook created, it's time to deploy production.
 
-Deploying Site A
+Deploying production
 ``````````````````
 
-To deploy Site A, use the ``ansible-playbook`` command to execute your new playbook.
+To deploy your production application, use the ``ansible-playbook`` command to execute your new playbook.
 
 .. code-block:: bash
 
-  $ ansible-playbook ~/devops-workshop/site.yml
-
-Your output should look like this sample output:
-
-.. code-block:: bash
-
-  $ output goes here for reference
+  $ ansible-playbook -i hosts ~/devops-workshop/prod.yml
 
 Summary
 ````````

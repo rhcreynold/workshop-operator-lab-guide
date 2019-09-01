@@ -20,8 +20,7 @@
  stig
  setting-up-version-control
  deploying-site-a
- deploying-ansible-tower
  deploying-site-b
  loadbalancing-multiple-sites
- deploying-to-production
+ deploying-ansible-tower
  license

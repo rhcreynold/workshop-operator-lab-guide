@@ -153,6 +153,43 @@ groups contain hosts.
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
 
+Configure Ansible Tower
+```````````````````````````````````````
+
+
+Set Up Credentials
+^^^^^^^^^^^^^^^^^^^
+
+Gogs and student machine Credentials
+
+Add a Project
+^^^^^^^^^^^^^
+
+Point Tower to the Gogs server
+
+
+Create a Stig template
+^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Create a Site A template
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a Site B template
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a NGINX template
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Create a Workflow
+^^^^^^^^^^^^^^^^^
+
+
+Create a STIG Check template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+s
+
 .. |Browse button| image:: ./_static/images/at_browse.png
 .. |Submit button| image:: ./_static/images/at_submit.png
 .. |Gear button| image:: ./_static/images/at_gear.png

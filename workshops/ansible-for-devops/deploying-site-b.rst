@@ -171,7 +171,7 @@ Now there should be a `index.html` and a `httpd.conf` in /home/|student_name|/de
 Playbook to deploy the container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next step is to deploy the containers to site B.  We are going to create a simple playbook to do just that.
+Next you'll deploy a container-based version of your application to your dev environment.  In this lab you'll do that using Ansible as well.
 
 .. code-block:: bash
 
@@ -183,7 +183,7 @@ Inside that file should have the following:
 
   ---
   - name: launch apache containers on site2 nodes
-    hosts: siteB
+    hosts: dev
     become: yes
 
     tasks:
