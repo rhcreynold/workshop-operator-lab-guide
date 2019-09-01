@@ -2,7 +2,7 @@
 .. _docs admin: creynold@redhat.com
 
 ============================
-Deploying your prod cluster
+Deploying to prod
 ============================
 
 Overview
@@ -16,7 +16,7 @@ Adding prod hosts to your inventory
 First, modify your ansible inventory at ``~/playbook/hosts`` to add a new groupe named ``prod`` with the IP addresses for your production hosts as members.
 
 .. parsed-literal::
-  
+
   [nodes]
   |node_1_ip|
   |node_2_ip|
@@ -169,8 +169,8 @@ Create an Ansible playbook at ``~/playbook/prod.yml`` with the following content
 
 With your playbook created, it's time to commit your source code and deploy your production application.
 
-Committing your source code to Gogs
-`````````````````````````````````````
+Committing your source code
+``````````````````````````````
 
 TODO
 

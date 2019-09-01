@@ -12,7 +12,7 @@ Our goal for today's lab is to help you build out a real-world example of how An
 
 Additionally, all our workloads in this lab are  deployed using `Linux containers <https://www.redhat.com/en/topics/containers>`__. If this isn't something you've done before, don't worry. The examples are all copy/paste friendly, and the goal of a workshop like this one is to give you confidence to use tools that you haven't used before.
 
-Defining Common Terms
+Common vocabulary
 ''''''''''''''''''''''
 
 Let's take a few minutes to level set around some of the vocabulary we're using throughout today's lab.

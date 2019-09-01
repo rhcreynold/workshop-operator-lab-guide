@@ -15,12 +15,12 @@
  :Caption: Index
  :name: mastertoc
 
- introduction
- ci-cd-essentials
- stig
- setting-up-version-control
- deploying-prod
- deploying-dev
- loadbalancing-multiple-sites
- deploying-ansible-tower
- conclusions
+ 01-introduction
+ 02-ci-cd-essentials
+ 03-security
+ 04-source-code-and-image-repos
+ 05-deploying-prod
+ 06-deploying-dev
+ 07-loadbalancing
+ 08-configuring-tower
+ 09-cta

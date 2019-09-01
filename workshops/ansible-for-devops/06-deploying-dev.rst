@@ -2,7 +2,7 @@
 .. _docs admin: jduncan@redhat.com
 
 ===========================
-Deploying your dev cluster
+Deploying to dev
 ===========================
 Overview
 `````````

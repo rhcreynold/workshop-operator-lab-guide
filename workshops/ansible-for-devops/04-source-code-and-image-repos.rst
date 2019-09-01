@@ -2,7 +2,7 @@
 .. _docs admin: jduncan@redhat.com
 
 ==========================================
-Managing source code and container images
+Source code and container repositories
 ==========================================
 
 Overview
@@ -34,7 +34,7 @@ You need to add ``gogs`` and ``registry`` groups to your inventory located at ``
 Add your ``gogs`` and ``registry`` groups to ``~/playbook/hosts``.
 
 .. parsed-literal::
-  
+
   [nodes]
   |node_1_ip|
   |node_2_ip|
