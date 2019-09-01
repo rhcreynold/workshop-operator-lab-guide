@@ -8,10 +8,10 @@ Setting up Artifact Control
 Overview
 `````````
 
-In this lab we're using `GOGS <https://gogs.io/>`__ deployed in a container to provide version control for all the playbooks we'll create. Additionally we'll deploy a container registry to house our container images. Our tasks for this lab are to:
+In this lab we're using `GOGS <https://gogs.io/>`__ deployed in a container to provide version control for the playbooks and roles we'll create. Additionally we'll deploy a container registry to house our container images. Our tasks for this lab are to:
 
 1. Write a playbook to deploy GOGS on your control host
-2. Deploy GOGS and confirm it's functioning properly
+2. Configure GOGS and confirm it's functioning properly
 3. Deploy a container registry to manage container images
 
 .. admonition:: Do I need to configure docker?!
@@ -22,22 +22,16 @@ In this lab we're using `GOGS <https://gogs.io/>`__ deployed in a container to p
 
 Let's get started.
 
-Creating an initial inventory
+Adding inventory groups
 ``````````````````````````````
 
-Ansible best practices include using inventory groups consistently. This makes your playbooks more portable. When your environment changes, only the inventory needs to be updated. Your roles and playbooks don't need to be edited.
-
-.. admonition:: Why is this important?
-
-  This practice allows content you create in this workshop to be used in other environments by simply using a different inventory.
-
-Let's create your initial inventory with ``gogs`` and ``registry`` groups. In your home directory, /home/|student_name| already exists. Change to that directory so we can work in it.
+You need to add ``gogs`` and ``registry`` groups to your inventory located at ``~/playbook/hosts``.
 
 .. code-block:: bash
 
-  $ cd ~/devops-workshop
+  $ vim ~/playbook/hosts
 
-Next, in that directory, create a file named ``hosts`` with the following content:
+Add the following groups
 
 .. parsed-literal::
   [gogs]
@@ -346,11 +340,11 @@ Creating a git repository from existing files
 
 On your control node, ``cd`` to your ``playbook`` directory
 
-.. parsed-literal::
+.. code-block:: bashs
 
-  cd /home/|student_name|/playbook
+  cd ~/playbook
 
-From this directory, follow the directions from the GOGS repository dashboard. We will make a few small change we'll make in those instructions is to add all of the existing files instead of just the example ``README.md`` as well as to configure a username and email for your commit.
+From this directory, follow the directions from the GOGS repository dashboard. We'll make a few small changes in those instructions is to add all of the existing files instead of just the example ``README.md`` as well as to configure a username and email for your commit.
 
 .. admonition:: What about README.md
 
