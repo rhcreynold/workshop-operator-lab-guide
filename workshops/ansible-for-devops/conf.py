@@ -18,6 +18,12 @@
 
 extensions = [
     'sphinx.ext.extlinks',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
 ]
 
 # -- Project information -----------------------------------------------------
@@ -67,23 +73,16 @@ rst_prolog = """
        os.environ['NODE_4_IP'],
        )
 
+extlinks = {
+    'github': ('https://github.com/jduncan-rva/%s'),
+    'license': ('https://creativecommons.org/licenses/by/4.0/'),
+    'quay_image': ('https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops')
+}
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
 # needs_sphinx = '1.0'
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
-extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
-]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
