@@ -67,13 +67,6 @@ rst_prolog = """
        os.environ['NODE_4_IP'],
        )
 
-
-extlinks = {
-        'github': ('https://github.com/jduncan-rva/%s', ''),
-        'cc_by': ('https://creativecommons.org/licenses/by/4.0/%s', ''),
-        'quay': ('https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops/%s', ''),
-        }
-
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.

@@ -14,8 +14,18 @@ Before we get started
 
 We encourage you to take today's lab guide back to your own environments for re-use and even your own modification.  With that in mind we have two ways for you to obtain the content.
 
-- *Source Code*: The source for today's lab guide (and others) is located on :github:'GitHub <>`.
-- *Container Image*: Your lab guide is deployed and running inside a container. The container image is available at :quay:'quay.io <>`.
+- *Source Code*: The source for today's lab guide (and others) is located on `GITHUB`_.
+- *Container Image*: Your lab guide is deployed and running inside a container. The container image is available at `QUAY`__.
+
+License
+---------
+
+This lab guide is released under the `CC_BY`_.
+
+Questions issues and improvements
+-----------------------------------
+
+Feel free to file `GITHUB`_ for any improvements or issues that may come to mind while you're working through the labs today!
 
 .. toctree::
  :maxdepth: 2
@@ -33,12 +43,7 @@ We encourage you to take today's lab guide back to your own environments for re-
  08-configuring-tower
  09-cta
 
- License
- ---------
-
- This lab guide is released under the :cc_by:'Creative Commons 4.0 By Attribution License <>`.
-
- Questions issues and improvements
- -----------------------------------
-
- Feel free to file :github:`issue <issues>` for any improvements or issues that may come to mind while you're working through the labs today!
+ .. _CC_BY: https://creativecommons.org/licenses/by/4.0/
+ .. _GITHUB: https://github.com/jduncan-rva/
+ .. _GH_ISSUES: https://github.com/jduncan-rva/issues/
+ .. _QUAY: https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops/
