@@ -5,7 +5,6 @@ ENV STUDENT_NAME='example student'
 ENV BASTION_HOST='bastion.example.com'
 ENV MASTER_URL='ocp.example.com'
 ENV APP_DOMAIN='apps.example.com'
-RUN yum -y update
 RUN yum -y install epel-release; yum -y install python-devel python-setuptools python-pip make; yum -y clean all
 COPY requirements.txt entrypoint.sh workshops/$workshop_name /opt/docs/
 WORKDIR /opt/docs

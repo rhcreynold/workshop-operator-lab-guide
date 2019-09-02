@@ -69,7 +69,7 @@ rst_prolog = """
 
 
 extlinks = {
-        'github_url': ('https://github.com/jduncan-rva/%s', 'GitHub '),
+        'github_url': ('https://github.com/jduncan-rva/%s', 'github'),
         }
 
 # -- General configuration ---------------------------------------------------
