@@ -14,8 +14,8 @@ Before we get started
 
 We encourage you to take today's lab guide back to your own environments for re-use and even your own modification.  With that in mind we have two ways for you to obtain the content.
 
-- *Source Code*: The source for today's lab guide (and others) is located at :github_url: ` `.
-- *Container Image*: Your lab guide is deployed and running inside a container. The container image is available at `on quay.io<https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops>`__.
+- *Source Code*: The source for today's lab guide (and others) is located on :github: `GitHub <>`.
+- *Container Image*: Your lab guide is deployed and running inside a container. The container image is available at :quay:`quay.io <>`.
 
 .. toctree::
  :maxdepth: 2
@@ -36,7 +36,7 @@ We encourage you to take today's lab guide back to your own environments for re-
  License
  ---------
 
- This lab guide is released under the `Creative Commons 4.0 By Attribution License<https://creativecommons.org/licenses/by/4.0/>`__.
+ This lab guide is released under the :cc_by: `Creative Commons 4.0 By Attribution License <>`.
 
  Questions issues and improvements
  -----------------------------------

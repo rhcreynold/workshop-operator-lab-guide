@@ -69,7 +69,9 @@ rst_prolog = """
 
 
 extlinks = {
-        'github_url': ('https://github.com/jduncan-rva/%s', 'github'),
+        'github': ('https://github.com/jduncan-rva/%s', ''),
+        'cc_by': ('https://creativecommons.org/licenses/by/4.0/', ''),
+        'quay': ('https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops', ''),
         }
 
 # -- General configuration ---------------------------------------------------
