@@ -14,18 +14,18 @@ Before we get started
 
 We encourage you to take today's lab guide back to your own environments for re-use and even your own modification.  With that in mind we have two ways for you to obtain the content.
 
-- *Source Code*: The source for today's lab guide (and others) is located on :gitub:`GitHub <>`.
-- *Container Image*: Your lab guide is deployed and running inside a container. The container image is available on :quay:`quay.io <>`.
+- *Source Code*: The source for today's lab guide (and others) is located on :gitub: `GitHub <>`.
+- *Container Image*: Your lab guide is deployed and running inside a container. The container image is available on :quay: `quay.io <>`.
 
 License
 ---------
 
-This lab guide is released under the :license:`Creative Commons 4.0 BY License <>`.
+This lab guide is released under the :license: `Creative Commons 4.0 BY License <>`.
 
 Questions issues and improvements
 -----------------------------------
 
-Feel free to file :github:`a GitHub issue <issues>` for any improvements or issues that may come to mind while you're working through the labs today!
+Feel free to file a :github: `GitHub issue <issues>` for any improvements or issues that may come to mind while you're working through the labs today!
 
 .. toctree::
  :maxdepth: 2
