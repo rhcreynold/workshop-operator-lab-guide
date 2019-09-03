@@ -74,9 +74,9 @@ rst_prolog = """
        )
 
 extlinks = {
-    'github': ('https://github.com/jduncan-rva/%s'),
-    'license': ('https://creativecommons.org/licenses/by/4.0/'),
-    'quay_image': ('https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops')
+    'github': ('https://github.com/jduncan-rva/%s', 'github'),
+    'license': ('https://creativecommons.org/licenses/by/4.0/', 'lic'),
+    'quay_image': ('https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops', 'image')
 }
 # -- General configuration ---------------------------------------------------
 
