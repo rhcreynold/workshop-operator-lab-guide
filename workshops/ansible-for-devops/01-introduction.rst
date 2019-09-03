@@ -5,7 +5,7 @@
 Introduction
 ========================
 
-Thanks for making the time attending today's workshop! We hope it provides value for you. All of the workshop content is deployed in AWS. To participate in the workshop you'll need a laptop with the following capabilities:
+Thanks for making the time attending today's workshop! We hope it provides value for you. All of the workshop content is deployed in :aws:`AWS<ec2>`. To participate in the workshop you'll need a laptop with the following capabilities:
 
 - Browse to public IP addresses without interference
 - SSH to public IP addresses without interference
@@ -47,12 +47,12 @@ We want the lab today to be a fair analogue of what you may be doing in your own
 - Secure our infrastructure using an approved security baseline like the DISA STIG
 - Deploy the tools we need to use containers and Ansible effectively in our infrastructure, including:
 
-  * GOGS for git-based version control
-  * A container registry to house our custom container images
-  * Ansible Tower
+  * :gogs:`GOGS<>` for git-based version control
+  * A :docker_hub:`container registry</registry>` to house your custom container images
+  * :tower:`Ansible Tower<>` to provide a central point of automation
 
-- Deploy production Site B using Ansible playbooks and traditional software RPM packages. Site B is a cluster of two RHEL instances on AWS and serving a custom website with ``httpd``.
+- Deploy production Site B using Ansible playbooks and traditional software RPM packages. Site B is a cluster of two RHEL instances on :aws:`AWS<ec2>` and serving a custom website with ``httpd``.
 - Deploy development Site A using Ansible playbooks. Site A will be a cluster of two Amazon instances as well, each running ``httpd`` in containers running a custom website.
 - Deploy and configure Ansible Tower
 - Configure a containerized ``nginx`` load balancer to balance traffic for your development and production clusters
-- Tie all of these resources together in Ansible Tower using a CI/CD workflow
+- Tie all of these resources together in :tower:`Ansible Tower<>` using a CI/CD workflow

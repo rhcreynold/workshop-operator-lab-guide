@@ -8,7 +8,7 @@ Source code and container repositories
 Overview
 `````````
 
-In this lab we're using `GOGS <https://gogs.io/>`__ deployed in a container to provide version control for the playbooks and roles we'll create. Additionally we'll deploy a container registry to house our container images. Our tasks for this lab are to:
+In this lab we're using :gogs:`GOGS<>` deployed in a container to provide version control for the playbooks and roles we'll create. Additionally we'll deploy a container registry to house our container images. Our tasks for this lab are to:
 
 1. Write a playbook to deploy GOGS on your control host
 2. Configure GOGS and confirm it's functioning properly
@@ -47,7 +47,7 @@ Add your ``gogs`` and ``registry`` groups to ``~/playbook/hosts``.
   [registry]
   |control_public_ip|
 
-Next, we'll create an `ansible role <https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html>`__ to apply to our GOGS group.
+Next, we'll create an :ansible_docs:`ansible role<user_guide/playbooks_reuse_roles.html>` to apply to our GOGS group.
 
 Creating a GOGS role
 `````````````````````
@@ -142,7 +142,7 @@ Next, well create a role to manage our container registry deployment
 Creating a registry role
 `````````````````````````
 
-You'll be deploying the `Docker v2 registry <https://hub.docker.com/_/registry>`__ on your control node and serving content on port 5000. To start, we'll create a new role inside ``~/devops-workshop/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
+You'll be deploying the :docker_hub:`Docker v2 registry <_/registry>` on your control node and serving content on port 5000. To start, we'll create a new role inside ``~/devops-workshop/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
 
 .. code-block:: shell
 
@@ -192,7 +192,7 @@ In your new registry role, add the following content to ``tasks/main.yml``.
 Writing your artifact control playbook
 ````````````````````````````````````````
 
-With your roles in place, you're ready to deploy GOGS, MariaDB, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
+With your roles in place, you're ready to deploy :gogs:`GOGS<>`, :mariadb:`MariaDB<>`, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
 
 .. code-block:: yaml
 
@@ -247,7 +247,7 @@ Once complete, run ``ansible-playbook`` referencing your inventory and the playb
   PLAY RECAP *****************************************************************
   3.91.13.13                 : ok=6    changed=5    unreachable=0    failed=0
 
-Before we can use GOGS to house our source code, we need to configure it to connect to the MariaDB container.
+Before we can use GOGS to house our source code, we need to configure it to connect to the MariaDB container which will act as its database.
 
 Configuring GOGS
 `````````````````

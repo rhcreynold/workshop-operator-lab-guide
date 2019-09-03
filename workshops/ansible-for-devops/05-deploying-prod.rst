@@ -50,7 +50,7 @@ Defaults
 
 Your role needs some default values for variables in ``~/playbook/roles/apache-simple/defaults/main.yml``. Edit your file to look like the example below.
 
-Default values are used for variables by Ansible if they're not set in any other location. In Ansible, you can set variable values in 22 different locations, each of which have an assigned `level of precedence<https://docs.ansible.com/ansible/2.5/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>`__.
+Default values are used for variables by Ansible if they're not set in any other location. In Ansible, you can set variable values in 22 different locations, each of which have an assigned :ansible_docs:`level of precedence<user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>`.
 
 .. code-block:: yaml
 
@@ -79,7 +79,7 @@ With your variables created, next you'll add a handler task to your ``apache-sim
 Handlers
 ~~~~~~~~~~~~~~
 
-Your ``apache-simple`` role needs a `handler task<https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#handlers-running-operations-on-change>`__ as well in ``~/playbook/roles/apache-simple/handlers/main.yml``. Handler tasks are special tasks in an Ansible role or playbook that can be triggered by another task or tasks when the original task has caused a change to the system.
+Your ``apache-simple`` role needs a :ansible_docs:`handler task<user_guide/playbooks_intro.html#handlers-running-operations-on-change>` as well in ``~/playbook/roles/apache-simple/handlers/main.yml``. Handler tasks are special tasks in an Ansible role or playbook that can be triggered by another task or tasks when the original task has caused a change to the system.
 
 .. admonition:: Designing for minimal disruption
 
@@ -100,7 +100,7 @@ Your ``apache-simple`` role needs a `handler task<https://docs.ansible.com/ansib
 Templates
 ~~~~~~~~~~~~~~~
 
-The `template<https://docs.ansible.com/ansible/latest/modules/template_module.html>`__ module uses the `Jinja2<https://jinja.palletsprojects.com/en/2.10.x/>`__ templating language to create dynamic documents with variables during a playbook run.
+The :ansible_docs:`template<modules/template_module.html>` module uses the :jinja2:`Jinja2<>` templating language to create dynamic documents with variables during a playbook run.
 
 Your role needs two Ansible templates in ``~/playbook/roles/apache-simple/templates/``. To save time, we've made these available for your to download directly.
 

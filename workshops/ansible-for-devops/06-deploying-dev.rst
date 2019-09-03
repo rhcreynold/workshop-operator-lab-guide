@@ -34,10 +34,9 @@ Let first modify the ``hosts`` file and add the correct ip addresses for our web
 Ok so now we have our inventory let use the same role to build the same website as last time but
 in a container. We are going to build a playbook that leverages the role that we previous created.
 
-Let modify the main playbook inside the role from site A.  This is going to give us the flexibility of using the same
-Ansible code to deploy the same content.  Notice that we have added tags, read more about Ansible tags `here <https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html/>`__
+Let modify the main playbook inside the role from site A.  This is going to give us the flexibility of using the same Ansible code to deploy the same content.  Notice the newly added :ansible_docs:`playbook tags<user_guide/playbooks_tags.html>`.
 
-Modify our Apache Role
+Modify your Apache Role
 `````````````````````
 
 .. parsed-literal::
@@ -96,9 +95,7 @@ Modify our Apache Role
     tags:
        - rpm
 
-Now that we have added tags, lets take a look at the DockerFile to build the container.  This is going to pull a rhel
-container that has apache installed.  From there we are going to add the config files `index.html` and `httpd.conf` to the
-container.  This will server the exact same site as the rpm version that we deployed earlier.
+Now that we have added tags, lets take a look at the DockerFile to build the container.  This is going to pull a rhel container that has apache installed.  From there we are going to add the config files `index.html` and `httpd.conf` to the container.  This will server the exact same site as the rpm version that we deployed earlier.
 
 Containers
 ```````````
@@ -210,5 +207,5 @@ Assuming everything ran you can test each node with the curl command.
 
 .. parsed-literal::
 
-  $ curl http://|node_3_ip|:8080
-  $ curl http://|node_4_ip|:8080
+  $ curl \http://|node_3_ip|:8080
+  $ curl \http://|node_4_ip|:8080

@@ -74,9 +74,26 @@ rst_prolog = """
        )
 
 extlinks = {
-    'github': ('https://github.com/jduncan-rva/%s', 'github'),
+    'github': ('https://github.com/%s', 'github'),
     'license': ('https://creativecommons.org/licenses/by/4.0/', 'lic'),
-    'quay_image': ('https://quay.io/repository/jduncan/operator-workshop-lab-guide-ansible-for-devops', 'image')
+    'quay_image': ('https://quay.io/repository/%s', 'image'),
+    'aws': ('https://aws.amazon.com/%s/', 'product'),
+    'ansible_galaxy': ('https://galaxy.ansible.com/%s', 'role'),
+    'gogs': ('https://gogs.io/%s', 'repo'),
+    'docker_hub': ('https://hub.docker.com/%s', 'project'),
+    'tower': ('https://www.ansible.com/products/tower/%s', 'extra'),
+    'stig': ('https://public.cyber.mil/stigs/downloads/?_search_stigs=Red%20Hat&_dl_facet_stigs=operating-systems%s', 'stig'),
+    'ci_def': ('https://en.wikipedia.org/wiki/Continuous_integration%s', 'def'),
+    'cd_def': ('https://en.wikipedia.org/wiki/Continuous_delivery', 'def'),
+    'jenkins': ('https://jenkins.io/%s', 'uri'),
+    'rh_containers': ('https://www.redhat.com/en/topics/containers%s', 'uri'),
+    'ocp': ('https://www.openshift.com/%s', 'page'),
+    'python': ('https://www.python.org/%s', 'page'),
+    'yaml': ('https://yaml.org/%s', 'page'),
+    'mariadb': ('https://mariadb.org/%s', 'page'),
+    'ansible_docs': ('https://docs.ansible.com/ansible/latest/%s', 'page'),
+    'jinja2': ('https://jinja.palletsprojects.com/en/2.10.x/%s', 'page'),
+
 }
 # -- General configuration ---------------------------------------------------
 

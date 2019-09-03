@@ -8,7 +8,7 @@ Securing your environment
 Overview
 `````````
 
-Before we deploy services and software, we need to ensure our infrastructure is secure. To accomplish this, we're going to apply the `RHEL 7 DISA STIG <https://public.cyber.mil/stigs/downloads/?_search_stigs=Red%20Hat&_dl_facet_stigs=operating-systems>`__.
+Before we deploy services and software, we need to ensure our infrastructure is secure. To accomplish this, we're going to apply the :stig:`RHEL 7 DISA STIG <>`.
 
 it's time to edit your inventory to create a group that contains all four of your nodes.
 
@@ -32,11 +32,12 @@ With your inventory created, you can create the playbook to apply the STIG basel
 Install the RHEL 7 STIG role from Ansible Galaxy
 `````````````````````````````````````````````````
 
-The RHEL 7 DISA STIG is a set of guidelines to secure government servers. To implement it we'll use an Ansible role that's maintained by Red Hat. We'll pull the role from https://galaxy.ansible.com/RedHatOfficial/rhel7_stig
-To install this role to be used locally we'll use the ``ansible-galaxy`` command.
+The RHEL 7 DISA STIG is a set of guidelines to secure government servers. To implement it we'll use an Ansible role that's maintained by Red Hat. We'll pull the role from :ansible_galaxy:`Ansible Galaxy<RedHatOfficial/rhel7_stig>`
+To install this role to be used locally we'll use the ``ansible-galaxy`` command on your control node.
 
 .. code-block:: bash
 
+  $ mkdir ~/playbook
   $ cd ~/playbook
   $ mkdir roles
   $ cd roles
