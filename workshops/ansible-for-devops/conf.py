@@ -12,9 +12,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
 
 extensions = [
     'sphinx.ext.extlinks',
@@ -24,11 +22,10 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
+    'sphinx.ext.autosectionlabel',
 ]
 
 # -- Project information -----------------------------------------------------
-
-import os
 
 project_clean = unicode(os.environ['WORKSHOP_NAME'].title().replace('_', ' ').replace('-',' '))
 
@@ -93,7 +90,9 @@ extlinks = {
     'mariadb': ('https://mariadb.org/%s', 'page'),
     'ansible_docs': ('https://docs.ansible.com/ansible/latest/%s', 'page'),
     'jinja2': ('https://jinja.palletsprojects.com/en/2.10.x/%s', 'page'),
-
+    'nginx': ('https://nginx.org/en/%s', 'page'),
+    'dockerfile': ('https://docs.docker.com/engine/reference/builder/%s', 'page'),
+    'dry': ('https://en.wikipedia.org/wiki/Don%27t_repeat_yourself/%s', 'page')
 }
 # -- General configuration ---------------------------------------------------
 

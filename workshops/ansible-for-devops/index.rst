@@ -9,7 +9,7 @@
 |workshop_name_clean| Lab Guide
 ==============================================================
 
-Before we get started
+Before getting started
 ----------------------
 
 We encourage you to take today's lab guide back to your own environments for re-use and even your modify it to fit your needs.  With that in mind we have two ways for you to obtain the content.

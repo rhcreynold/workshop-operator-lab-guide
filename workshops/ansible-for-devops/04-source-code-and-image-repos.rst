@@ -47,9 +47,11 @@ Add your ``gogs`` and ``registry`` groups to ``~/playbook/hosts``.
   [registry]
   |control_public_ip|
 
-Next, we'll create an :ansible_docs:`ansible role<user_guide/playbooks_reuse_roles.html>` to apply to our GOGS group.
+Next, we'll create an :ansible_docs:`Ansible role<user_guide/playbooks_reuse_roles.html>` to apply to our GOGS group.
 
-Creating a GOGS role
+.. _GOGS:
+
+Deploying GOGS
 `````````````````````
 Ansible roles should live in your playbook project inside a directory named ``roles``. Go ahead and create that directory.
 
@@ -139,8 +141,10 @@ In your GOGS role, add the following content to your ``tasks/main.yml`` file:
 
 Next, well create a role to manage our container registry deployment
 
-Creating a registry role
-`````````````````````````
+.. _Container Registry:
+
+Deploying a container registry
+```````````````````````````````````
 
 You'll be deploying the :docker_hub:`Docker v2 registry <_/registry>` on your control node and serving content on port 5000. To start, we'll create a new role inside ``~/devops-workshop/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
 

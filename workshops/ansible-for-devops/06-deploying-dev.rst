@@ -7,47 +7,55 @@ Deploying to dev
 Overview
 `````````
 
-We have gone ahead and stood up two additional Red Hat Enterprise Linux hosts for you.  In this lab we are going to
-deploy a containerized simple web application (from an Ansible Role) on two different hosts. This will host a simple
-website.  This is an integration of the last role that we made in Deploying site a.
+Just like production, you development environment is pre-provisioned and secured at this point. In this lab you're deploying a containerized version of your production web application for your theoretical developers to continue working on.
 
-Modify the hosts file
-`````````````````````
+To start, add a ``dev`` group to ``~/playbook/hosts``.
 
-Let first modify the ``hosts`` file and add the correct ip addresses for our web servers.
+Modifying your inventory
+``````````````````````````
+After adding your ``dev`` group, your version of ``~/playbook/hosts`` should look like this example:
 
 .. parsed-literal::
+
+  [nodes]
+  |node_1_ip|
+  |node_2_ip|
+  |node_3_ip|
+  |node_4_ip|
+
   [gogs]
   |control_public_ip|
 
   [registry]
   |control_public_ip|
 
-  [dev]
-  |node_1_ip|
-  |node_2_ip|
-
   [prod]
   |node_3_ip|
   |node_4_ip|
 
-Ok so now we have our inventory let use the same role to build the same website as last time but
-in a container. We are going to build a playbook that leverages the role that we previous created.
+  [dev]
+  |node_1_ip|
+  |node_2_ip|
 
-Let modify the main playbook inside the role from site A.  This is going to give us the flexibility of using the same Ansible code to deploy the same content.  Notice the newly added :ansible_docs:`playbook tags<user_guide/playbooks_tags.html>`.
+One of the key Anisble best practices is to :dry:`re-use code whenever possible<>` with *Don't Repeat Yourself (DRY)* principles. DRY makes maintenance easier and also makes your environments more consistent. With that in mind, you'll create a playbook that leverages the role you created to deploy to production instead of creating an entirely new role.
 
-Modify your Apache Role
-`````````````````````
+Modify the main playbook inside the role from site A.  This is going to give us the flexibility of using the same Ansible code to deploy the same content.  Notice the newly added :ansible_docs:`playbook tags<user_guide/playbooks_tags.html>`.
+
+Adding tags to your Apache role
+`````````````````````````````````
+
+First, you'll be editing the tasks in ``~/playbook/roles/apache-simple``.
 
 .. parsed-literal::
 
-  $ cd /home/|student_name|/devops-workshop/
+  $ cd ~/playbook
   $ vim roles/apache-simple/tasks/main.yml
 
+You need to add Ansible tags to your tasks to distinguish whether the tasks will be executed when deploying rpms or when creating a container image.
 
 .. parsed-literal::
 
-    ---
+  ---
   # tasks file for apache
   - name: Ensure httpd packages are present
     yum:
@@ -69,7 +77,7 @@ Modify your Apache Role
   - name: Ensure latest httpd.conf file is present for Container
     template:
       src: httpd.conf.j2
-      dest: /home/|student_name|/devops-workshop/httpd.conf
+      dest: /home/|student_name|/playbook/apache-simple/httpd.conf
     tags:
        - container
 
@@ -83,7 +91,7 @@ Modify your Apache Role
   - name: Ensure latest index.html file is present for Container
     template:
       src: index.html.j2
-      dest: /home/|student_name|/devops-workshop/index.html
+      dest: /home/|student_name|/apache-simple/index.html
     tags:
        - container
 
@@ -95,40 +103,38 @@ Modify your Apache Role
     tags:
        - rpm
 
-Now that we have added tags, lets take a look at the DockerFile to build the container.  This is going to pull a rhel container that has apache installed.  From there we are going to add the config files `index.html` and `httpd.conf` to the container.  This will server the exact same site as the rpm version that we deployed earlier.
+With the proper tags in place, you need to create a Dockerfile to build your custom httpd container. Your container's base image will already have ``httpd`` installed. Your Dockerfile only needs to add the custom index page and ``httpd`` configuration to the image in the proper location.
 
-Containers
-```````````
 
-Creating the Dockerfile
-^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating your Dockerfile
+`````````````````````````
+
+Create ``~/playbook/apache-simple/Dockerfile`` with the following content:
 
 .. parsed-literal::
 
-  # Pull the rhel image from the local registry
   FROM rhscl/httpd-24-rhel7
   USER root
-
   MAINTAINER |student_name|
-
-  # Add configuration file
   ADD httpd.conf /etc/httpd/conf
   ADD index.html /var/www/html/
   RUN chown -R apache:apache /var/www/html
   EXPOSE 8080
 
+With this done, you need to build your new container image and push it into your container registry.
 
-Playbook to build the container and push it
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creating and pushing your container image
+```````````````````````````````````````````
 
-Now we can create a Ansible playbook to build the container and push it into the registry that we created earlier.
+The next step is to create a new playbook that uses your newly versioned ``apache-simple`` role to build your container image and push it to your container image.
 
 .. code-block:: bash
 
-  $ vim build-apache-simple-container.yml
+  $ cd ~/playbook
+  $ vim apache-simple-container-build.yml
 
-This will have the following content.  Note how we are using the container tag, this playbook can be used for the rpm deployment
-or the container based deployment based about using tags.
+Add the following content to your new playbook. Note you're adding the ``container`` tag to these tasks, so they'll be executed only when you're building a container image. They'll be ignored when deploying your application via rpms.
 
 .. parsed-literal::
 
@@ -156,27 +162,26 @@ or the container based deployment based about using tags.
        tags:
           - container
 
-
-Now its time to build the container:
+With your tasks added, run the playbook using ``ansible-playbook``.
 
 .. code-block:  bash
 
-    $ ansible-playbook -i hosts build-apache-simple-container.yml
+    $ cd ~/playbook
+    $ ansible-playbook -i hosts apache-simple-container-build.yml
 
-Now there should be a `index.html` and a `httpd.conf` in /home/|student_name|/devops-workshop/.
+Your custom httpd image is now in your container registry. Your next playbook will deploy your application to your development nodes.
 
-Playbook to deploy the container
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Deploying your dev environment
+````````````````````````````````````````
 
-Next you'll deploy a container-based version of your application to your dev environment.  In this lab you'll do that using Ansible as well. First, you'll need to add a ``dev`` group to ``~/playbook/hosts``.
-
-
+The next step in this workflow is to write the playbook that deploys your development environent. Create ``~/playbook/apache-simple-container-deploy.yml``
 
 .. code-block:: bash
 
-  $ vim deploy-apache-simple-container.yml
+  $ cd ~/playbook
+  $ vim apache-simple-container-deploy.yml
 
-Inside that file should have the following:
+and add the following content:
 
 .. parsed-literal::
 
@@ -189,21 +194,19 @@ Inside that file should have the following:
       - name: launch apache-simple container on siteb nodes
         docker_container:
           name: apache-simple
-          image: |control_public_ip|:5000/student1/apache-simple
+          image: |control_public_ip|:5000/|student_name|/apache-simple
           ports:
             - "8080:80"
           restart_policy: always
 
-so let's go ahead and run this:
+With this complete, run the playbook to deploy your development environment.
 
 .. code-block:: bash
 
-  $ ansible-playbook -i hosts deploy-apache-simple-container.yml
+  $ cd ~/playbook
+  $ ansible-playbook -i hosts apache-simple-container-deploy.yml
 
-
-OUTPUT GOES HERE
-
-Assuming everything ran you can test each node with the curl command.
+With a successful completion, confirm your dev cluster is functional by accessing each node.
 
 .. parsed-literal::
 

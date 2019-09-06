@@ -6,6 +6,8 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
+LINKCHECKDIR  = _build/linkcheck
+
 
 # Put it first so that "make" without argument is like "make help".
 help:

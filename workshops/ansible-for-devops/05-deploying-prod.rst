@@ -8,12 +8,12 @@ Deploying to prod
 Overview
 `````````
 
-Now that we have our operational infrastructure secured, in this lab you'll deploy your production web server infrastructure. To do this, you'll create an Ansible Role. Our web application will display the hostname of each server.
+With your operational infrastructure secured, in this lab you'll deploy your production web application. To do this, you'll create an :ansible_docs:`Ansible Role<user_guide/playbooks_reuse_roles.html>`. Your web application will display the hostname of the responding server for the content. The first thing to do is to create a group for your production nodes.
 
 Adding prod hosts to your inventory
 ``````````````````````````````````````````
 
-First, modify your ansible inventory at ``~/playbook/hosts`` to add a new groupe named ``prod`` with the IP addresses for your production hosts as members.
+Modify your ansible inventory at ``~/playbook/hosts`` to add a new group named ``prod`` with the IP addresses for your production hosts as members.
 
 .. parsed-literal::
 
@@ -33,17 +33,19 @@ First, modify your ansible inventory at ``~/playbook/hosts`` to add a new groupe
   |node_1_ip|
   |node_2_ip|
 
-Next we'll create the Ansible content to deploy our production application.
+Next, create the Ansible role to deploy your production application.
 
-Creating a development site deployment role
+Creating a production site deployment role
 ``````````````````````````````````````````````
 
-Next, move over to the ``~/devops-workshop/roles`` directory and create a new Ansible role using ``ansible-galaxy`` named ``apache-simple``.
+Next, move over to the ``~/playbook/roles`` directory and create a new Ansible role using ``ansible-galaxy`` named ``apache-simple``.
 
 .. code-block:: bash
 
   $ cd ~/playbook/roles
   $ ansible-galaxy init apache-simple
+
+Your newly created role is essentially empty, like the roles you created when :ref:`GOGS` and :ref:`Container Registry`. Next, you'll add the code to deploy your production environment.
 
 Defaults
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +64,7 @@ Default values are used for variables by Ansible if they're not set in any other
 
 With your defaults created, next you'll create variables for your role.
 
-Role variables
+Variables
 ~~~~~~~~~~~~~~~
 
 Next, add the following role-specific variables in ``~/playbook/roles/apache-simple/vars/main.yml.``
