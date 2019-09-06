@@ -6,7 +6,7 @@ Source code and container repositories
 ==========================================
 
 Overview
-`````````
+---------
 
 In this lab we're using :gogs:`GOGS<>` deployed in a container to provide version control for the playbooks and roles we'll create. Additionally we'll deploy a container registry to house our container images. Our tasks for this lab are to:
 
@@ -23,7 +23,7 @@ In this lab we're using :gogs:`GOGS<>` deployed in a container to provide versio
 Let's get started.
 
 Adding inventory groups
-``````````````````````````````
+------------------------
 
 You need to add ``gogs`` and ``registry`` groups to your inventory located at ``~/playbook/hosts``.
 
@@ -52,7 +52,7 @@ Next, we'll create an :ansible_docs:`Ansible role<user_guide/playbooks_reuse_rol
 .. _GOGS:
 
 Deploying GOGS
-`````````````````````
+---------------
 Ansible roles should live in your playbook project inside a directory named ``roles``. Go ahead and create that directory.
 
 .. code-block:: bash
@@ -92,7 +92,7 @@ This creates the prescriptive directory structure for your ansible role.
 This completes the basic infrastructure we'll need. Now, it's time to write some Ansible by creating our first role.
 
 Creating GOGS role tasks
-^^^^^^^^^^^^^^^^^^^^^^^^^
+`````````````````````````
 
 The tasks to deploy GOGS need to accomplish these tasks:
 
@@ -143,8 +143,8 @@ Next, well create a role to manage our container registry deployment
 
 .. _Container Registry:
 
-Deploying a container registry
-```````````````````````````````````
+Deploying your container registry
+-----------------------------------
 
 You'll be deploying the :docker_hub:`Docker v2 registry <_/registry>` on your control node and serving content on port 5000. To start, we'll create a new role inside ``~/devops-workshop/roles``, and use ``ansible-galaxy`` to start a role named ``registry``.
 
@@ -194,7 +194,7 @@ In your new registry role, add the following content to ``tasks/main.yml``.
       restart_policy: always
 
 Writing your artifact control playbook
-````````````````````````````````````````
+---------------------------------------
 
 With your roles in place, you're ready to deploy :gogs:`GOGS<>`, :mariadb:`MariaDB<>`, and the container registry on your control node. To do this, your playbook will need to reference the roles you just created. In your ``playbook`` directory, create a file named ``deploy_artifacts.yml`` with the following contents.
 
@@ -253,8 +253,23 @@ Once complete, run ``ansible-playbook`` referencing your inventory and the playb
 
 Before we can use GOGS to house our source code, we need to configure it to connect to the MariaDB container which will act as its database.
 
+Confirming your applications are deployed
+------------------------------------------
+
+You can query ``docker`` to ensure your containers deployed.
+
+.. code-block:: bash
+
+  $ sudo docker ps
+  CONTAINER ID IMAGE    COMMAND                 CREATED        STATUS            PORTS                  NAMES
+  57e0ec28478b registry "/entrypoint.sh /e..."  11 seconds ago Up 10 seconds   0.0.0.0:5000->5000/tcp  registry
+  049860e21412 mariadb "docker-entrypoint..."   12 seconds ago Up 12 seconds 3306/tcp mariadb
+  3867b34d2177 gogs/gogs "/app/gogs/docker/..." 13 seconds ago Up 13 seconds 0.0.0.0:10022->22/tcp, 0.0.0.0:8081->3000/tcp gogs
+
+Your registry is now ready to go and your git repository is ready to be configured. Let's configure GOGS next.
+
 Configuring GOGS
-`````````````````
+-----------------
 
 The GOGS UI is listening at |control_public_ip|:8081. The configuration is done using a web wizard. You'll need to configure a few options in this wizard to get going.
 
@@ -286,7 +301,7 @@ Our container's IP address is ``172.17.0.4``. Your root database user's password
 With this section complete, we'll wrap up the other configuration options.
 
 Configuring GOGS URLs
-```````````````````````
+``````````````````````
 
 GOGS needs to know the URLs to use for cloning repositories and to host its application. Replace the instances of ``localhost`` in the *Domain* and *Application URL* fields with |control_public_ip|. Additionally, the port number for *Application URL* needs to be ``8081``.
 
@@ -316,7 +331,7 @@ GOGS is now configured to house all of your repositories for the rest of the lab
   For this workshop, GOGS, MariaDB, and the container registry are not using persistent storage. That means if you stop these containers and restart them, you'll essentially be starting from scratch with configuring GOGS. This can be helpful, but be careful!
 
 Creating a GOGS repository
----------------------------
+```````````````````````````
 
 To create our initial GOGS repository, we'll first create one in the GOGS UI, then add our content so far to it and upload to our remote host.
 
@@ -412,3 +427,6 @@ With your initial Ansible content uploaded, you now have almost everything you n
 
 .. |plus sign| image:: _static/images/gogs_plus.png
 .. |save button| image:: _static/images/gogs_save.png
+
+Summary
+--------

@@ -212,3 +212,6 @@ With a successful completion, confirm your dev cluster is functional by accessin
 
   $ curl \http://|node_3_ip|:8080
   $ curl \http://|node_4_ip|:8080
+
+Summary
+````````

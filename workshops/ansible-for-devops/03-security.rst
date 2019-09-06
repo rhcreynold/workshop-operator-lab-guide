@@ -12,7 +12,7 @@ Before we deploy services and software, we need to ensure our infrastructure is 
 
 it's time to edit your inventory to create a group that contains all four of your nodes.
 
-Ansible inventories
+Creating an Ansible inventory
 `````````````````````````````````````````````
 
 Ansible best practices include using inventory groups consistently. This makes your playbooks more portable. When your environment changes, only the inventory needs to be updated. Your roles and playbooks don't need to be edited.
@@ -29,7 +29,7 @@ To accomplish this we'll create inventory groups to easily accommodate your diff
 
 With your inventory created, you can create the playbook to apply the STIG baseline to your hosts.
 
-Install the RHEL 7 STIG role from Ansible Galaxy
+Installing the RHEL 7 STIG role
 `````````````````````````````````````````````````
 
 The RHEL 7 DISA STIG is a set of guidelines to secure government servers. To implement it we'll use an Ansible role that's maintained by Red Hat. We'll pull the role from :ansible_galaxy:`Ansible Galaxy<RedHatOfficial/rhel7_stig>`
@@ -49,7 +49,7 @@ To install this role to be used locally we'll use the ``ansible-galaxy`` command
 
 With the RHEL 7 STIG role installed create a playbook to apply the role to your ``nodes`` group.
 
-Writing the STIG Playbook
+Writing your STIG Playbook
 ````````````````````````````
 Create a file named ``~/playbook/stig.yml``. This file will be the playbook to secure your web servers.
 
@@ -87,15 +87,28 @@ Role tasks
         reload: true
 
 You're adding two additional tasks that run after the role is applied and also setting a variable used by the STIG role. Since we're using the cloud image for RHEL, ``firewalld`` isn't installed by default.
-The first tasks sets an SELinux boolean that allows http connections to the  webservers and containers that will be running on the hosts. The second task allows ensures tcp connections
-are forward from the node to the containers that serve content.
 
-With the playbook finished, run the playbook using the ``ansible-playbook`` command.
+The first tasks sets an SELinux boolean that allows http connections to the  webservers and containers that will be running on the hosts. The second task allows ensures tcp connections are forward from the node to the containers that serve content. Next you need to run the playbook to apply the STIG baseline.
+
+Running your STIG playbook
+````````````````````````````
+
+With your code finished, run the playbook using the ``ansible-playbook`` command.
 
   .. code-block:: bash
 
       $ cd ~/playbook
-      $ ansible-playbook -i hosts stig.yml
+      $ ansible-playbook -i hosts stig.yml -k
 
+This playbook will take a few minutes to complete. It's making a lot of changes to your system. It checks almost 500 things on the system in its default configuration.
 
-OUTPUT GOES HERE
+.. code-block:: bash
+
+PLAY RECAP *****************************************************************
+172.16.121.0 : ok=467  changed=5    unreachable=0    failed=0    skipped=81   rescued=0    ignored=0
+172.16.225.249 : ok=467  changed=5    unreachable=0    failed=0    skipped=81   rescued=0    ignored=0
+172.16.228.125 : ok=467  changed=5    unreachable=0    failed=0    skipped=81   rescued=0    ignored=0
+172.16.246.6 : ok=467  changed=5    unreachable=0    failed=0    skipped=81   rescued=0    ignored=0
+
+Summary
+````````

@@ -136,19 +136,34 @@ Deploying your nginx load balancer
 
 Create a playbook named ``~/playbook/nginx-lb-deploy.yml`` with the following content.
 
+.. parsed-literal::
 
+  ---
+  - name: deploy nginx load balancer
+    hosts: lb
+    become: yes
 
+    tasks:
+      - name: launch nginx-lb container on lb nodes
+        docker_container:
+          name: apache-simple
+          image: |control_public_ip|:5000/|student_name|/nginx-lb
+          ports:
+            - "8081:80"
+          restart_policy: always
 
-
-So what we have done is create a loadbalancer that answers on |control_public_ip| and then will forward the request to one of the backend_servers.
-
-
-
-Now that we have the playbook written it is time to execute it.
+Run the playbook on your control node using ``ansible-playbook``.
 
 .. code-block:: bash
 
   $ ansible-playbook setup-nginx.yml
 
+After a successful completion, confirm your load balancer is deployed by testing both dev and prod endpoints.
 
-  OUTPUT GOES HERE
+.. parsed-literal::
+
+  $ curl http://|control_public_ip|:8081/dev
+  $ curl http://|control_public_ip|:8081/prod
+
+Summary
+````````
