@@ -61,7 +61,7 @@ Create a directory named ``~/playbook/nginx-lb`` on your control node. Inside th
   }
 
   server {
-      listen 8081;
+      listen 8082;
       location /dev {
         proxy_pass \http://dev;
       }
@@ -149,7 +149,7 @@ Create a playbook named ``~/playbook/nginx-lb-deploy.yml`` with the following co
           name: apache-simple
           image: |control_public_ip|:5000/|student_name|/nginx-lb
           ports:
-            - "8081:80"
+            - "8082:80"
           restart_policy: always
 
 Run the playbook on your control node using ``ansible-playbook``.
@@ -162,8 +162,8 @@ After a successful completion, confirm your load balancer is deployed by testing
 
 .. parsed-literal::
 
-  $ curl http://|control_public_ip|:8081/dev
-  $ curl http://|control_public_ip|:8081/prod
+  $ curl http://|control_public_ip|:8082/dev
+  $ curl http://|control_public_ip|:8082/prod
 
 Summary
 ````````
