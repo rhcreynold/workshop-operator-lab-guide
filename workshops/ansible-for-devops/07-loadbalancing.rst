@@ -162,8 +162,8 @@ After a successful completion, confirm your load balancer is deployed by testing
 
 .. parsed-literal::
 
-  $ curl http://|control_public_ip|:8082/dev
-  $ curl http://|control_public_ip|:8082/prod
+  $ curl \http://|control_public_ip|:8082/dev
+  $ curl \http://|control_public_ip|:8082/prod
 
 Summary
 ````````

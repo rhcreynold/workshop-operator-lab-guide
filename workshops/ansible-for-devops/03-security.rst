@@ -13,7 +13,7 @@ Before we deploy services and software, we need to ensure our infrastructure is 
 it's time to edit your inventory to create a group that contains all four of your nodes.
 
 Creating an Ansible inventory
-`````````````````````````````````````````````
+------------------------------
 
 Ansible best practices include using inventory groups consistently. This makes your playbooks more portable. When your environment changes, only the inventory needs to be updated. Your roles and playbooks don't need to be edited.
 
@@ -30,7 +30,7 @@ To accomplish this we'll create inventory groups to easily accommodate your diff
 With your inventory created, you can create the playbook to apply the STIG baseline to your hosts.
 
 Installing the RHEL 7 STIG role
-`````````````````````````````````````````````````
+---------------------------------
 
 The RHEL 7 DISA STIG is a set of guidelines to secure government servers. To implement it we'll use an Ansible role that's maintained by Red Hat. We'll pull the role from :ansible_galaxy:`Ansible Galaxy<RedHatOfficial/rhel7_stig>`
 To install this role to be used locally we'll use the ``ansible-galaxy`` command on your control node.
@@ -50,7 +50,8 @@ To install this role to be used locally we'll use the ``ansible-galaxy`` command
 With the RHEL 7 STIG role installed create a playbook to apply the role to your ``nodes`` group.
 
 Writing your STIG Playbook
-````````````````````````````
+----------------------------
+
 Create a file named ``~/playbook/stig.yml``. This file will be the playbook to secure your web servers.
 
   .. code-block:: bash
@@ -61,7 +62,7 @@ Create a file named ``~/playbook/stig.yml``. This file will be the playbook to s
 Now let us run the playbook to STIG the Environment.
 
 Role tasks
-~~~~~~~~~~~
+````````````
 .. parsed-literal::
 
   ---
@@ -91,7 +92,7 @@ You're adding two additional tasks that run after the role is applied and also s
 The first tasks sets an SELinux boolean that allows http connections to the  webservers and containers that will be running on the hosts. The second task allows ensures tcp connections are forward from the node to the containers that serve content. Next you need to run the playbook to apply the STIG baseline.
 
 Running your STIG playbook
-````````````````````````````
+---------------------------
 
 With your code finished, run the playbook using the ``ansible-playbook`` command.
 
@@ -111,4 +112,6 @@ PLAY RECAP *****************************************************************
 172.16.246.6 : ok=467  changed=5    unreachable=0    failed=0    skipped=81   rescued=0    ignored=0
 
 Summary
-````````
+--------
+
+The term DevOps is being eclipsed by DevSecOps in a lot of circles. The reason we scheduled this lab first was to provide a nod to the concept. You should never deploy an infrastructure that's not secured as quickly as possible. Your workshop environment today is no different. 

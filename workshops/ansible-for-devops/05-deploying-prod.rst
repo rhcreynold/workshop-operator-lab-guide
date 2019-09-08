@@ -30,8 +30,8 @@ Modify your ansible inventory at ``~/playbook/hosts`` to add a new group named `
   |control_public_ip|
 
   [prod]
-  |node_1_ip|
-  |node_2_ip|
+  |node_3_ip|
+  |node_4_ip|
 
 Next, create the Ansible role to deploy your production application.
 
@@ -174,7 +174,24 @@ With your playbook created, it's time to commit your source code and deploy your
 Committing your source code
 ``````````````````````````````
 
-TODO
+Be sure to add your new files to source control and push your source to your its repository.
+
+.. code-block:: bash
+
+  $ cd ~/playbook
+  $ git add -A
+  $ git commit -a -m 'adding production deployment code'
+  $ git push origin master
+
+The ``git push`` command will prompt you for your GOGS password just like your previous push. Your output should look similar to the example below:
+
+.. code-block:: bash
+
+  ...
+  Username for 'http://54.89.149.44:8081': student1
+  Password for 'http://student1@54.89.149.44:8081':
+  To http://54.89.149.44:8081/student1/playbook.git
+   70fd216..c27fd85  master -> master
 
 Deploying production
 `````````````````````
@@ -184,7 +201,17 @@ To deploy your production application, use the ``ansible-playbook`` command to e
 .. code-block:: bash
 
   $ cd ~/playbook
-  $ ansible-playbook -i hosts prod.yml
+  $ ansible-playbook -i hosts prod.yml -k
+
+Confirming a successful deployment
+```````````````````````````````````
+
+To confirm your playbook performed properly, use the ``curl`` command to access each production server on port 8080.
+
+.. parsed-literal::
+
+  $ curl \http://|node_1_ip|:8080
+  $ curl \http://|node_2_ip|:8080
 
 Summary
 ````````

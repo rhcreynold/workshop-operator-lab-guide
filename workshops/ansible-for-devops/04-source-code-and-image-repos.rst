@@ -425,8 +425,33 @@ You'll be prompted for your GOGS username and password you set up when you regis
 
 With your initial Ansible content uploaded, you now have almost everything you need to create a full CI/CD pipeline for the rest of your workshop!
 
-.. |plus sign| image:: _static/images/gogs_plus.png
-.. |save button| image:: _static/images/gogs_save.png
+Accessing your container registry
+----------------------------------
+
+You'll need to make one change to your control node to allow it to access your newly deployed container registry. For today's workshop we're not setting up SSl for your registry. By default, ``docker`` won't allow access to an insecure registry. To allow this to happen, you'll need to edit this line in ``/etc/sysconfig/docker``:
+
+.. code-block:: bash
+
+  OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false'
+
+to read like:
+
+.. parsed-literal::
+
+  OPTIONS='--insecure-registry=|control_public_ip|:5000 --selinux-enabled --log-driver=journald --signature-verification=false'
+
+With the change made, restart the ``docker`` daemon on your control node for the changes to take affect.
+
+.. code-block:: bash
+
+  $ sudo systemctl restart docker
+
+And now your system is ready for the rest of the workshop!
 
 Summary
 --------
+
+This lab deploys and configures your environment to work with the fundamental building blocks that make DevOps possible. Everything you do should be in source control. Additionally, containers are the building blocks of modern infrastructure. 
+
+.. |plus sign| image:: _static/images/gogs_plus.png
+.. |save button| image:: _static/images/gogs_save.png

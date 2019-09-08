@@ -7,9 +7,9 @@ Deploying to dev
 Overview
 `````````
 
-Just like production, you development environment is pre-provisioned and secured at this point. In this lab you're deploying a containerized version of your production web application for your theoretical developers to continue working on.
+Just like production, your development environment is pre-provisioned and secured at this point. In this lab you're deploying a containerized version of your production web application for your theoretical developers to continue developing for their shiny new container platform.
 
-To start, add a ``dev`` group to ``~/playbook/hosts``.
+To begin, add a ``dev`` group to ``~/playbook/hosts``.
 
 Modifying your inventory
 ``````````````````````````
@@ -91,7 +91,7 @@ You need to add Ansible tags to your tasks to distinguish whether the tasks will
   - name: Ensure latest index.html file is present for Container
     template:
       src: index.html.j2
-      dest: /home/|student_name|/apache-simple/index.html
+      dest: /home/|student_name|/playbook/apache-simple/index.html
     tags:
        - container
 
@@ -104,8 +104,6 @@ You need to add Ansible tags to your tasks to distinguish whether the tasks will
        - rpm
 
 With the proper tags in place, you need to create a Dockerfile to build your custom httpd container. Your container's base image will already have ``httpd`` installed. Your Dockerfile only needs to add the custom index page and ``httpd`` configuration to the image in the proper location.
-
-
 
 Creating your Dockerfile
 `````````````````````````
@@ -145,10 +143,8 @@ Add the following content to your new playbook. Note you're adding the ``contain
     roles:
       - apache-simple
 
-    tasks:
-
      - name: build a new docker image
-       command: "docker build -t apache-simple ."
+       command: "docker build -t apache-simple /home/|student_name|/playbook/apache-simple"
        tags:
           - container
 
@@ -162,12 +158,12 @@ Add the following content to your new playbook. Note you're adding the ``contain
        tags:
           - container
 
-With your tasks added, run the playbook using ``ansible-playbook``.
+With your tasks added, run the playbook using ``ansible-playbook``, specifying that only tasks with the ``container`` tag are executed.
 
 .. code-block:  bash
 
-    $ cd ~/playbook
-    $ ansible-playbook -i hosts apache-simple-container-build.yml
+  $ cd ~/playbook
+  $ ansible-playbook -i hosts apache-simple-container-build.yml
 
 Your custom httpd image is now in your container registry. Your next playbook will deploy your application to your development nodes.
 
@@ -186,18 +182,33 @@ and add the following content:
 .. parsed-literal::
 
   ---
-  - name: launch apache containers on site2 nodes
+  - name: launch apache containers on dev nodes
     hosts: dev
     become: yes
 
     tasks:
-      - name: launch apache-simple container on siteb nodes
-        docker_container:
-          name: apache-simple
-          image: |control_public_ip|:5000/|student_name|/apache-simple
-          ports:
-            - "8080:80"
-          restart_policy: always
+    - name: install docker-py prerequisites
+      pip:
+        name: docker-py
+
+    - name: add insecure registry option for dev nodes
+      lineinfile:
+        path: /etc/sysconfig/docker
+        regexp: '^OPTIONS='
+        line: OPTIONS='--insecure-registry=|control_public_ip|:5000 --selinux-enabled --log-driver=journald --signature-verification=false'
+
+    - name: restart docker service
+      service:
+        name: docker
+        state: restarted
+
+    - name: launch apache-simple container on dev nodes
+      docker_container:
+        name: apache-simple
+        image: |control_public_ip|:5000/|student_name|/apache-simple
+        ports:
+          - "8080:80"
+        restart_policy: always
 
 With this complete, run the playbook to deploy your development environment.
 
