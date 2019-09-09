@@ -51,17 +51,17 @@ Create a directory named ``~/playbook/nginx-lb`` on your control node. Inside th
 .. parsed-literal::
 
   upstream prod {
-    server |node_1_ip|;
-    server |node_2_ip|;
+    server |node_1_ip|:8080;
+    server |node_2_ip|:8080;
   }
 
   upstream dev {
-    server |node_3_ip|;
-    server |node_4_ip|;
+    server |node_3_ip|:8080;
+    server |node_4_ip|:8080;
   }
 
   server {
-      listen 8082;
+      listen 80;
       location /dev {
         proxy_pass \http://dev;
       }
@@ -112,7 +112,7 @@ The load balancer build playbook should have the following content:
     tasks:
 
      - name: build a new docker image
-       command: "docker build -t nginx-lb ."
+       command: "docker build -t nginx-lb /home/|student_name|/playbook/nginx-lb"
 
      - name: Tag and push to registry
        docker_image:
@@ -122,10 +122,13 @@ The load balancer build playbook should have the following content:
          source: local
          tag: latest
 
-To build your container image and push it to your registery, run the playbook using the ``ansible-playbook`` command:
+To build your container image and push it to your registery, run the playbook using the ``ansible-playbook`` command. Be sure to save the commit your new code to GOGS as well.
 
 .. code-block:: bash
 
+  $ git add -A
+  $ git commit -a -m "adding load balancer code"
+  $ git push origin master
   $ cd ~/playbook
   $ ansible-playbook -i hosts nginx-lb-build.yml
 
@@ -146,7 +149,7 @@ Create a playbook named ``~/playbook/nginx-lb-deploy.yml`` with the following co
     tasks:
       - name: launch nginx-lb container on lb nodes
         docker_container:
-          name: apache-simple
+          name: nginx-lb
           image: |control_public_ip|:5000/|student_name|/nginx-lb
           ports:
             - "8082:80"
@@ -156,7 +159,7 @@ Run the playbook on your control node using ``ansible-playbook``.
 
 .. code-block:: bash
 
-  $ ansible-playbook setup-nginx.yml
+  $ ansible-playbook -i hosts nginx-lb-deploy.yml
 
 After a successful completion, confirm your load balancer is deployed by testing both dev and prod endpoints.
 
@@ -167,3 +170,5 @@ After a successful completion, confirm your load balancer is deployed by testing
 
 Summary
 ````````
+
+This lab is the completion of your infrastructure. In the next lab you'll take what you've created and make it work from inside Ansible Tower. Ansible Tower gives you an API in front of your Ansible code so you can interact with it to control your infrastructure from other services like your CI/CD tooling or even your help desk service. 
