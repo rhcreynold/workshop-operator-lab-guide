@@ -41,7 +41,7 @@ Creating the nginx container image
 Nginx has a built-in module that acts as a reverse proxy load balancer named ``proxy_pass``. You'll need to configure that module as well as an ``upstream`` server group for both dev and prod in your ``nginx.conf`` configuration file at ``/etc/nginx/conf.d/default.conf``.
 
 Setting up nginx.conf
-~~~~~~~~~~~~~~~~~~~~~~~
+```````````````````````
 
 The first step to create your customized nginx container is to create the proper configuration file.
 
@@ -74,7 +74,7 @@ This configuration creates an ``nginx`` loadbalancer that passes requests on |co
 Next, create a :dockerfile:`Dockerfile<>` to build an ``nginx`` container image that includes the custom configuration.
 
 Creating the nginx Dockerfile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``````````````````````````````
 
 Create a file at ``~/plabybook/nginx-lb/Dockerfile with the following contents. *Note: The capitalization of ``Dockerfile`` is important*
 
@@ -88,7 +88,7 @@ Create a file at ``~/plabybook/nginx-lb/Dockerfile with the following contents. 
 
 With all of the artifacts created, next you'll write Ansible playbooks to build the container image and deploy your nginx load balancer on your control node.
 
-Create the nginx container image
+Creating the nginx container image
 ``````````````````````````````````
 Similar to your development website, you'll create a playbook to build and push your container image and a second playbook to deploy it.
 
@@ -134,7 +134,7 @@ To build your container image and push it to your registery, run the playbook us
 With the successful completion of this playbook run, your container image is now available in your container registry. Let's deploy it on the proper nodes with another playbook.
 
 Deploying your nginx load balancer
-```````````````````````````````````
+-----------------------------------
 
 Create a playbook named ``~/playbook/nginx-lb-deploy.yml`` with the following content.
 
@@ -168,6 +168,6 @@ After a successful completion, confirm your load balancer is deployed by testing
   $ curl \http://|control_public_ip|:8082/prod
 
 Summary
-````````
+--------
 
 This lab is the completion of your infrastructure. In the next lab you'll take what you've created and make it work from inside Ansible Tower. Ansible Tower gives you an API in front of your Ansible code so you can interact with it to control your infrastructure from other services like your CI/CD tooling or even your help desk service.
