@@ -179,6 +179,10 @@ The next step in this workflow is to write the playbook that deploys your develo
 
 and add the following content:
 
+.. admonition:: Taking care of container-specific dependencies
+
+  There are three tasks in this playbook that handle dependencies for allowing the ``docker_container`` module to run on your dev nodes and to allow your dev nodes to access your container registry via http.
+
 .. parsed-literal::
 
   ---
@@ -195,7 +199,7 @@ and add the following content:
       lineinfile:
         path: /etc/sysconfig/docker
         regexp: '^OPTIONS='
-        line: OPTIONS='--insecure-registry=|control_public_ip|:5000 --selinux-enabled --log-driver=journald --signature-verification=false'
+        line: OPTIONS='--insecure-registry=\ |control_public_ip|:5000 --selinux-enabled --log-driver=journald --signature-verification=false'
 
     - name: restart docker service
       service:
@@ -210,10 +214,13 @@ and add the following content:
           - "8080:80"
         restart_policy: always
 
-With this complete, run the playbook to deploy your development environment.
+With this complete, commit your changes to source control and run the playbook to deploy your development environment.
 
 .. code-block:: bash
 
+  $ git add -A
+  $ git commit -a -m 'dev environment ready to deploy'
+  $ git push origin master
   $ cd ~/playbook
   $ ansible-playbook -i hosts apache-simple-container-deploy.yml
 
