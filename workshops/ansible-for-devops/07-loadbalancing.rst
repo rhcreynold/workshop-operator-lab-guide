@@ -5,11 +5,10 @@
 Load-balancing your clusters
 =================================
 
-Overview
-`````````
+In exercise we're going to deploy an :nginx:`nginx<>` reverse proxy and load balancer. This proxy will take incoming http requests over port 8081
+and forward them to one of the 4 web servers that we have deployed. Like most of your other services in today's workshop, you'll be containerizing nginx.
 
-In exercise we're going to deploy an :nginx:`nginx<>` reverse proxy and load balancer.  This proxy will take incoming http requests over port 8081
-and forward them to one of the 4 webservers that we have deployed. Like most of your other services in today's workshop, you'll be containerizing nginx.
+The first
 
 Adding a load balancer inventory group
 ---------------------------------------
@@ -171,4 +170,4 @@ After a successful completion, confirm your load balancer is deployed by testing
 Summary
 ````````
 
-This lab is the completion of your infrastructure. In the next lab you'll take what you've created and make it work from inside Ansible Tower. Ansible Tower gives you an API in front of your Ansible code so you can interact with it to control your infrastructure from other services like your CI/CD tooling or even your help desk service. 
+This lab is the completion of your infrastructure. In the next lab you'll take what you've created and make it work from inside Ansible Tower. Ansible Tower gives you an API in front of your Ansible code so you can interact with it to control your infrastructure from other services like your CI/CD tooling or even your help desk service.
