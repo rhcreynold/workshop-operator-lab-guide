@@ -233,3 +233,5 @@ With a successful completion, confirm your dev cluster is functional by accessin
 
 Summary
 ````````
+
+Just like a lot of actual environments represented in this workshop today, production is deployed in a "tradtional" manner and containers are used for development with an eye toward a future production methodology. Can you see where the extra work you've done to containerize your web application will quickly provide a solid ROI? 

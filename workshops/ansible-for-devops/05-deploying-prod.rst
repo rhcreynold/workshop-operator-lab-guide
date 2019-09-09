@@ -157,7 +157,7 @@ Next, create a playbook to apply the new role to your production hosts.
 Creating a production playbook
 ````````````````````````````
 
-Create an Ansible playbook at ``~/playbook/prod.yml`` with the following content.
+Create an Ansible playbook at ``~/playbook/prod-deploy.yml`` with the following content.
 
 .. code-block:: yaml
 
@@ -201,7 +201,7 @@ To deploy your production application, use the ``ansible-playbook`` command to e
 .. code-block:: bash
 
   $ cd ~/playbook
-  $ ansible-playbook -i hosts prod.yml -k
+  $ ansible-playbook -i hosts prod-deploy.yml -k
 
 Confirming a successful deployment
 ```````````````````````````````````
