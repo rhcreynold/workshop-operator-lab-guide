@@ -5,8 +5,6 @@
 Configuring Ansible Tower
 ==================================================
 
-Overview
----------
 In this lab will you'll be working with Ansible Tower to make it how we interface with our playbooks, roles, and infrastructure for the rest of the workshop. We'll configure Tower with your inventory, credentials, and tell it how to interface with GOGS to manage playbooks and roles.
 
 Your control node already has Tower deployed at \https://|control_public_ip|. We've also pre-applied a license key to your tower instance, so it's ready to be configured. Your Tower username is ``admin`` and your Tower password is |student_pass|.
@@ -23,8 +21,10 @@ There are a number of constructs in the Ansible Tower UI that enable multi-tenan
 
 Let's start with adding a Credential.
 
-Creating a Credential
-^^^^^^^^^^^^^^^^^^^^^^
+Creating Credentials
+``````````````````````
+
+TODO - GOGS creds
 
 Credentials are utilized by Tower for authentication when launching jobs against machines, synchronizing with inventory sources, and importing project content from a version control system.
 
@@ -32,7 +32,6 @@ There are many `types of credentials <http://docs.ansible.com/ansible-tower/late
 
 - Select the gear icon |Gear button|, then select CREDENTIALS.
 - Click on ADD |Add button|
-
 
 Use this information to complete the credential form.
 
@@ -62,7 +61,7 @@ Use this information to complete the credential form.
 With your credential created, next you'll create a project to point back to your GOGS instance.
 
 Creating a Project
-^^^^^^^^^^^^^^^^^^^
+```````````````````
 
 A Project is a logical collection of Ansible playbooks, represented in Tower. You can manage playbooks and playbook directories by either placing them manually under the Project Base Path on your Tower server, or by placing your playbooks into a source code management (SCM) system supported by Tower, including Git, Subversion, and Mercurial.
 
@@ -90,7 +89,9 @@ SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 - Select SAVE |Save button|
 
 Creating an Inventory
-^^^^^^^^^^^^^^^^^^^^^^
+``````````````````````
+
+TODO - make it pull from the project
 
 An inventory is a collection of hosts against which jobs may be launched. Inventories are divided into groups and these groups contain the actual hosts. Groups may be sourced manually, by entering host names into Tower, or from one of Ansible Tower’s supported cloud providers.
 An Inventory can also be imported into Tower using the ``tower-manage`` command and this is how we are going to add an inventory for this workshop.
@@ -153,42 +154,26 @@ groups contain hosts.
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
 
-Configure Ansible Tower
-```````````````````````````````````````
+Creating job templates
+-----------------------
 
+STIG template
+``````````````
 
-Set Up Credentials
-^^^^^^^^^^^^^^^^^^^
+Prod template
+``````````````
 
-Gogs and student machine Credentials
+Dev template
+``````````````
 
-Add a Project
-^^^^^^^^^^^^^
+Load balancer template
+```````````````````````
 
-Point Tower to the Gogs server
+Workflow templates
+--------------------
 
-
-Create a Stig template
-^^^^^^^^^^^^^^^^^^^^^^^
-
-
-Create a Site A template
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Create a Site B template
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Create a NGINX template
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-Create a Workflow
-^^^^^^^^^^^^^^^^^
-
-
-Create a STIG Check template
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-s
+Summary
+--------
 
 .. |Browse button| image:: ./_static/images/at_browse.png
 .. |Submit button| image:: ./_static/images/at_submit.png
