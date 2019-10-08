@@ -12,7 +12,7 @@ RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --
 RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
 EXPOSE 8080
 CMD ["/opt/docs/entrypoint.sh"]
-LABEL maintainer="jduncan@redhat.com"
+LABEL maintainer="creynold@redhat.com"
 RUN chmod -R u+x /opt/docs && \
     chgrp -R 0 /opt/docs && \
     chmod -R g=u /opt/docs
