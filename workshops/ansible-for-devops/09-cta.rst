@@ -1,5 +1,5 @@
-.. sectionauthor:: Jamie Duncan <jduncan@redhat.com>
-.. _docs admin: jduncan@redhat.com
+.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
+.. _docs admin: creynold@redhat.com
 
 =======================
 Conclusions

@@ -1,5 +1,5 @@
-.. sectionauthor:: Jamie Duncan <jamie.e.duncan@gmail.com>
-.. _docs admin: cloudguy@redhat.com
+.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
+.. _docs admin: creynold@redhat.com
 
 ==================================================
 Configuring Ansible Tower
@@ -57,7 +57,7 @@ Use this information to complete the credential form.
 Click SAVE |Save button| to save each new Credential.
 
 With your machine credential created, next create a source control credential to
-authenticate to your GOGS instance. Use the following information. 
+authenticate to your GOGS instance. Use the following information.
 
 +------------------------+---------------------------------------+
 | NAME                   | GOGS Credential                       |
@@ -137,26 +137,26 @@ Click SAVE |Save button| to save your new inventory.
 
 Next, click Sources |Source button| to add a source for your inventory.
 
-Inventory Sources 
+Inventory Sources
 ~~~~~~~~~~~~~~~~~~~
 
 Inventory sources can come from multiple locations including all of the public
 and on-premise cloud and infrastructure providers, Red Hat Satellite, and even
 custom scripts. For today's workshop, you'll add a source to your inventory that
 references the file in your GOGS repository project. Fill in your inventory
-source with the following information. 
+source with the following information.
 
 ============ ===================================================================
-NAME          GOGS Source                 
+NAME          GOGS Source
 ============ ===================================================================
-DESCRIPTION   <leave blank>                
+DESCRIPTION   <leave blank>
 CREDENTIAL    GOGS Credential
 SOURCE        Sourced from Project
 OPTIONS       [x] Overwrite [x] Overwrite Variables [x] Update on Project Change
 ============ ===================================================================
 
 .. figure:: ./_static/images/at_inv_source.png
-    :alt: Adding a source to your inventory 
+    :alt: Adding a source to your inventory
 
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
@@ -166,91 +166,91 @@ Creating job templates
 
 Ansible Tower Job Templates are where everything comes together to get work
 done. Job Templates have many configurable options. These are equivalent to
-everything available to Ansible on the command line. 
+everything available to Ansible on the command line.
 
 .. figure:: ./_static/images/at_job_template.png
     :alt: Job Template options
-    
+
 Let's walk through the fields so you can begin to re-create the playbooks we've
-run today. 
+run today.
 
 Name and Description
-  These provide friendly and unique identifiers for your Job Templates. 
+  These provide friendly and unique identifiers for your Job Templates.
 
 Job Type
-  - Run - Run the selected job 
+  - Run - Run the selected job
   - Check - Equivalent to "dry run" mode on the command line
 
-Inventory 
-  Select the inventory to use. 
-  
+Inventory
+  Select the inventory to use.
+
 Project
   The Project to pull playbooks from.
 
 Playbook
   Once a project is selected, Playbook is populated with all of the playbooks
-  available to the user within that project. 
+  available to the user within that project.
 
 Credential
   Credentials needed for the playbook to operate. These could include machine,
   vault, or any other valid credential for your playbook. If you need more than
   one, you can select multiple credentials of different types in this field.
-  
+
 Forks
   The default Ansible fork value is 5. This is the number of concurrent SSH
-  sessions Ansible will create to execute a playbook. 
-  
+  sessions Ansible will create to execute a playbook.
+
 Limit
   One or more patterns to limit the hosts to execute the Job Template against.
-  These are typically group names and can be additive. For example: 
+  These are typically group names and can be additive. For example:
 
-  - `a:b` means "in group a or b" 
-  - `a:b&c` means "in group a or b and in group c" 
-  - `a:!b` means in group a and exclude group b 
+  - `a:b` means "in group a or b"
+  - `a:b&c` means "in group a or b and in group c"
+  - `a:!b` means in group a and exclude group b
 
 Verbosity
   The level of log verbosity that will be recorded in the Tower database.
 
 Job Tags
-  Specify tasks with these tags to be executed 
+  Specify tasks with these tags to be executed
 
 Skip Tags
-  Specify tasks with these tags to be skipped during execution 
+  Specify tasks with these tags to be skipped during execution
 
-Labels 
+Labels
   Labels to apply to the Job Template. These labels can be used to search and
-  filter database searches in busy Tower systems 
+  filter database searches in busy Tower systems
 
-Instance Groups 
+Instance Groups
   In multi-node Tower deployments, Instance Groups are defined to provide
   logical node groups. These groups can be logical ('dev' and 'prod') or they
-  can represent your infrastructure topology. 
-  
-Job Slicing 
+  can represent your infrastructure topology.
+
+Job Slicing
   Ansible Tower can slice large jobs up, dispersing the work across multiple
-  concurrently running instances of the Job Template 
+  concurrently running instances of the Job Template
 
 Timeout
-  An optional timeout value for the job task 
+  An optional timeout value for the job task
 
-Show Changes 
-  Equivelant to the `--diff` option on the command line 
-  
-There are also several checkbox options. 
+Show Changes
+  Equivelant to the `--diff` option on the command line
 
-- Enable Privilege Escalation 
-- Allow Provisioning Callbacks 
-- Enable Concurrent Jobs 
+There are also several checkbox options.
+
+- Enable Privilege Escalation
+- Allow Provisioning Callbacks
+- Enable Concurrent Jobs
 - Use Fact Cache
 
-Benefits of Job Templates 
+Benefits of Job Templates
 ``````````````````````````
 
 The options available in a Job Template are equivalent to the options available
 on the command line. In addition, all of the playbooks executed in Tower are
 recorded and searchable in the Tower database. Job Templates are also available
 through the Tower API. That means other services could call your Ansible
-playbooks in more complex workflows. 
+playbooks in more complex workflows.
 
 Summary
 --------

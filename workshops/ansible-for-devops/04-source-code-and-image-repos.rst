@@ -1,5 +1,5 @@
-.. sectionauthor:: Jamie Duncan <jduncan@redhat.com>
-.. _docs admin: jduncan@redhat.com
+.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
+.. _docs admin: creynold@redhat.com
 
 ==========================================
 Source code and container repositories
@@ -451,7 +451,7 @@ And now your system is ready for the rest of the workshop!
 Summary
 --------
 
-This lab deploys and configures your environment to work with the fundamental building blocks that make DevOps possible. Everything you do should be in source control. Additionally, containers are the building blocks of modern infrastructure. 
+This lab deploys and configures your environment to work with the fundamental building blocks that make DevOps possible. Everything you do should be in source control. Additionally, containers are the building blocks of modern infrastructure.
 
 .. |plus sign| image:: _static/images/gogs_plus.png
 .. |save button| image:: _static/images/gogs_save.png
