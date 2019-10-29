@@ -3,7 +3,7 @@
 
 WORKSHOP_NAME=$1
 if [[ ${#3} -eq 0 ]];then
-  QUAY_PROJECT=jduncan
+  QUAY_PROJECT=creynold
 else
   QUAY_PROJECT=$3
 fi

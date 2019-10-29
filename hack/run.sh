@@ -4,7 +4,7 @@
 
 WORKSHOP_NAME=$1
 RUN_TYPE=$2
-QUAY_USER=jduncan
+QUAY_USER=creynold
 TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ENV_FILE=/tmp/env.list
 CONTAINER_IMAGE=quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME
