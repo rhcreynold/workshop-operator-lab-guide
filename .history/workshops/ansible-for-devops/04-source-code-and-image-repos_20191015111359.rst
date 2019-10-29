@@ -316,11 +316,11 @@ Once the configuration is complete you'll be forwarded to the GOGS login page. C
 
 .. figure:: _static/images/gogs_login.png
 
-This takes you to the registration page. Use your student name, |student_name| for your login, and |student_pass| for your password. Email is a required field, but we're not going to configure email notifications so any fake email address is fine. The final field is a Captcha field. Fill them out and click *Create New Account*.
+This takes you to the registration page. Use your student name, |student_name| for your login, and ``redhat`` for your password. Email is a required field, but we're not going to configure email notifications so any fake email address is fine. The final field is a Captcha field. Fill them out and click *Create New Account*.
 
 .. figure:: _static/images/gogs_register.png
 
-You'll be returned to the login page. Log in with your |student_name| user with the password of |student_pass|. You'll see your dashboard page after logging in.
+You'll be returned to the login page. Log in with your |student_name| user with the password of ``redhat``. You'll see your dashboard page after logging in.
 
 .. figure:: _static/images/gogs_dash.png
 

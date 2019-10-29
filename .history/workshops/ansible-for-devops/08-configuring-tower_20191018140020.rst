@@ -1,5 +1,5 @@
-.. sectionauthor:: Jamie Duncan <jamie.e.duncan@gmail.com>
-.. _docs admin: cloudguy@redhat.com
+.. sectionauthor:: Ajay Chenampara <achenamp@redhat.com>
+.. _docs admin: jduncan@redhat.com
 
 ==================================================
 Configuring Ansible Tower
@@ -54,7 +54,7 @@ Use this information to complete the credential form.
 
    Adding a Credential
 
-Click SAVE |Save button| to save each new Credential.
+- Select SAVE |Save button|
 
 With your machine credential created, next create a source control credential to
 authenticate to your GOGS instance. Use the following information. 
@@ -104,7 +104,7 @@ SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 
    Defining a Project
 
-Click SAVE |Save button| to save your project.
+- Click SAVE |Save button|
 
 With your GOGS repository set up as a source of Ansibe code for your Tower
 instance, next you'll add an Inventory that references the inventory file you've
@@ -133,7 +133,7 @@ An Inventory can also be imported into Tower using the ``tower-manage`` command 
 
    Creating an Inventory
 
-Click SAVE |Save button| to save your new inventory.
+- Click SAVE |Save button|
 
 Next, click Sources |Source button| to add a source for your inventory.
 
@@ -146,17 +146,26 @@ custom scripts. For today's workshop, you'll add a source to your inventory that
 references the file in your GOGS repository project. Fill in your inventory
 source with the following information. 
 
-============ ===================================================================
-NAME          GOGS Source                 
-============ ===================================================================
-DESCRIPTION   <leave blank>                
-CREDENTIAL    GOGS Credential
-SOURCE        Sourced from Project
-OPTIONS       [x] Overwrite [x] Overwrite Variables [x] Update on Project Change
-============ ===================================================================
++-----------------------------------------------+
+| NAME           |  GOGS source                 |
++-----------------------------------------------+
+| DESCRIPTION    | <leave blank>                |
++-----------------------------------------------+
+| CREDENTIAL     | GOGS Credential              |
++-----------------------------------------------+
+| SOURCE         | Sourced from Project         | 
++----------------+------------------------------+
+| OPTIONS        | 
+[x] Overwrite
+[x] Overwrite Variables
+[x] Update on Project Change                    |
++----------------+------------------------------+
+
+
 
 .. figure:: ./_static/images/at_inv_source.png
     :alt: Adding a source to your inventory 
+
 
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
@@ -164,11 +173,20 @@ Ansible Tower is now configured with everything we need to continue building out
 Creating job templates
 -----------------------
 
-Ansible Tower Job Templates are where everything comes together to get work
-done. 
+STIG template
+``````````````
 
-Creating a STIG Job Template
-`````````````````````````````
+Prod template
+``````````````
+
+Dev template
+``````````````
+
+Load balancer template
+```````````````````````
+
+Workflow templates
+--------------------
 
 Summary
 --------

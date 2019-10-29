@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 # Helper script to build container images for each workshop
 # if using podman, be sure to install the podman-docker package
-# also, if using podman, up th
 
 WORKSHOP_NAME=$1
 if [[ ${#3} -eq 0 ]];then

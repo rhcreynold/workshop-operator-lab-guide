@@ -1,4 +1,4 @@
-FROM centos
+FROM centos:7
 ARG workshop_name=example-workshop
 ENV WORKSHOP_NAME=$workshop_name
 ENV STUDENT_NAME='example student'
