@@ -1,5 +1,5 @@
-.. sectionauthor:: Jamie Duncan <jamie.e.duncan@gmail.com>
-.. _docs admin: cloudguy@redhat.com
+.. sectionauthor:: Ajay Chenampara <achenamp@redhat.com>
+.. _docs admin: jduncan@redhat.com
 
 ==================================================
 Configuring Ansible Tower
@@ -54,7 +54,7 @@ Use this information to complete the credential form.
 
    Adding a Credential
 
-Click SAVE |Save button| to save each new Credential.
+- Select SAVE |Save button|
 
 With your machine credential created, next create a source control credential to
 authenticate to your GOGS instance. Use the following information. 
@@ -104,7 +104,7 @@ SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 
    Defining a Project
 
-Click SAVE |Save button| to save your project.
+- Click SAVE |Save button|
 
 With your GOGS repository set up as a source of Ansibe code for your Tower
 instance, next you'll add an Inventory that references the inventory file you've
@@ -112,6 +112,8 @@ been maintaining in GOGS today.
 
 Creating an Inventory
 ``````````````````````
+
+TODO - make it pull from the project
 
 An inventory is a collection of hosts against which jobs may be launched. Inventories are divided into groups and these groups contain the actual hosts. Groups may be sourced manually, by entering host names into Tower, or from one of Ansible Tower’s supported cloud providers.
 An Inventory can also be imported into Tower using the ``tower-manage`` command and this is how we are going to add an inventory for this workshop.
@@ -133,132 +135,67 @@ An Inventory can also be imported into Tower using the ``tower-manage`` command 
 
    Creating an Inventory
 
-Click SAVE |Save button| to save your new inventory.
+- Select SAVE |Save button|
 
-Next, click Sources |Source button| to add a source for your inventory.
+Look in your ``.ansible.cfg`` file to find the path to your default inventory. This is the inventory we'll import into Tower. Your default inventory is the ``inventory`` parameter.
 
-Inventory Sources 
-~~~~~~~~~~~~~~~~~~~
+.. parsed-literal::
 
-Inventory sources can come from multiple locations including all of the public
-and on-premise cloud and infrastructure providers, Red Hat Satellite, and even
-custom scripts. For today's workshop, you'll add a source to your inventory that
-references the file in your GOGS repository project. Fill in your inventory
-source with the following information. 
+  $ cat ~/.ansible.cfg
+  [defaults]
+  stdout_callback = yaml
+  connection = smart
+  timeout = 60
+  deprecation_warnings = False
+  host_key_checking = False
+  retry_files_enabled = False
 
-============ ===================================================================
-NAME          GOGS Source                 
-============ ===================================================================
-DESCRIPTION   <leave blank>                
-CREDENTIAL    GOGS Credential
-SOURCE        Sourced from Project
-OPTIONS       [x] Overwrite [x] Overwrite Variables [x] Update on Project Change
-============ ===================================================================
+  inventory = /home/|student_name|/devops-workshop/lab_inventory/hosts
 
-.. figure:: ./_static/images/at_inv_source.png
-    :alt: Adding a source to your inventory 
+To import the inventory, we'll use the ``tower-manage`` utility on your control node/Tower server.
 
+.. parsed-literal::
+
+    sudo tower-manage inventory_import --source=/home/|student_name|/devops-workshop/lab_inventory/hosts --inventory-name="Ansible Workshop Inventory"
+
+You should see output similar to the following:
+
+.. figure:: ./_static/images/at_tm_stdout.png
+   :alt: Importing an inventory with tower-manage
+
+   Importing an inventory with tower-manage
+
+Feel free to browse your inventory in Tower. You should now notice that
+the inventory has been populated with Groups and that each of those
+groups contain hosts.
+
+.. figure:: ./_static/images/at_inv_group.png
+   :alt: Inventory with Groups
+
+   Inventory with Groups
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
 
 Creating job templates
 -----------------------
 
-Ansible Tower Job Templates are where everything comes together to get work
-done. Job Templates have many configurable options. These are equivalent to
-everything available to Ansible on the command line. 
+STIG template
+``````````````
 
-.. figure:: ./_static/images/at_job_template.png
-    :alt: Job Template options
-    
-Let's walk through the fields so you can begin to re-create the playbooks we've
-run today. 
+Prod template
+``````````````
 
-Name and Description
-  These provide friendly and unique identifiers for your Job Templates. 
+Dev template
+``````````````
 
-Job Type
-  - Run - Run the selected job 
-  - Check - Equivalent to "dry run" mode on the command line
+Load balancer template
+```````````````````````
 
-Inventory 
-  Select the inventory to use. 
-  
-Project
-  The Project to pull playbooks from.
-
-Playbook
-  Once a project is selected, Playbook is populated with all of the playbooks
-  available to the user within that project. 
-
-Credential
-  Credentials needed for the playbook to operate. These could include machine,
-  vault, or any other valid credential for your playbook. If you need more than
-  one, you can select multiple credentials of different types in this field.
-  
-Forks
-  The default Ansible fork value is 5. This is the number of concurrent SSH
-  sessions Ansible will create to execute a playbook. 
-  
-Limit
-  One or more patterns to limit the hosts to execute the Job Template against.
-  These are typically group names and can be additive. For example: 
-
-  - `a:b` means "in group a or b" 
-  - `a:b&c` means "in group a or b and in group c" 
-  - `a:!b` means in group a and exclude group b 
-
-Verbosity
-  The level of log verbosity that will be recorded in the Tower database.
-
-Job Tags
-  Specify tasks with these tags to be executed 
-
-Skip Tags
-  Specify tasks with these tags to be skipped during execution 
-
-Labels 
-  Labels to apply to the Job Template. These labels can be used to search and
-  filter database searches in busy Tower systems 
-
-Instance Groups 
-  In multi-node Tower deployments, Instance Groups are defined to provide
-  logical node groups. These groups can be logical ('dev' and 'prod') or they
-  can represent your infrastructure topology. 
-  
-Job Slicing 
-  Ansible Tower can slice large jobs up, dispersing the work across multiple
-  concurrently running instances of the Job Template 
-
-Timeout
-  An optional timeout value for the job task 
-
-Show Changes 
-  Equivelant to the `--diff` option on the command line 
-  
-There are also several checkbox options. 
-
-- Enable Privilege Escalation 
-- Allow Provisioning Callbacks 
-- Enable Concurrent Jobs 
-- Use Fact Cache
-
-Benefits of Job Templates 
-``````````````````````````
-
-The options available in a Job Template are equivalent to the options available
-on the command line. In addition, all of the playbooks executed in Tower are
-recorded and searchable in the Tower database. Job Templates are also available
-through the Tower API. That means other services could call your Ansible
-playbooks in more complex workflows. 
+Workflow templates
+--------------------
 
 Summary
 --------
-
-Ansible Tower is how Ansible is consumed at enterprise scale. It provides an
-API, a database that is a single source of truth, and the ability to deploy in a
-highly-available mesh across your entire infrastructure. For any team managing
-production environments, Ansible Tower is a vital tool.
 
 .. |Credentials button| image:: ./_static/images/at_credentials_button.png
 .. |Browse button| image:: ./_static/images/at_browse.png
@@ -266,4 +203,3 @@ production environments, Ansible Tower is a vital tool.
 .. |Gear button| image:: ./_static/images/at_gear.png
 .. |Add button| image:: ./_static/images/at_add.png
 .. |Save button| image:: ./_static/images/at_save.png
-.. |Source button| image:: ./_static/images/at_inv_source_button.png
