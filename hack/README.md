@@ -8,7 +8,7 @@ This script builds out a container image for a specific lab guide. It takes up t
 2. Build target - `local` or `quay`.
   * `local` - the container is built and available in the host's container cache.
   * `quay` - it's built, cached, and also pushed to quay.io. Requirements for quay would be to be logged in to your runtime to authenticate against quay.io. The images are named using `quay.io/<quay_namespace>/operator-workshop-lab-guide-<workshop_name>`.
-3. (optional) - Quay namespace tag. By default, this is `jduncan` (makes it easier for the author). You can specify a different quay namespace using this parameter.
+3. (optional) - Quay namespace tag. By default, this is `creynold` (makes it easier for the author). You can specify a different quay namespace using this parameter.
 
 ## run.sh
 
