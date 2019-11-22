@@ -9,7 +9,7 @@ TMP_FILE=/tmp/lab_guide_id_$WORKSHOP_NAME
 ENV_FILE=/tmp/env.list
 CONTAINER_IMAGE=quay.io/$QUAY_USER/operator-workshop-lab-guide-$WORKSHOP_NAME
 if [[ ${#3} -eq 0 ]];then
-  PORT=8080
+  PORT=8888
 else
   PORT=$3
 fi
