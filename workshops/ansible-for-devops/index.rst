@@ -14,7 +14,7 @@ Before getting started
 
 We encourage you to take today's lab guide back to your own environments for re-use and even your modify it to fit your needs.  With that in mind we have two ways for you to obtain the content.
 
-- *Source Code*: The source for today's lab guide (and others) is located on :github:`GitHub<jduncan-rva/workshop-operator-lab-guide>`.
+- *Source Code*: The source for today's lab guide (and others) is located on :github:`GitHub<rhcreynold/workshop-operator-lab-guide>`.
 - *Container Image*: Your lab guide is deployed and running inside a container. The container image is available on :quay_image:`quay.io<jduncan/operator-workshop-lab-guide-ansible-for-devops>`.
 
 License
