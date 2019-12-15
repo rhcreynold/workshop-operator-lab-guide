@@ -13,10 +13,10 @@ if [ -f $INVENTORY_FILE ];then
   CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
   STUDENT_PASS=$(grep ansible_ssh_pass $INVENTORY_FILE | awk -F= '{ print $2 }')
   CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-  NODE_1_IP=$(grep dev_web1 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
-  NODE_2_IP=$(grep dev_web2 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
-  NODE_3_IP=$(grep prod_web1 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
-  NODE_4_IP=$(grep prod_web2 $INVENTORY_FILE | awk -F'=' '{ print $2 }')
+  NODE_1_IP=$(grep dev_web1 $INVENTORY_FILE | head -1 | awk -F'=' '{ print $2 }')
+  NODE_2_IP=$(grep dev_web2 $INVENTORY_FILE | head -1 | awk -F'=' '{ print $2 }')
+  NODE_3_IP=$(grep prod_web1 $INVENTORY_FILE | head -1 | awk -F'=' '{ print $2 }')
+  NODE_4_IP=$(grep prod_web2 $INVENTORY_FILE | head -1 | awk -F'=' '{ print $2 }')
 else
   CONTROL_PRIVATE_IP=10.0.0.1
   STUDENT_PASS=redhat01
