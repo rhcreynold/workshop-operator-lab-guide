@@ -9,6 +9,9 @@ Thanks for making the time attending today's workshop! We hope it provides value
 
 - Browse to public IP addresses without interference
 - SSH to public IP addresses without interference
+- Github account :github:`github.com<join>`
+- Quay.io account :quay:`quay.io<signin>`
+
 
 Workshop design
 ----------------
@@ -44,15 +47,18 @@ Success Criteria
 
 We want the lab today to be a fair analogue of what you may be doing in your own environments today with containers. By the end of today's workshop our goal is to:
 
-- Secure our infrastructure using an approved security baseline like the DISA STIG
 - Deploy the tools we need to use containers and Ansible effectively in our infrastructure, including:
 
-  * :gogs:`GOGS<>` for git-based version control
-  * A :docker_hub:`container registry</registry>` to house your custom container images
+  * A :quay:`quay.io<repository>` repository to house your custom container images
   * :tower:`Ansible Tower<>` to provide a central point of automation
 
-- Deploy production Site B using Ansible playbooks and traditional software RPM packages. Site B is a cluster of two RHEL instances on :aws:`AWS<ec2>` and serving a custom website with ``httpd``.
-- Deploy development Site A using Ansible playbooks. Site A will be a cluster of two Amazon instances as well, each running ``httpd`` in containers running a custom website.
+
+- Deploy to Site B using Ansible playbooks and traditional software RPM packages. Site B is a cluster of two RHEL instances on :aws:`AWS<ec2>` and serving a custom website with ``httpd``.
+- Deploy to Site A using Ansible playbooks. Site A will be a cluster of two Amazon instances as well, each running ``httpd`` in containers running a custom website.
 - Deploy and configure Ansible Tower
 - Configure a containerized ``nginx`` load balancer to balance traffic for your development and production clusters
 - Tie all of these resources together in :tower:`Ansible Tower<>` using a CI/CD workflow
+
+.. admonition:: Copy and Paste
+
+  Don't do it.  The formatting in this workshop is correct to display in the browser, but not for pasting into vi/vim.

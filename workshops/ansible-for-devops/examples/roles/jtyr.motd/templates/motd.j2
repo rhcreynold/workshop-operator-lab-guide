@@ -1,0 +1,11 @@
+{{ motd_ascii_art }}
+{% for item in motd_info -%}
+  {%- for key, value in item.items() %}
+    {%- if key != '' -%}
+      {{ ' ' * (motd_initial_spaces | int) }}{{ key }}: {{ (' ' * (motd_indent | int - motd_initial_spaces | int - (key | length))) if (motd_initial_spaces | int + (key | length)) < motd_indent | int else '' }}{{ value }}{{ '\n' }}
+    {%- else -%}
+      {{ '\n' if motd_virtual_newline else '' }}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+

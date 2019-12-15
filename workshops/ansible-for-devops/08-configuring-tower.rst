@@ -5,9 +5,16 @@
 Configuring Ansible Tower
 ==================================================
 
-In this lab will you'll be working with Ansible Tower to make it how we interface with our playbooks, roles, and infrastructure for the rest of the workshop. We'll configure Tower with your inventory, credentials, and tell it how to interface with GOGS to manage playbooks and roles.
+In this lab will you'll be working with Ansible Tower to make it how we interface with our playbooks, roles, and infrastructure for the rest of the workshop. We'll configure Tower with your inventory, credentials, and tell it how to interface with :github:`github.com<>` to manage playbooks and roles.
 
-Your control node already has Tower deployed at \https://|control_public_ip|. We've also pre-applied a license key to your tower instance, so it's ready to be configured. Your Tower username is ``admin`` and your Tower password is |student_pass|.
+Your control node already has Tower deployed at \https://|control_public_ip|.
+
+
+Ansible Tower License
+---------------------
+
+Request a license at https://www.ansible.com/workshop-license to use for this workshop.
+
 
 Configuring Ansible Tower
 --------------------------
@@ -56,27 +63,8 @@ Use this information to complete the credential form.
 
 Click SAVE |Save button| to save each new Credential.
 
-With your machine credential created, next create a source control credential to
-authenticate to your GOGS instance. Use the following information.
-
-+------------------------+---------------------------------------+
-| NAME                   | GOGS Credential                       |
-+------------------------+---------------------------------------+
-| DESCRIPTION            | Credential for GOGS git instance      |
-+------------------------+---------------------------------------+
-| ORGANIZATION           | Default                               |
-+------------------------+---------------------------------------+
-| TYPE                   | Source Control                        |
-+------------------------+---------------------------------------+
-| USERNAME               | |student_name|                        |
-+------------------------+---------------------------------------+
-| PASSWORD               | |student_pass|                        |
-+------------------------+---------------------------------------+
-
-When finished, click SAVE |Save button|.
-
 These credentials will allow us to configure the rest of Tower. Next, create a
-Project that points back to your source code in GOGS.
+Project that points back to your source code in Github.
 
 Creating a Project
 ```````````````````
@@ -94,7 +82,7 @@ NAME               Ansible Workshop Project
 DESCRIPTION        workshop playbooks
 ORGANIZATION       Default
 SCM TYPE           Git
-SCM URL            \http://|control_public_ip|/|student_name|/playbook.git
+SCM URL            https://github.com/|student_name|/ansible-for-devops-workshop
 SCM BRANCH
 SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 ================== ===================================================
@@ -106,9 +94,9 @@ SCM UPDATE OPTIONS [x] Clean [x] Delete on Update [x] Update on Launch
 
 Click SAVE |Save button| to save your project.
 
-With your GOGS repository set up as a source of Ansibe code for your Tower
+With your Github repository set up as a source of Ansibe code for your Tower
 instance, next you'll add an Inventory that references the inventory file you've
-been maintaining in GOGS today.
+been maintaining in Github today.
 
 Creating an Inventory
 ``````````````````````
@@ -143,14 +131,14 @@ Inventory Sources
 Inventory sources can come from multiple locations including all of the public
 and on-premise cloud and infrastructure providers, Red Hat Satellite, and even
 custom scripts. For today's workshop, you'll add a source to your inventory that
-references the file in your GOGS repository project. Fill in your inventory
+references the file in your Github repository project. Fill in your inventory
 source with the following information.
 
 ============ ===================================================================
-NAME          GOGS Source
+NAME          Github Source
 ============ ===================================================================
 DESCRIPTION   <leave blank>
-CREDENTIAL    GOGS Credential
+CREDENTIAL    Github Credential
 SOURCE        Sourced from Project
 OPTIONS       [x] Overwrite [x] Overwrite Variables [x] Update on Project Change
 ============ ===================================================================
@@ -158,6 +146,17 @@ OPTIONS       [x] Overwrite [x] Overwrite Variables [x] Update on Project Change
 .. figure:: ./_static/images/at_inv_source.png
     :alt: Adding a source to your inventory
 
+
+Sync the Inventory
+------------------
+
+Select the Inventories icon on the left hand side.
+
+From here select the ``Ansible Workshop Inventory`` that we just created.
+
+Select the ``SOURCES`` button at the top and click the ``Start sync Process`` Icon under actions.  This will start the sync from Github to your Ansible Tower inventory.
+
+Once that has finished you will see the groups and hosts that you created earlier in the workshop.
 
 Ansible Tower is now configured with everything we need to continue building out our infrastructure-as-code environment in today's workshop!
 

@@ -1,0 +1,18 @@
+---
+- name: deploy nginx load balancer
+  hosts: lb
+  become: yes
+
+  tasks:
+    - name: install docker preqequisities
+      pip:
+        name: docker
+        
+    - name: launch nginx-lb container on lb nodes
+      docker_container:
+        name: nginx-lb
+        image: quay.io/creynold/ansible-for-devops-nginx-lb
+        ports:
+          - "8081:8081"
+        restart_policy: always
+        pull: yes
