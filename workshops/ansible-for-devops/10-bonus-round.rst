@@ -2,7 +2,7 @@ similar.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
 .. _docs admin: creynold@redhat.com
 
 ==================================================
-Bonus Roung
+Bonus Round
 ==================================================
 
 In this lab you will NOT be guided, but given tasks that need to be implemented.
