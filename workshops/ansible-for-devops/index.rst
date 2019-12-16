@@ -42,4 +42,5 @@ Feel free to file a :github:`GitHub issue<creynold/workshop-operator-lab-guide/i
  07-galaxy-motd
  08-configuring-tower
  09-building-tower-jobs
- 10-cta
+ 10-bonus-round
+ 11-cta
