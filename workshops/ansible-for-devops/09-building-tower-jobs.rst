@@ -1,4 +1,4 @@
-similar.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
+.. sectionauthor:: Chris Reynolds <creynold@redhat.com>
 .. _docs admin: creynold@redhat.com
 
 ==================================================
