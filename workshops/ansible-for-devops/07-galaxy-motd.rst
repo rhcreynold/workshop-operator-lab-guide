@@ -28,6 +28,10 @@ We are going to use the motd from :ansible_galaxy:`galaxy.ansible.com<jtyr/motd>
 
 Now we can create a playbook that will use our new role.
 
+.. code-block:: bash
+
+  $ vim motd.yml
+
 .. code-block:: yaml
 
   ---

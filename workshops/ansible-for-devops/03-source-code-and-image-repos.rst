@@ -76,14 +76,14 @@ From this directory, follow the directions from the github repository creation d
 
 .. admonition:: What about README.md
 
-  The ``README.md`` file is optional for this workshop, but is definitely a best practice in general.
+  The ``README.md`` file is optional for this workshop, but is definitely a best practice in general. 
 
 .. parsed-literal::
   $ echo "# ansible-for-devops-workshop" >> README.md
   $ git init
   Initialized empty Git repository in /home/|student_name|/ansible-for-devops-workshop/.git/
   $ git add .
-  $ git config --global user.email "|student_name|@example.com"
+  $ git config --global user.email "GITHUB EMAIL"
   $ git config --global user.name |student_name|
   $ git commit -m "first commit"
   [master (root-commit) 9b28318] first commit

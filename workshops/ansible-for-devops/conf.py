@@ -32,7 +32,7 @@ project_clean = unicode(os.environ['WORKSHOP_NAME'].title().replace('_', ' ').re
 # -- Project information -----------------------------------------------------
 
 project = u'Ansible for DevOps'
-copyright = u'2019, Red Hat Public Sector'
+copyright = u'2020, Red Hat Public Sector'
 author = u'Red Hat Public Sector'
 
 # The short X.Y version

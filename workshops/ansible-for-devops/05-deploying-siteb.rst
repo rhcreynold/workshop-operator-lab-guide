@@ -105,7 +105,7 @@ With the proper tags in place, you need to create a ``Dockerfile`` to build your
 Creating your Dockerfile and Building the needed files
 ```````````````````````````````````````````````````````
 We are also going to create two folders, one for the Ansible generated ``httpd.conf`` file and one for the ``index.html`` file. These will be used by Quay.io Build system to create the container from the ``Dockerfile``.
-Create ``~/ansible-for-devops-workshop/apache-simple/Dockerfile`` with the following content:
+Create ``~/ansible-for-devops-workshop/siteb/Dockerfile`` with the following content:
 
 
 .. code-block:: bash

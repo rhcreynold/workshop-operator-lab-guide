@@ -138,7 +138,7 @@ source with the following information.
 NAME          Github Source
 ============ ===================================================================
 DESCRIPTION   <leave blank>
-CREDENTIAL    Github Credential
+CREDENTIAL    <leave blank>
 SOURCE        Sourced from Project
 OPTIONS       [x] Overwrite [x] Overwrite Variables [x] Update on Project Change
 ============ ===================================================================

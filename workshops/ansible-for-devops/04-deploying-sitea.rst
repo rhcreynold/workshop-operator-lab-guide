@@ -103,10 +103,10 @@ Now put the following handler in the file:
   ---
   # handlers file for apache-simple
   - name: restart-apache-service
-  service:
-    name: httpd
-    state: restarted
-    enabled: yes
+    service:
+      name: httpd
+      state: restarted
+      enabled: yes
 
 Templates
 ~~~~~~~~~~~~~~~
@@ -115,11 +115,24 @@ The :ansible_docs:`template<modules/template_module.html>` module uses the :jinj
 
 Your role needs two Ansible templates in ``~/ansible-for-devops-workshop/roles/apache-simple/templates/``. To save time, we've made these available for your to download directly.
 
-.. code-block:: yaml
+.. code-block:: bash
 
   $ cd ~/ansible-for-devops-workshop/roles/apache-simple/templates/
   $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/httpd.conf.j2
   $ curl -O https://raw.githubusercontent.com/ansible/lightbulb/master/examples/apache-role/roles/apache-simple/templates/index.html.j2
+
+Let's take a look at the template files!
+
+.. code-block:: bash
+
+  $ cd ~/ansible-for-devops-workshop/roles/apache-simple/templates/
+  $ less httpd.conf.j2
+  $ less index.html.j2
+
+Notice in the ``httpd.conf.j2`` we are using the ``{{ apache_webserver_port }}`` variableto defind what port apache will listen on.
+
+In the ``index.html.j2`` we are using both the ``{{ apache_test_message }}`` and the ``{{ inventory_hostname }}`` variables.  We have defined the ``{{ apache_test_message }}`` variable earier in thie excersize, but the ``{{ inventory_hostname }}`` is coming from :ansible_docs:`Ansible Facts<user_guide/playbooks_variables.html#variables-discovered-from-systems-facts>`.
+
 
 The final component for your ``apache-simple`` role is to create the actual tasks that it will excecute to deploy your Site-A application.
 
@@ -233,8 +246,8 @@ To confirm your playbook performed properly, use the ``curl`` command to access 
 
 .. parsed-literal::
 
-  $ curl \http://|node_1_ip|:8080
-  $ curl \http://|node_2_ip|:8080
+  $ curl \http://|node_3_ip|:8080
+  $ curl \http://|node_4_ip|:8080
 
 Summary
 ````````

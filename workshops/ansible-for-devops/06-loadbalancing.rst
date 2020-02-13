@@ -67,7 +67,7 @@ Create a directory named ``~/ansible-for-devops-workshop/nginx-lb`` on your cont
      location / {
        proxy_pass http://backend;
      }
-}
+  }
 
 This configuration creates an ``nginx`` loadbalancer that passes requests on |control_public_ip| for ``/`` between your site-a and site-b nodes.
 
@@ -141,18 +141,18 @@ Create a playbook named ``~/ansible-for-devops-workshop/nginx-lb-deploy.yml`` wi
     become: yes
 
     tasks:
-    - name: install docker preqequisities
-      pip:
-        name: docker
+      - name: install docker preqequisities
+        pip:
+          name: docker
 
-    tasks:
       - name: launch nginx-lb container on lb nodes
         docker_container:
-          name: nginx-lb
-          image: quay.io/|student_name|/ansible-for-devops-nginx-lb
-          ports:
+         name: nginx-lb
+         image: quay.io/|student_name|/ansible-for-devops-nginx-lb
+         ports:
             - "8081:8081"
-          restart_policy: always
+         restart_policy: always
+         pull: yes
 
 We are NOT going to run the playbook yet, this will be done in Ansible Tower.
 
