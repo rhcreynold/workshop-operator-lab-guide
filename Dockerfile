@@ -8,8 +8,8 @@ ENV WORKSHOP_NAME=$workshop_name \
     MASTER_URL='ocp.example.com' \
     APP_DOMAIN='apps.example.com'
 
-COPY requirements.txt entrypoint.sh workshops/$workshop_name /opt/docs/
-RUN chmod -R u+x /opt/docs && \
+RUN mkdir -p /opt/docs && \
+    chmod -R u+x /opt/docs && \
     chgrp -R 0 /opt/docs && \
     chmod -R g=u /opt/docs && \
     yum -y install epel-release && \
@@ -17,6 +17,7 @@ RUN chmod -R u+x /opt/docs && \
     yum -y update && \
     yum -y clean all --enablerepo='*'
 
+COPY requirements.txt entrypoint.sh workshops/$workshop_name /opt/docs/
 WORKDIR /opt/docs
 RUN pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade pip setuptools && \
     pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
