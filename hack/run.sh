@@ -31,6 +31,7 @@ setup_local() {
   podman create --env-file $ENV_FILE --name $WORKSHOP_NAME -p $PORT:8080 $CONTAINER_IMAGE
 
   echo Dropping systemd unit file
+  mkdir -p $HOME/.config/systemd/user
   cat << EOF > $HOME/.config/systemd/user/$WORKSHOP_NAME.service
 [Unit]
 Description=$WORKSHOP_NAME Lab Guide container
