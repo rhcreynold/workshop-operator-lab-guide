@@ -19,8 +19,8 @@ RUN mkdir -p /opt/docs && \
 
 COPY requirements.txt entrypoint.sh workshops/$workshop_name /opt/docs/
 WORKDIR /opt/docs
-RUN pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade pip setuptools && \
-    pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
+RUN pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org --no-cache-dir --upgrade pip setuptools && \
+    pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org --no-cache-dir -r requirements.txt
 
 EXPOSE 8080
 CMD ["/opt/docs/entrypoint.sh"]
