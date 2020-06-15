@@ -177,7 +177,7 @@ if [ "$do_tests" ]; then
   max_failures=6
   while ! curl 127.0.0.1:$PORT; do
     (( count++ ))
-    if [ $count -gt $max_failures ]; then
+    if [ $count -ge $max_failures ]; then
       systemctl --user status $WORKSHOP_NAME
       journalctl --user -u $WORKSHOP_NAME
       exit 13
