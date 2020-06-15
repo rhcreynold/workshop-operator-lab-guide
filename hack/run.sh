@@ -159,15 +159,18 @@ remove_local() {
   fi
 }
 
+testable=''
 case $RUN_TYPE in
   setup)
     setup_local
   ;;
   start)
     start
+    testable=true
   ;;
   local)
     start_local
+    testable=true
   ;;
   stop)
     stop_local
@@ -181,7 +184,7 @@ case $RUN_TYPE in
   ;;
 esac
 
-if [ "$do_tests" ]; then
+if [ -n "$do_tests" -a -n "$testable"]; then
   count=0
   step=5
   max_failures=12
