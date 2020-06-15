@@ -1,15 +1,12 @@
 #! /usr/bin/env bash
 
 ENV_FILE=$1
+STUDENT_NAME=${2:-student1}
 
-echo "Preparing environment variables for $WORKSHOP_NAME lab guide"
+echo "Preparing environment variables for ansible-for-devops lab guide"
 
-STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
-if [[ ${#STUDENT_NAME} -eq 0 ]];then
-  STUDENT_NAME=student1
-fi
 INVENTORY_FILE=/home/$STUDENT_NAME/devops-workshop/lab_inventory/hosts
-if [ -f $INVENTORY_FILE ];then
+if [ -f $INVENTORY_FILE ]; then
   CONTROL_PRIVATE_IP=$(grep 'ansible ansible_host' $INVENTORY_FILE | awk -F'=' '{ print $2 }')
   STUDENT_PASS=$(grep ansible_ssh_pass $INVENTORY_FILE | awk -F= '{ print $2 }')
   CONTROL_PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
