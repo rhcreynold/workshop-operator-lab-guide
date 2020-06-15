@@ -112,11 +112,11 @@ container_installed() {
 start_local() {
   stop_local
 
-  echo Ensuring setup complete
-  container_installed || setup_local
-
   echo Running dedicated local build
   hack/build.sh $WORKSHOP_NAME local $QUAY_PROJECT || exit 1
+
+  echo Ensuring setup complete
+  container_installed || setup_local
 
   echo Starting systemd container for $WORKSHOP_NAME
   systemctl --user start $WORKSHOP_NAME
@@ -125,11 +125,11 @@ start_local() {
 start() {
   stop_local
 
-  echo Ensuring setup complete
-  container_installed || setup_local
-
   echo Pulling image $CONTAINER_IMAGE
   podman pull $CONTAINER_IMAGE || exit 1
+
+  echo Ensuring setup complete
+  container_installed || setup_local
 
   echo Starting systemd container for $WORKSHOP_NAME
   systemctl --user start $WORKSHOP_NAME
