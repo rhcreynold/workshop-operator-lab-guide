@@ -17,7 +17,7 @@ before_script:
   - sudo apt-get -qq -y install podman
   - sudo mkdir -p /etc/containers
   - echo -e "[registries.search]\nregistries = ['docker.io', 'quay.io']" | sudo tee /etc/containers/registries.conf
-script: hack/run.sh ${WORKSHOP_NAME} local ${QUAY_REPOSITORY:-creynold} && sleep 10 && curl localhost:8888 || exit 1
+script: hack/run.sh ${WORKSHOP_NAME} local --project=${QUAY_REPOSITORY:-creynold} --test
 jobs:
   include:
     - stage: deploy
@@ -26,6 +26,3 @@ jobs:
     - stage: deploy
       script: bash hack/build.sh ${WORKSHOP_NAME} quay ${QUAY_REPOSITORY:-creynold}
       env: WORKSHOP_NAME=better-together
-after_failure:
-  - systemctl --user status ${WORKSHOP_NAME}
-  - journalctl --user -u ${WORKSHOP_NAME}
