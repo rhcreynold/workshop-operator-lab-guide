@@ -5,7 +5,7 @@ cd $(dirname $(realpath $0))/..
 
 WORKSHOP_NAME=$1
 RUN_TYPE=$2
-QUAY_PROJECT=${3:-rhcreynold}
+QUAY_PROJECT=${3:-creynold}
 PORT=${4:-8888}
 ENV_FILE=${5:-/tmp/env.list}
 CONTAINER_IMAGE=quay.io/$QUAY_PROJECT/operator-workshop-lab-guide-$WORKSHOP_NAME

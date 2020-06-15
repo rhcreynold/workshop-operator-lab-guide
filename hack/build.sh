@@ -3,7 +3,7 @@
 
 WORKSHOP_NAME=$1
 LOCATION=${2:local}
-QUAY_PROJECT=${3:-rhcreynold}
+QUAY_PROJECT=${3:-creynold}
 
 cd $(dirname $(realpath $0))/..
 if [ -f .quay_creds ]; then
