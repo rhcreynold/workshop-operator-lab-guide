@@ -175,7 +175,7 @@ if [ "$do_tests" ]; then
   count=0
   step=5
   max_failures=6
-  while ! curl localhost:$PORT; do
+  while ! curl 127.0.0.1:$PORT; do
     (( count++ ))
     echo "Failed attempt $count of $max_failures.... retrying in $step" >&2
     sleep $step
