@@ -180,7 +180,7 @@ case $RUN_TYPE in
   ;;
 esac
 
-if [ -n "$do_tests" -a -n "$testable"]; then
+if [ -n "$do_tests" -a -n "$testable" ]; then
   count=0
   step=5
   max_failures=12
