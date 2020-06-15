@@ -56,8 +56,6 @@ stop_local() {
   if systemctl --user | grep -qF $WORKSHOP_NAME; then
     echo Stopping $WORKSHOP_NAME container
     systemctl --user stop $WORKSHOP_NAME.service
-  else
-    echo No lab guide for $WORKSHOP_NAME installed
   fi
 }
 
@@ -69,10 +67,30 @@ start_local() {
 
   ENV_PREP_SCRIPT=prep-$WORKSHOP_NAME.sh
   if [ -f hack/$ENV_PREP_SCRIPT ]; then
+    echo Running prep script
     hack/$ENV_PREP_SCRIPT $ENV_FILE $STUDENT_NAME
   fi
 
-  podman pull $CONTAINER_IMAGE
+  echo Running dedicated local build
+  hack/build.sh $WORKSHOP_NAME local $QUAY_PROJECT || exit 1
+
+  echo Starting systemd container for $WORKSHOP_NAME
+  systemctl --user start $WORKSHOP_NAME
+}
+
+start() {
+  stop_local
+
+  echo Ensuring setup complete
+  systemctl --user | grep -qF $WORKSHOP_NAME || setup_local
+
+  ENV_PREP_SCRIPT=prep-$WORKSHOP_NAME.sh
+  if [ -f hack/$ENV_PREP_SCRIPT ]; then
+    hack/$ENV_PREP_SCRIPT $ENV_FILE $STUDENT_NAME
+  fi
+
+  echo Pulling image $CONTAINER_IMAGE
+  podman pull $CONTAINER_IMAGE || exit 1
 
   echo Starting systemd container for $WORKSHOP_NAME
   systemctl --user start $WORKSHOP_NAME
@@ -83,7 +101,7 @@ case $2 in
     setup_local
   ;;
   start)
-    start_local
+    start
   ;;
   local)
     start_local
