@@ -27,7 +27,8 @@ extensions = [
 
 # -- Project information -----------------------------------------------------
 
-project_clean = unicode(os.environ['WORKSHOP_NAME'].title().replace('_', ' ').replace('-',' '))
+project_clean = os.environ['WORKSHOP_NAME'].title()
+project_clean = project_clean.replace('_', ' ').replace('-', ' ')
 
 # -- Project information -----------------------------------------------------
 
