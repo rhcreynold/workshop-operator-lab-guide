@@ -1,3 +1,5 @@
 .DS_Store
 .pyc
 _build
+tags
+.quay_creds
