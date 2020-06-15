@@ -199,5 +199,5 @@ if [ "$do_tests" ]; then
     echo "Failed attempt $count of $max_failures.... retrying in $step" >&2
     sleep $step
   done
+  curl localhost:8888 |& grep -F '<title>'
 fi
-curl localhost:8888 |& grep -F '<title>'
