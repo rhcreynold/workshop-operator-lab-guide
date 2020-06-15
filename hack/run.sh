@@ -184,10 +184,12 @@ esac
 if [ "$do_tests" ]; then
   count=0
   step=5
-  max_failures=6
+  max_failures=12
   while ! curl 127.0.0.1:$PORT &>/dev/null; do
     (( count++ ))
     if [ $count -ge $max_failures ]; then
+      echo "Failed attempt $count of $max_failures.... dumping logs" >&2
+      echo
       echo systemctl --user status $WORKSHOP_NAME:
       systemctl --user status $WORKSHOP_NAME | sed 's/^/  /'
       echo journalctl --user -u $WORKSHOP_NAME:
