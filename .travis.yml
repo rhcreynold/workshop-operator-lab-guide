@@ -25,9 +25,9 @@ before_install:
   - sudo mkdir -p /etc/containers
   - echo -e "[registries.search]\nregistries = ['docker.io', 'quay.io']" | sudo tee /etc/containers/registries.conf
 script:
-- bash hack/run.sh ${WORKSHOP_NAME} local
+- bash hack/run.sh ${WORKSHOP_NAME} local ${QUAY_REPOSITORY:-creynold}
 deploy:
   provider: script
-  script: bash hack/build.sh ${WORKSHOP_NAME} quay
+  script: bash hack/build.sh ${WORKSHOP_NAME} quay ${QUAY_REPOSITORY:-creynold}
   on:
     branch: master
