@@ -24,7 +24,7 @@ extensions = [
 
 import os
 
-project_clean = unicode(os.environ['WORKSHOP_NAME'].title().replace('_', ' ').replace('-',' '))
+project_clean = os.environ['WORKSHOP_NAME'].title().replace('_', ' ').replace('-',' ')
 
 project = project_clean
 copyright = u'2019, Red Hat, Inc.'
