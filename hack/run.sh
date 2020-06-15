@@ -175,11 +175,13 @@ if [ "$do_tests" ]; then
   count=0
   step=5
   max_failures=6
-  while ! curl 127.0.0.1:$PORT; do
+  while ! curl 127.0.0.1:$PORT &>/dev/null; do
     (( count++ ))
     if [ $count -ge $max_failures ]; then
-      systemctl --user status $WORKSHOP_NAME
-      journalctl --user -u $WORKSHOP_NAME
+      echo systemctl --user status $WORKSHOP_NAME:
+      systemctl --user status $WORKSHOP_NAME | sed 's/^/  /'
+      echo journalctl --user -u $WORKSHOP_NAME:
+      journalctl --user -u $WORKSHOP_NAME | sed 's/^/  /'
       exit 13
     fi
     echo "Failed attempt $count of $max_failures.... retrying in $step" >&2
