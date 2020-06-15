@@ -26,3 +26,6 @@ jobs:
     - stage: deploy
       script: bash hack/build.sh ${WORKSHOP_NAME} quay ${QUAY_REPOSITORY:-creynold}
       env: WORKSHOP_NAME=better-together
+after_failure:
+  - systemctl --user status ${WORKSHOP_NAME}
+  - journalctl --user -u ${WORKSHOP_NAME}
