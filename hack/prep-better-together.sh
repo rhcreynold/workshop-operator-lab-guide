@@ -1,13 +1,9 @@
 #! /usr/bin/env bash
 
 ENV_FILE=$1
-
+STUDENT_NAME=${2:-student1}
 echo "Preparing environment variables for $WORKSHOP_NAME lab guide"
 
-STUDENT_NAME=$(grep student /etc/passwd | awk -F':' '{ print $1 }')
-if [[ ${#STUDENT_NAME} -eq 0 ]];then
-  STUDENT_NAME=student1
-fi
 STUDENT_PASS=redhat01
 OPENSHIFT_VER=3.11
 CONTROL_PUBLIC_IP=192.168.10.1
