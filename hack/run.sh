@@ -98,17 +98,22 @@ EOF
 }
 
 stop_local() {
-  if systemctl --user | grep -qF $WORKSHOP_NAME; then
+  if container_installed; then
     echo Stopping $WORKSHOP_NAME container
     systemctl --user stop $WORKSHOP_NAME.service
   fi
+}
+
+container_installed() {
+  systemctl --user | grep -qF "$WORKSHOP_NAME Lab Guide container"
+  return $?
 }
 
 start_local() {
   stop_local
 
   echo Ensuring setup complete
-  systemctl --user | grep -qF $WORKSHOP_NAME || setup_local
+  container_installed || setup_local
 
   echo Running dedicated local build
   hack/build.sh $WORKSHOP_NAME local $QUAY_PROJECT || exit 1
@@ -121,7 +126,7 @@ start() {
   stop_local
 
   echo Ensuring setup complete
-  systemctl --user | grep -qF $WORKSHOP_NAME || setup_local
+  container_installed || setup_local
 
   echo Pulling image $CONTAINER_IMAGE
   podman pull $CONTAINER_IMAGE || exit 1
@@ -141,12 +146,17 @@ remove_container() {
 remove_local() {
   rm -f $ENV_FILE
   remove_container
-  systemctl --user stop $WORKSHOP_NAME.service
-  systemctl --user disable $WORKSHOP_NAME.service
-  rm -f $HOME/.config/systemd/user/$WORKSHOP_NAME.service
-  systemctl --user daemon-reload
-  systemctl --user reset-failed
-  podman rmi --force $(podman images --filter label=$CONTAINER_IMAGE --format='{{ $.ID }}')
+  if container_installed; then
+    systemctl --user stop $WORKSHOP_NAME.service
+    systemctl --user disable $WORKSHOP_NAME.service
+    rm -f $HOME/.config/systemd/user/$WORKSHOP_NAME.service
+    systemctl --user daemon-reload
+    systemctl --user reset-failed
+  fi
+  image_ids=$(podman images --filter label=$CONTAINER_IMAGE --format='{{ $.ID }}')
+  if [ "$image_ids" ]; then
+    podman rmi --force $(podman images --filter label=$CONTAINER_IMAGE --format='{{ $.ID }}')
+  fi
 }
 
 case $RUN_TYPE in
