@@ -177,12 +177,12 @@ if [ "$do_tests" ]; then
   max_failures=6
   while ! curl 127.0.0.1:$PORT; do
     (( count++ ))
-    echo "Failed attempt $count of $max_failures.... retrying in $step" >&2
-    sleep $step
     if [ $count -gt $max_failures ]; then
       systemctl --user status $WORKSHOP_NAME
       journalctl --user -u $WORKSHOP_NAME
       exit 13
     fi
+    echo "Failed attempt $count of $max_failures.... retrying in $step" >&2
+    sleep $step
   done
 fi
