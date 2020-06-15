@@ -44,7 +44,7 @@ ExecStart=/usr/bin/podman start -a $WORKSHOP_NAME
 ExecStop=/usr/bin/podman stop -t 2 $WORKSHOP_NAME
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
 EOF
   systemctl --user daemon-reload
 
