@@ -153,10 +153,6 @@ remove_local() {
     systemctl --user daemon-reload
     systemctl --user reset-failed
   fi
-  image_ids=$(podman images --filter label=$CONTAINER_IMAGE --format='{{ $.ID }}')
-  if [ "$image_ids" ]; then
-    podman rmi --force $(podman images --filter label=$CONTAINER_IMAGE --format='{{ $.ID }}')
-  fi
 }
 
 testable=''
