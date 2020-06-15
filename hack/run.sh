@@ -200,4 +200,5 @@ if [ "$do_tests" ]; then
     sleep $step
   done
   curl localhost:8888 |& grep -F '<title>'
+  stop_local
 fi
