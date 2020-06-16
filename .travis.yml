@@ -1,18 +1,26 @@
-language: python
-python:
-- '2.7'
+dist: bionic
+language: minimal
 env:
   - WORKSHOP_NAME=example-workshop
   - WORKSHOP_NAME=ansible-for-devops
   - WORKSHOP_NAME=better-together
-services:
-- docker
-install:
-- pip install -r requirements.txt
-script:
-- bash hack/run.sh ${WORKSHOP_NAME} local
-deploy:
-  provider: script
-  script: bash hack/build.sh ${WORKSHOP_NAME} quay
-  on:
-    branch: master
+stages:
+  - test
+  - name: deploy
+    if: branch = master
+before_script:
+  # https://podman.io/getting-started/installation#ubuntu
+  - . /etc/os-release
+  - echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+  - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
+  - sudo apt-get update -qq
+  - sudo apt-get -qq -y install podman slirp4netns
+script: hack/run.sh ${WORKSHOP_NAME} local --project=${QUAY_REPOSITORY:-creynold} --test
+jobs:
+  include:
+    - stage: deploy
+      script: bash hack/build.sh ${WORKSHOP_NAME} quay ${QUAY_REPOSITORY:-creynold}
+      env: WORKSHOP_NAME=ansible-for-devops
+    - stage: deploy
+      script: bash hack/build.sh ${WORKSHOP_NAME} quay ${QUAY_REPOSITORY:-creynold}
+      env: WORKSHOP_NAME=better-together

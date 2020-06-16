@@ -3,4 +3,4 @@
 
 make dirhtml
 cp -r _build/dirhtml/_static .
-cd _build/dirhtml && python -m SimpleHTTPServer 8080
+cd _build/dirhtml && python3 -m http.server 8080
